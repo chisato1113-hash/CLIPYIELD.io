@@ -1,10 +1,10 @@
-# CLIPYIELD.io
 <!DOCTYPE html>
+
 <html lang="ja">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CLIPYIELD — Clip once. Earn twice.</title>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title data-i18n="t250">CLIPYIELD — Clip once. Earn twice.</title>
 <style>
 :root{
   --bg:#FFFFFF;
@@ -367,590 +367,588 @@ footer{border-top:1px solid var(--line);padding:64px 0 44px;background:var(--bg-
   .pill b{font-size:9.5px;padding:3px 8px}
   .hero-bg .glow-a,.hero-bg .glow-b{opacity:.55}
 }
+/* ===== language switcher ===== */
+.lang{display:flex;align-items:center;gap:2px;padding:3px;border:1px solid var(--line-strong);border-radius:999px;background:var(--surface-2)}
+.lang-b{appearance:none;-webkit-appearance:none;border:0;background:transparent;color:var(--ink-3);font-family:inherit;font-size:12px;font-weight:700;letter-spacing:.02em;padding:5px 10px;border-radius:999px;cursor:pointer;line-height:1;white-space:nowrap;transition:color .15s ease,background .15s ease,box-shadow .15s ease}
+.lang-b:hover{color:var(--ink)}
+.lang-b.is-on{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(16,24,40,.12)}
+.lang-b .l-abbr{display:none}
+@media(max-width:640px){
+  .lang{padding:2px;gap:0}
+  .lang-b{padding:5px 8px;font-size:11.5px}
+  .lang-b .l-full{display:none}
+  .lang-b .l-abbr{display:inline}
+  .nav-in{gap:12px}
+  .nav-cta{gap:8px}
+}
+@media(max-width:400px){
+  .wrap.nav-in{padding-left:16px;padding-right:16px;gap:6px}
+  .logo{font-size:14px;gap:7px}
+  .logo svg{width:22px;height:22px}
+  .lang-b{padding:5px 5px;font-size:11px}
+  .nav-cta{gap:6px}
+  .nav-cta .btn-sm{padding:0 10px;font-size:11.5px}
+}
+html[lang="zh"] body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif}
+html[lang="en"] body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
 </style>
 </head>
 <body>
-
 <div class="note-bar">
-  <div class="wrap"><b>社内デザイン確認用プロトタイプ</b>｜掲載している案件名・数値・ランキング等はレイアウト確認のためのサンプル表示です（実績値ではありません）</div>
+<div class="wrap" data-i18n-html="t001"><b>社内デザイン確認用プロトタイプ</b>｜掲載している案件名・数値・ランキング等はレイアウト確認のためのサンプル表示です（実績値ではありません）</div>
 </div>
-
 <!-- ============ NAV ============ -->
 <nav class="nav">
-  <div class="wrap nav-in">
-    <a class="logo" href="#top">
-      <svg width="26" height="26" viewBox="0 0 32 32" fill="none">
-        <defs><linearGradient id="lg" x1="0" y1="0" x2="32" y2="32">
-          <stop offset="0" stop-color="#FF7A18"/><stop offset="1" stop-color="#FFC93C"/></linearGradient></defs>
-        <rect x="1" y="1" width="30" height="30" rx="9" stroke="url(#lg)" stroke-width="2"/>
-        <path d="M12 9.5 L22.5 16 L12 22.5 Z" fill="url(#lg)"/>
-        <path d="M8 12.5 L8 19.5" stroke="url(#lg)" stroke-width="2.4" stroke-linecap="round"/>
-      </svg>
+<div class="wrap nav-in">
+<a class="logo" href="#top">
+<svg fill="none" height="26" viewBox="0 0 32 32" width="26">
+<defs><linearGradient id="lg" x1="0" x2="32" y1="0" y2="32">
+<stop offset="0" stop-color="#FF7A18"></stop><stop offset="1" stop-color="#FFC93C"></stop></linearGradient></defs>
+<rect height="30" rx="9" stroke="url(#lg)" stroke-width="2" width="30" x="1" y="1"></rect>
+<path d="M12 9.5 L22.5 16 L12 22.5 Z" fill="url(#lg)"></path>
+<path d="M8 12.5 L8 19.5" stroke="url(#lg)" stroke-linecap="round" stroke-width="2.4"></path>
+</svg>
       CLIPYIELD
     </a>
-    <div class="nav-links">
-      <a href="#rewards">報酬モデル</a>
-      <a href="#board">案件ボード</a>
-      <a href="#why">CLIPYIELDの違い</a>
-      <a href="#how">はじめ方</a>
-      <a href="#faq">FAQ</a>
-    </div>
-    <div class="nav-cta">
-      <a class="btn btn-ghost btn-sm" href="#">ログイン</a>
-      <a class="btn btn-primary btn-sm" href="#cta">無料ではじめる</a>
-    </div>
-  </div>
+<div class="nav-links">
+<a data-i18n="t003" href="#rewards">報酬モデル</a>
+<a data-i18n="t004" href="#board">案件ボード</a>
+<a data-i18n="t005" href="#why">CLIPYIELDの違い</a>
+<a data-i18n="t006" href="#how">はじめ方</a>
+<a data-i18n="t007" href="#faq">FAQ</a>
+</div>
+<div class="nav-cta">
+<div aria-label="Language" class="lang" role="group"><button class="lang-b is-on" data-lang="ja" type="button"><span class="l-full">日本語</span><span class="l-abbr">JA</span></button><button class="lang-b" data-lang="en" type="button"><span class="l-full">EN</span><span class="l-abbr">EN</span></button><button class="lang-b" data-lang="zh" type="button"><span class="l-full">中文</span><span class="l-abbr">中</span></button></div>
+<a class="btn btn-ghost btn-sm" data-i18n="t008" href="#">ログイン</a>
+<a class="btn btn-primary btn-sm" data-i18n="t009" href="#cta">無料ではじめる</a>
+</div>
+</div>
 </nav>
-
 <!-- ============ HERO ============ -->
 <header class="hero" id="top">
-  <div class="hero-bg">
-    <div class="glow-a"></div><div class="glow-b"></div><div class="grid"></div>
-  </div>
-  <div class="wrap hero-in">
-    <div class="pill"><b>TWO-TIER</b> 再生でもらう。売れたらもう一度もらう。</div>
-    <h1>Clip once.<br><span class="grad-text">Earn twice.</span></h1>
-    <p class="hero-sub">
-      公式ライセンスのモーションコミックを切り抜いて投稿するだけ。<br>
+<div class="hero-bg">
+<div class="glow-a"></div><div class="glow-b"></div><div class="grid"></div>
+</div>
+<div class="wrap hero-in">
+<div class="pill" data-i18n-html="t010"><b>TWO-TIER</b> 再生でもらう。売れたらもう一度もらう。</div>
+<h1 data-i18n-html="t011">Clip once.<br/><span class="grad-text">Earn twice.</span></h1>
+<p class="hero-sub" data-i18n-html="t012">
+      公式ライセンスのモーションコミックを切り抜いて投稿するだけ。<br/>
       再生数の報酬に加えて、あなたのリンク経由で売れたグッズ売上の<b>60%</b>が積み上がります。
     </p>
-    <div class="hero-btns">
-      <a class="btn btn-primary" href="#cta">クリッパー登録（無料）</a>
-      <a class="btn btn-ghost" href="#rewards">報酬モデルを見る</a>
-    </div>
-    <div class="hero-note">
-      <span><i class="dot"></i>審査なし</span>
-      <span><i class="dot"></i>フォロワー数の条件なし</span>
-      <span><i class="dot"></i>最低再生数のしきい値なし</span>
-    </div>
-  </div>
-
-  <!-- product stage -->
-  <div class="wrap stage">
-    <div class="float float-l">
-      <div class="ft">PAYOUTS</div>
-      <div class="pay-row">7月 ・ TIER1+TIER2 <span class="st st-pend">処理中</span></div>
-      <div class="pay-row">6月 ・ TIER1+TIER2 <span class="st st-paid">支払済</span></div>
-      <div class="pay-row">5月 ・ TIER1 <span class="st st-paid">支払済</span></div>
-    </div>
-    <div class="app">
-      <div class="app-bar">
-        <div class="tl"><i></i><i></i><i></i></div>
-        <div class="app-title">clipyield.com / dashboard</div>
-        <div class="app-tag">CREATOR VIEW</div>
-      </div>
-      <div class="app-body">
-        <div class="pane">
-          <div class="kpis">
-            <div class="kpi"><div class="lb">確定報酬（今月）</div><div class="vl">¥279,120</div><div class="dl">▲ 34.2%</div></div>
-            <div class="kpi"><div class="lb">総再生数</div><div class="vl">364,800</div><div class="dl">▲ 12.8%</div></div>
-            <div class="kpi"><div class="lb">リンク経由購入</div><div class="vl">142件</div><div class="dl">▲ 51.0%</div></div>
-          </div>
-          <div class="chart-head">
-            <div class="t">再生数と成果の推移</div>
-            <div class="s">直近30日</div>
-          </div>
-          <svg viewBox="0 0 620 190" style="width:100%;height:auto;display:block" preserveAspectRatio="none">
-            <defs>
-              <linearGradient id="fill1" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0" stop-color="#FF9A2B" stop-opacity=".38"/>
-                <stop offset="1" stop-color="#FF9A2B" stop-opacity="0"/>
-              </linearGradient>
-              <linearGradient id="ln1" x1="0" y1="0" x2="620" y2="0">
-                <stop offset="0" stop-color="#FF7A18"/><stop offset="1" stop-color="#FFC93C"/>
-              </linearGradient>
-            </defs>
-            <g stroke="rgba(16,24,40,.10)" stroke-width="1">
-              <line x1="0" y1="40" x2="620" y2="40"/><line x1="0" y1="82" x2="620" y2="82"/>
-              <line x1="0" y1="124" x2="620" y2="124"/><line x1="0" y1="166" x2="620" y2="166"/>
-            </g>
-            <path d="M0,158 C40,150 70,140 100,132 C140,121 165,133 200,120 C240,105 260,96 300,102
-                     C340,108 360,78 400,66 C440,54 460,72 500,54 C540,36 570,30 620,18 L620,190 L0,190 Z"
-                  fill="url(#fill1)"/>
-            <path d="M0,158 C40,150 70,140 100,132 C140,121 165,133 200,120 C240,105 260,96 300,102
-                     C340,108 360,78 400,66 C440,54 460,72 500,54 C540,36 570,30 620,18"
-                  fill="none" stroke="url(#ln1)" stroke-width="2.4" stroke-linecap="round"/>
-            <g>
-              <line x1="500" y1="54" x2="500" y2="190" stroke="rgba(16,24,40,.22)" stroke-dasharray="3 4"/>
-              <circle cx="500" cy="54" r="5.5" fill="#FFFFFF" stroke="#F59E0B" stroke-width="2.6"/>
-            </g>
-            <g transform="translate(413,10)">
-              <rect width="118" height="34" rx="8" fill="#FFFFFF" stroke="rgba(16,24,40,.16)"/>
-              <text x="11" y="15" fill="#8A94A6" font-size="9.5" font-family="sans-serif">7/22</text>
-              <text x="11" y="27" fill="#0E1420" font-size="11.5" font-weight="700" font-family="sans-serif">28,400 views</text>
-            </g>
-          </svg>
-          <div class="legend">
-            <span><i style="background:linear-gradient(90deg,#FF7A18,#F5A623)"></i>再生数</span>
-            <span><i style="background:rgba(16,24,40,.18)"></i>成果発生ポイント</span>
-          </div>
-
-          <div class="inpane">
-            <div class="ft">THIS MONTH ／ 内訳</div>
-            <div class="tier-mini"><div class="bx bx1">T1</div><div class="tx">再生報酬</div><div class="vv">¥182,400</div></div>
-            <div class="tier-mini"><div class="bx bx2">T2</div><div class="tx">グッズ成果報酬</div><div class="vv">¥96,720</div></div>
-          </div>
-        </div>
-
-        <div class="pane">
-          <div class="side-title">国別の再生シェア</div>
-          <div class="rowbar"><div class="rl"><span>United States</span><b>38%</b></div><div class="track"><i style="width:38%"></i></div></div>
-          <div class="rowbar"><div class="rl"><span>Indonesia</span><b>21%</b></div><div class="track"><i style="width:21%"></i></div></div>
-          <div class="rowbar"><div class="rl"><span>Thailand</span><b>17%</b></div><div class="track"><i style="width:17%"></i></div></div>
-          <div class="rowbar"><div class="rl"><span>Korea</span><b>13%</b></div><div class="track"><i style="width:13%"></i></div></div>
-          <div class="rowbar"><div class="rl"><span>Others</span><b>11%</b></div><div class="track"><i style="width:11%"></i></div></div>
-
-          <div class="mini-list">
-            <div class="side-title" style="margin-bottom:10px">今月のクリッパーランキング</div>
-            <div class="mini-row"><span class="rank top">1</span><span class="nm">@ne***fox</span><span class="am">¥412,000</span></div>
-            <div class="mini-row"><span class="rank">2</span><span class="nm">@sh***lab</span><span class="am">¥356,200</span></div>
-            <div class="mini-row"><span class="rank">3</span><span class="nm">@you</span><span class="am">¥279,120</span></div>
-            <div class="mini-row"><span class="rank">4</span><span class="nm">@ka***77</span><span class="am">¥241,800</span></div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="stage-fade"></div>
-  </div>
+<div class="hero-btns">
+<a class="btn btn-primary" data-i18n="t013" href="#cta">クリッパー登録（無料）</a>
+<a class="btn btn-ghost" data-i18n="t014" href="#rewards">報酬モデルを見る</a>
+</div>
+<div class="hero-note">
+<span data-i18n-html="t015"><i class="dot"></i>審査なし</span>
+<span data-i18n-html="t016"><i class="dot"></i>フォロワー数の条件なし</span>
+<span data-i18n-html="t017"><i class="dot"></i>最低再生数のしきい値なし</span>
+</div>
+</div>
+<!-- product stage -->
+<div class="wrap stage">
+<div class="float float-l">
+<div class="ft" data-i18n="t018">PAYOUTS</div>
+<div class="pay-row" data-i18n-html="t019">7月 ・ TIER1+TIER2 <span class="st st-pend">処理中</span></div>
+<div class="pay-row" data-i18n-html="t020">6月 ・ TIER1+TIER2 <span class="st st-paid">支払済</span></div>
+<div class="pay-row" data-i18n-html="t021">5月 ・ TIER1 <span class="st st-paid">支払済</span></div>
+</div>
+<div class="app">
+<div class="app-bar">
+<div class="tl"><i></i><i></i><i></i></div>
+<div class="app-title" data-i18n="t022">clipyield.com / dashboard</div>
+<div class="app-tag" data-i18n="t023">CREATOR VIEW</div>
+</div>
+<div class="app-body">
+<div class="pane">
+<div class="kpis">
+<div class="kpi"><div class="lb" data-i18n="t024">確定報酬（今月）</div><div class="vl" data-i18n="t025">¥279,120</div><div class="dl" data-i18n="t026">▲ 34.2%</div></div>
+<div class="kpi"><div class="lb" data-i18n="t027">総再生数</div><div class="vl" data-i18n="t028">364,800</div><div class="dl" data-i18n="t029">▲ 12.8%</div></div>
+<div class="kpi"><div class="lb" data-i18n="t030">リンク経由購入</div><div class="vl" data-i18n="t031">142件</div><div class="dl" data-i18n="t032">▲ 51.0%</div></div>
+</div>
+<div class="chart-head">
+<div class="t" data-i18n="t033">再生数と成果の推移</div>
+<div class="s" data-i18n="t034">直近30日</div>
+</div>
+<svg preserveAspectRatio="none" style="width:100%;height:auto;display:block" viewBox="0 0 620 190">
+<defs>
+<linearGradient id="fill1" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0" stop-color="#FF9A2B" stop-opacity=".38"></stop>
+<stop offset="1" stop-color="#FF9A2B" stop-opacity="0"></stop>
+</linearGradient>
+<linearGradient id="ln1" x1="0" x2="620" y1="0" y2="0">
+<stop offset="0" stop-color="#FF7A18"></stop><stop offset="1" stop-color="#FFC93C"></stop>
+</linearGradient>
+</defs>
+<g stroke="rgba(16,24,40,.10)" stroke-width="1">
+<line x1="0" x2="620" y1="40" y2="40"></line><line x1="0" x2="620" y1="82" y2="82"></line>
+<line x1="0" x2="620" y1="124" y2="124"></line><line x1="0" x2="620" y1="166" y2="166"></line>
+</g>
+<path d="M0,158 C40,150 70,140 100,132 C140,121 165,133 200,120 C240,105 260,96 300,102
+                     C340,108 360,78 400,66 C440,54 460,72 500,54 C540,36 570,30 620,18 L620,190 L0,190 Z" fill="url(#fill1)"></path>
+<path d="M0,158 C40,150 70,140 100,132 C140,121 165,133 200,120 C240,105 260,96 300,102
+                     C340,108 360,78 400,66 C440,54 460,72 500,54 C540,36 570,30 620,18" fill="none" stroke="url(#ln1)" stroke-linecap="round" stroke-width="2.4"></path>
+<g>
+<line stroke="rgba(16,24,40,.22)" stroke-dasharray="3 4" x1="500" x2="500" y1="54" y2="190"></line>
+<circle cx="500" cy="54" fill="#FFFFFF" r="5.5" stroke="#F59E0B" stroke-width="2.6"></circle>
+</g>
+<g transform="translate(413,10)">
+<rect fill="#FFFFFF" height="34" rx="8" stroke="rgba(16,24,40,.16)" width="118"></rect>
+<text fill="#8A94A6" font-family="sans-serif" font-size="9.5" x="11" y="15">7/22</text>
+<text fill="#0E1420" font-family="sans-serif" font-size="11.5" font-weight="700" x="11" y="27">28,400 views</text>
+</g>
+</svg>
+<div class="legend">
+<span data-i18n-html="t035"><i style="background:linear-gradient(90deg,#FF7A18,#F5A623)"></i>再生数</span>
+<span data-i18n-html="t036"><i style="background:rgba(16,24,40,.18)"></i>成果発生ポイント</span>
+</div>
+<div class="inpane">
+<div class="ft" data-i18n="t037">THIS MONTH ／ 内訳</div>
+<div class="tier-mini"><div class="bx bx1" data-i18n="t038">T1</div><div class="tx" data-i18n="t039">再生報酬</div><div class="vv" data-i18n="t040">¥182,400</div></div>
+<div class="tier-mini"><div class="bx bx2" data-i18n="t041">T2</div><div class="tx" data-i18n="t042">グッズ成果報酬</div><div class="vv" data-i18n="t043">¥96,720</div></div>
+</div>
+</div>
+<div class="pane">
+<div class="side-title" data-i18n="t044">国別の再生シェア</div>
+<div class="rowbar"><div class="rl"><span data-i18n="t045">United States</span><b data-i18n="t046">38%</b></div><div class="track"><i style="width:38%"></i></div></div>
+<div class="rowbar"><div class="rl"><span data-i18n="t047">Indonesia</span><b data-i18n="t048">21%</b></div><div class="track"><i style="width:21%"></i></div></div>
+<div class="rowbar"><div class="rl"><span data-i18n="t049">Thailand</span><b data-i18n="t050">17%</b></div><div class="track"><i style="width:17%"></i></div></div>
+<div class="rowbar"><div class="rl"><span data-i18n="t051">Korea</span><b data-i18n="t052">13%</b></div><div class="track"><i style="width:13%"></i></div></div>
+<div class="rowbar"><div class="rl"><span data-i18n="t053">Others</span><b data-i18n="t054">11%</b></div><div class="track"><i style="width:11%"></i></div></div>
+<div class="mini-list">
+<div class="side-title" data-i18n="t055" style="margin-bottom:10px">今月のクリッパーランキング</div>
+<div class="mini-row"><span class="rank top" data-i18n="t056">1</span><span class="nm" data-i18n="t057">@ne***fox</span><span class="am" data-i18n="t058">¥412,000</span></div>
+<div class="mini-row"><span class="rank" data-i18n="t059">2</span><span class="nm" data-i18n="t060">@sh***lab</span><span class="am" data-i18n="t061">¥356,200</span></div>
+<div class="mini-row"><span class="rank" data-i18n="t062">3</span><span class="nm" data-i18n="t063">@you</span><span class="am" data-i18n="t064">¥279,120</span></div>
+<div class="mini-row"><span class="rank" data-i18n="t065">4</span><span class="nm" data-i18n="t066">@ka***77</span><span class="am" data-i18n="t067">¥241,800</span></div>
+</div>
+</div>
+</div>
+</div>
+<div class="stage-fade"></div>
+</div>
 </header>
-
 <!-- ============ STRIP ============ -->
 <div class="strip">
-  <div class="wrap">
-    <div class="strip-in">
-      <div class="strip-cell">
-        <div class="n grad-text">¥0.5<span style="font-size:.42em;letter-spacing:0;color:var(--ink-3)"> / 再生</span></div>
-        <div class="l">TIER 1・再生報酬</div>
-        <div class="d">投稿が伸びた分だけ、その日のうちに積み上がる基礎報酬。</div>
-      </div>
-      <div class="strip-cell">
-        <div class="n grad-text">60<span style="font-size:.42em;letter-spacing:0;color:var(--ink-3)">%</span></div>
-        <div class="l">TIER 2・グッズ成果報酬</div>
-        <div class="d">あなたのリンク経由で売れたグッズ売上の60%。上限なし。</div>
-      </div>
-      <div class="strip-cell">
-        <div class="n">0<span style="font-size:.42em;letter-spacing:0;color:var(--ink-3)"> 条件</span></div>
-        <div class="l">参加のハードル</div>
-        <div class="d">審査・フォロワー数・最低再生数のいずれも問いません。</div>
-      </div>
-    </div>
-  </div>
+<div class="wrap">
+<div class="strip-in">
+<div class="strip-cell">
+<div class="n grad-text" data-i18n-html="t068">¥0.5<span style="font-size:.42em;letter-spacing:0;color:var(--ink-3)"> / 再生</span></div>
+<div class="l" data-i18n="t069">TIER 1・再生報酬</div>
+<div class="d" data-i18n="t070">投稿が伸びた分だけ、その日のうちに積み上がる基礎報酬。</div>
 </div>
-
+<div class="strip-cell">
+<div class="n grad-text" data-i18n-html="t071">60<span style="font-size:.42em;letter-spacing:0;color:var(--ink-3)">%</span></div>
+<div class="l" data-i18n="t072">TIER 2・グッズ成果報酬</div>
+<div class="d" data-i18n="t073">あなたのリンク経由で売れたグッズ売上の60%。上限なし。</div>
+</div>
+<div class="strip-cell">
+<div class="n" data-i18n-html="t074">0<span style="font-size:.42em;letter-spacing:0;color:var(--ink-3)"> 条件</span></div>
+<div class="l" data-i18n="t075">参加のハードル</div>
+<div class="d" data-i18n="t076">審査・フォロワー数・最低再生数のいずれも問いません。</div>
+</div>
+</div>
+</div>
+</div>
 <!-- ============ REWARDS + SIMULATOR ============ -->
 <section id="rewards">
-  <div class="wrap">
-    <div class="sec-head">
-      <div class="eyebrow">Reward model</div>
-      <h2 class="sec-title">バズって終わり、ではない。<br><span class="grad-text">二階建て</span>だから積み上がる。</h2>
-      <p class="sec-lead">一般的なクリッピング案件は、再生数に応じた単発の支払いで終わります。CLIPYIELDは再生報酬に加えて、あなたの投稿から実際にグッズが売れたときの成果報酬が重なります。</p>
-    </div>
-
-    <div class="tier-wrap">
-      <div class="card tier-card">
-        <span class="tier-badge tb1">TIER 1 — VIEWS</span>
-        <div class="tier-num">¥0.5<small>／再生（案件により変動）</small></div>
-        <p class="tier-desc">投稿した切り抜きの再生数がそのまま報酬になります。案件ごとに単価が設定され、ダッシュボードで日次に集計されます。最低再生数のしきい値がないため、小さく始めても1再生目から加算されます。</p>
-        <div class="tier-visual">
-          <svg viewBox="0 0 460 96" style="width:100%;height:auto;display:block">
-            <defs><linearGradient id="bar1" x1="0" y1="0" x2="460" y2="0">
-              <stop offset="0" stop-color="#FF7A18"/><stop offset="1" stop-color="#FFC93C"/></linearGradient></defs>
-            <g>
-              <rect x="0" y="66" width="34" height="26" rx="5" fill="url(#bar1)" opacity=".45"/>
-              <rect x="44" y="54" width="34" height="38" rx="5" fill="url(#bar1)" opacity=".52"/>
-              <rect x="88" y="58" width="34" height="34" rx="5" fill="url(#bar1)" opacity=".5"/>
-              <rect x="132" y="42" width="34" height="50" rx="5" fill="url(#bar1)" opacity=".6"/>
-              <rect x="176" y="30" width="34" height="62" rx="5" fill="url(#bar1)" opacity=".68"/>
-              <rect x="220" y="36" width="34" height="56" rx="5" fill="url(#bar1)" opacity=".64"/>
-              <rect x="264" y="20" width="34" height="72" rx="5" fill="url(#bar1)" opacity=".78"/>
-              <rect x="308" y="12" width="34" height="80" rx="5" fill="url(#bar1)" opacity=".88"/>
-              <rect x="352" y="24" width="34" height="68" rx="5" fill="url(#bar1)" opacity=".8"/>
-              <rect x="396" y="4" width="34" height="88" rx="5" fill="url(#bar1)"/>
-            </g>
-          </svg>
-        </div>
-      </div>
-
-      <div class="card tier-card">
-        <span class="tier-badge tb2">TIER 2 — SALES</span>
-        <div class="tier-num">60%<small>／リンク経由のグッズ売上</small></div>
-        <p class="tier-desc">あなた専用の紹介リンクを経由してグッズが購入されると、その売上の60%が支払われます。購入の追跡はプラットフォーム側で自動化されており、申請作業は不要です。再生が伸びなくても、刺さる人に届けば大きくなる報酬です。</p>
-        <div class="tier-visual">
-          <svg viewBox="0 0 460 96" style="width:100%;height:auto;display:block">
-            <defs><linearGradient id="fl2" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stop-color="#FFA62B" stop-opacity=".38"/><stop offset="1" stop-color="#FFC93C" stop-opacity="0"/></linearGradient></defs>
-            <path d="M0,88 C60,86 90,74 140,70 C190,66 210,50 260,42 C320,32 350,22 400,12 C425,7 440,5 460,3 L460,96 L0,96 Z" fill="url(#fl2)"/>
-            <path d="M0,88 C60,86 90,74 140,70 C190,66 210,50 260,42 C320,32 350,22 400,12 C425,7 440,5 460,3"
-                  fill="none" stroke="#F59E0B" stroke-width="2.4" stroke-linecap="round"/>
-            <circle cx="140" cy="70" r="4" fill="#FFFFFF" stroke="#F59E0B" stroke-width="2"/>
-            <circle cx="260" cy="42" r="4" fill="#FFFFFF" stroke="#F59E0B" stroke-width="2"/>
-            <circle cx="400" cy="12" r="4" fill="#FFFFFF" stroke="#F59E0B" stroke-width="2"/>
-          </svg>
-        </div>
-      </div>
-    </div>
-
-    <!-- simulator -->
-    <div class="sim" style="margin-top:26px">
-      <div class="eyebrow" style="margin-bottom:22px">Earnings simulator ／ 収益シミュレーター</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:34px" class="sim-grid">
-        <div>
-          <div class="sim-field">
-            <div class="fl"><span>月間の合計再生数</span><b id="v1">300,000</b></div>
-            <input type="range" id="r1" min="0" max="2000000" step="10000" value="300000">
-          </div>
-          <div class="sim-field" style="margin-bottom:0">
-            <div class="fl"><span>あなたのリンク経由のグッズ売上</span><b id="v2">¥160,000</b></div>
-            <input type="range" id="r2" min="0" max="1000000" step="10000" value="160000">
-          </div>
-          <p class="sim-note">TIER1単価は案件ごとに変動します（基準値 ¥0.5／再生）。TIER2はグッズ売上の60%で計算しています。本シミュレーターは報酬設計を説明するための試算であり、収益を保証するものではありません。</p>
-        </div>
-        <div>
-          <div class="sim-out">
-            <div class="lb">MONTHLY TOTAL</div>
-            <div class="sim-total" id="total">¥246,000</div>
-            <div class="sim-break">
-              <span><i class="dot" style="background:#FF7A18"></i>TIER 1 <b id="t1">¥150,000</b></span>
-              <span><i class="dot" style="background:#F5A623"></i>TIER 2 <b id="t2">¥96,000</b></span>
-            </div>
-          </div>
-          <div style="font-size:12px;color:var(--ink-3);margin-bottom:9px">報酬の内訳</div>
-          <div style="display:flex;height:16px;border-radius:8px;overflow:hidden;background:rgba(16,24,40,.06)">
-            <div id="bar1s" style="width:61%;background:linear-gradient(90deg,#FF7A18,#FF9A2B)"></div>
-            <div id="bar2s" style="width:39%;background:#F5A623"></div>
-          </div>
-          <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--ink-3);margin-top:9px">
-            <span>再生報酬</span><span>グッズ成果報酬</span>
-          </div>
-          <div style="border:1px solid var(--line);border-radius:12px;padding:15px 17px;margin-top:22px;background:rgba(16,24,40,.02)">
-            <div style="font-size:11.5px;color:var(--ink-2);line-height:1.85">
+<div class="wrap">
+<div class="sec-head">
+<div class="eyebrow" data-i18n="t077">Reward model</div>
+<h2 class="sec-title" data-i18n-html="t078">バズって終わり、ではない。<br/><span class="grad-text">二階建て</span>だから積み上がる。</h2>
+<p class="sec-lead" data-i18n="t079">一般的なクリッピング案件は、再生数に応じた単発の支払いで終わります。CLIPYIELDは再生報酬に加えて、あなたの投稿から実際にグッズが売れたときの成果報酬が重なります。</p>
+</div>
+<div class="tier-wrap">
+<div class="card tier-card">
+<span class="tier-badge tb1" data-i18n="t080">TIER 1 — VIEWS</span>
+<div class="tier-num" data-i18n-html="t081">¥0.5<small>／再生（案件により変動）</small></div>
+<p class="tier-desc" data-i18n="t082">投稿した切り抜きの再生数がそのまま報酬になります。案件ごとに単価が設定され、ダッシュボードで日次に集計されます。最低再生数のしきい値がないため、小さく始めても1再生目から加算されます。</p>
+<div class="tier-visual">
+<svg style="width:100%;height:auto;display:block" viewBox="0 0 460 96">
+<defs><linearGradient id="bar1" x1="0" x2="460" y1="0" y2="0">
+<stop offset="0" stop-color="#FF7A18"></stop><stop offset="1" stop-color="#FFC93C"></stop></linearGradient></defs>
+<g>
+<rect fill="url(#bar1)" height="26" opacity=".45" rx="5" width="34" x="0" y="66"></rect>
+<rect fill="url(#bar1)" height="38" opacity=".52" rx="5" width="34" x="44" y="54"></rect>
+<rect fill="url(#bar1)" height="34" opacity=".5" rx="5" width="34" x="88" y="58"></rect>
+<rect fill="url(#bar1)" height="50" opacity=".6" rx="5" width="34" x="132" y="42"></rect>
+<rect fill="url(#bar1)" height="62" opacity=".68" rx="5" width="34" x="176" y="30"></rect>
+<rect fill="url(#bar1)" height="56" opacity=".64" rx="5" width="34" x="220" y="36"></rect>
+<rect fill="url(#bar1)" height="72" opacity=".78" rx="5" width="34" x="264" y="20"></rect>
+<rect fill="url(#bar1)" height="80" opacity=".88" rx="5" width="34" x="308" y="12"></rect>
+<rect fill="url(#bar1)" height="68" opacity=".8" rx="5" width="34" x="352" y="24"></rect>
+<rect fill="url(#bar1)" height="88" rx="5" width="34" x="396" y="4"></rect>
+</g>
+</svg>
+</div>
+</div>
+<div class="card tier-card">
+<span class="tier-badge tb2" data-i18n="t083">TIER 2 — SALES</span>
+<div class="tier-num" data-i18n-html="t084">60%<small>／リンク経由のグッズ売上</small></div>
+<p class="tier-desc" data-i18n="t085">あなた専用の紹介リンクを経由してグッズが購入されると、その売上の60%が支払われます。購入の追跡はプラットフォーム側で自動化されており、申請作業は不要です。再生が伸びなくても、刺さる人に届けば大きくなる報酬です。</p>
+<div class="tier-visual">
+<svg style="width:100%;height:auto;display:block" viewBox="0 0 460 96">
+<defs><linearGradient id="fl2" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0" stop-color="#FFA62B" stop-opacity=".38"></stop><stop offset="1" stop-color="#FFC93C" stop-opacity="0"></stop></linearGradient></defs>
+<path d="M0,88 C60,86 90,74 140,70 C190,66 210,50 260,42 C320,32 350,22 400,12 C425,7 440,5 460,3 L460,96 L0,96 Z" fill="url(#fl2)"></path>
+<path d="M0,88 C60,86 90,74 140,70 C190,66 210,50 260,42 C320,32 350,22 400,12 C425,7 440,5 460,3" fill="none" stroke="#F59E0B" stroke-linecap="round" stroke-width="2.4"></path>
+<circle cx="140" cy="70" fill="#FFFFFF" r="4" stroke="#F59E0B" stroke-width="2"></circle>
+<circle cx="260" cy="42" fill="#FFFFFF" r="4" stroke="#F59E0B" stroke-width="2"></circle>
+<circle cx="400" cy="12" fill="#FFFFFF" r="4" stroke="#F59E0B" stroke-width="2"></circle>
+</svg>
+</div>
+</div>
+</div>
+<!-- simulator -->
+<div class="sim" style="margin-top:26px">
+<div class="eyebrow" data-i18n="t086" style="margin-bottom:22px">Earnings simulator ／ 収益シミュレーター</div>
+<div class="sim-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:34px">
+<div>
+<div class="sim-field">
+<div class="fl"><span data-i18n="t087">月間の合計再生数</span><b data-i18n="t088" id="v1">300,000</b></div>
+<input id="r1" max="2000000" min="0" step="10000" type="range" value="300000"/>
+</div>
+<div class="sim-field" style="margin-bottom:0">
+<div class="fl"><span data-i18n="t089">あなたのリンク経由のグッズ売上</span><b data-i18n="t090" id="v2">¥160,000</b></div>
+<input id="r2" max="1000000" min="0" step="10000" type="range" value="160000"/>
+</div>
+<p class="sim-note" data-i18n="t091">TIER1単価は案件ごとに変動します（基準値 ¥0.5／再生）。TIER2はグッズ売上の60%で計算しています。本シミュレーターは報酬設計を説明するための試算であり、収益を保証するものではありません。</p>
+</div>
+<div>
+<div class="sim-out">
+<div class="lb" data-i18n="t092">MONTHLY TOTAL</div>
+<div class="sim-total" data-i18n="t093" id="total">¥246,000</div>
+<div class="sim-break">
+<span><i class="dot" style="background:#FF7A18"></i>TIER 1 <b id="t1">¥150,000</b></span>
+<span><i class="dot" style="background:#F5A623"></i>TIER 2 <b id="t2">¥96,000</b></span>
+</div>
+</div>
+<div data-i18n="t096" style="font-size:12px;color:var(--ink-3);margin-bottom:9px">報酬の内訳</div>
+<div style="display:flex;height:16px;border-radius:8px;overflow:hidden;background:rgba(16,24,40,.06)">
+<div id="bar1s" style="width:61%;background:linear-gradient(90deg,#FF7A18,#FF9A2B)"></div>
+<div id="bar2s" style="width:39%;background:#F5A623"></div>
+</div>
+<div style="display:flex;justify-content:space-between;font-size:11px;color:var(--ink-3);margin-top:9px">
+<span data-i18n="t097">再生報酬</span><span data-i18n="t098">グッズ成果報酬</span>
+</div>
+<div style="border:1px solid var(--line);border-radius:12px;padding:15px 17px;margin-top:22px;background:rgba(16,24,40,.02)">
+<div data-i18n-html="t099" style="font-size:11.5px;color:var(--ink-2);line-height:1.85">
               同じ再生数でも、<b style="color:var(--ink)">グッズが売れた分だけ上振れる</b>のがCLIPYIELDの構造です。単発のビュー単価だけの案件では、この上の階は存在しません。
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
-
 <!-- ============ CAMPAIGN BOARD ============ -->
 <section id="board" style="background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
-  <div class="wrap">
-    <div class="board-head">
-      <div>
-        <div class="eyebrow">Campaign board</div>
-        <h2 class="sec-title" style="margin-bottom:8px">切り抜く作品を選ぶ。</h2>
-        <p class="sec-lead">公開前・独占配信のモーションコミックに、誰よりも早くアクセスできます。</p>
-      </div>
-      <div class="filters">
-        <span class="chip on">すべて</span><span class="chip">アクション</span><span class="chip">ロマンス</span>
-        <span class="chip">ファンタジー</span><span class="chip">新着</span>
-      </div>
-    </div>
-
-    <div class="cards">
-      <!-- card 1 -->
-      <div class="cc">
-        <div class="cc-art">
-          <svg viewBox="0 0 400 132" preserveAspectRatio="none">
-            <defs><linearGradient id="a1" x1="0" y1="0" x2="400" y2="132">
-              <stop offset="0" stop-color="#FFE7CE"/><stop offset="1" stop-color="#FFFFFF"/></linearGradient></defs>
-            <rect width="400" height="132" fill="url(#a1)"/>
-            <g stroke="#F97316" stroke-width="1.4" opacity=".55" fill="none">
-              <path d="M-20 110 L120 30 L200 78 L300 12 L420 60"/>
-              <path d="M-20 132 L110 60 L210 102 L310 40 L420 88" opacity=".5"/>
-            </g>
-            <circle cx="318" cy="34" r="30" fill="#FF7A18" opacity=".26"/>
-            <circle cx="318" cy="34" r="14" fill="#F59E0B" opacity=".55"/>
-          </svg>
-          <span class="cc-badge"><i class="live-dot"></i>募集中</span>
-          <span class="cc-days">残り 42日</span>
-        </div>
-        <div class="cc-body">
-          <div class="cc-title">BLADE OF THE LAST SUN</div>
-          <div class="cc-meta">全24話・独占一次配信／EN・ES・TH・ID・KO</div>
-          <div class="cc-rates">
-            <div class="cc-rate"><div class="k">TIER 1</div><div class="v">¥0.5<small> /再生</small></div></div>
-            <div class="cc-rate"><div class="k">TIER 2</div><div class="v">60%<small> /グッズ売上</small></div></div>
-          </div>
-          <div class="plats"><span class="plat">TikTok</span><span class="plat">Reels</span><span class="plat">Shorts</span><span class="plat">X</span></div>
-          <div class="track"><i style="width:34%"></i></div>
-          <div class="cc-foot"><span>予算消化 34%</span><span class="cc-qual">参加条件なし</span></div>
-        </div>
-      </div>
-      <!-- card 2 -->
-      <div class="cc">
-        <div class="cc-art">
-          <svg viewBox="0 0 400 132" preserveAspectRatio="none">
-            <defs><linearGradient id="a2" x1="0" y1="0" x2="400" y2="132">
-              <stop offset="0" stop-color="#F0E4FB"/><stop offset="1" stop-color="#FFFFFF"/></linearGradient></defs>
-            <rect width="400" height="132" fill="url(#a2)"/>
-            <g fill="none" stroke="#F59E0B" stroke-width="1.2" opacity=".55">
-              <ellipse cx="200" cy="66" rx="150" ry="46"/><ellipse cx="200" cy="66" rx="110" ry="34"/>
-              <ellipse cx="200" cy="66" rx="70" ry="22"/>
-            </g>
-            <circle cx="200" cy="66" r="17" fill="#FF7A18" opacity=".7"/>
-          </svg>
-          <span class="cc-badge"><i class="live-dot"></i>募集中</span>
-          <span class="cc-days">残り 28日</span>
-        </div>
-        <div class="cc-body">
-          <div class="cc-title">SILENT ORBIT</div>
-          <div class="cc-meta">全18話・独占一次配信／EN・ID・TH</div>
-          <div class="cc-rates">
-            <div class="cc-rate"><div class="k">TIER 1</div><div class="v">¥0.8<small> /再生</small></div></div>
-            <div class="cc-rate"><div class="k">TIER 2</div><div class="v">60%<small> /グッズ売上</small></div></div>
-          </div>
-          <div class="plats"><span class="plat">TikTok</span><span class="plat">Shorts</span><span class="plat">Reels</span></div>
-          <div class="track"><i style="width:62%"></i></div>
-          <div class="cc-foot"><span>予算消化 62%</span><span class="cc-qual">参加条件なし</span></div>
-        </div>
-      </div>
-      <!-- card 3 -->
-      <div class="cc">
-        <div class="cc-art">
-          <svg viewBox="0 0 400 132" preserveAspectRatio="none">
-            <defs><linearGradient id="a3" x1="0" y1="0" x2="400" y2="132">
-              <stop offset="0" stop-color="#DDF2EF"/><stop offset="1" stop-color="#FFFFFF"/></linearGradient></defs>
-            <rect width="400" height="132" fill="url(#a3)"/>
-            <g opacity=".55">
-              <rect x="30" y="86" width="26" height="46" fill="#F59E0B" opacity=".45"/>
-              <rect x="72" y="62" width="26" height="70" fill="#F59E0B" opacity=".55"/>
-              <rect x="114" y="72" width="26" height="60" fill="#F59E0B" opacity=".5"/>
-              <rect x="156" y="40" width="26" height="92" fill="#FF9A2B" opacity=".55"/>
-              <rect x="198" y="54" width="26" height="78" fill="#FF9A2B" opacity=".5"/>
-              <rect x="240" y="24" width="26" height="108" fill="#FF7A18" opacity=".6"/>
-              <rect x="282" y="48" width="26" height="84" fill="#FF7A18" opacity=".5"/>
-              <rect x="324" y="16" width="26" height="116" fill="#FF7A18" opacity=".7"/>
-            </g>
-          </svg>
-          <span class="cc-badge"><i class="live-dot"></i>新着</span>
-          <span class="cc-days">残り 60日</span>
-        </div>
-        <div class="cc-body">
-          <div class="cc-title">NEON HANABI</div>
-          <div class="cc-meta">全32話・独占一次配信／EN・KO・ZH・TH・ID</div>
-          <div class="cc-rates">
-            <div class="cc-rate"><div class="k">TIER 1</div><div class="v">¥0.6<small> /再生</small></div></div>
-            <div class="cc-rate"><div class="k">TIER 2</div><div class="v">60%<small> /グッズ売上</small></div></div>
-          </div>
-          <div class="plats"><span class="plat">TikTok</span><span class="plat">Reels</span><span class="plat">Shorts</span><span class="plat">X</span></div>
-          <div class="track"><i style="width:11%"></i></div>
-          <div class="cc-foot"><span>予算消化 11%</span><span class="cc-qual">参加条件なし</span></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="sample-note">
-      <span style="color:var(--brand-ink)">※</span>
-      <span>掲載している作品名・単価・進捗はデザイン確認用のサンプルです。実際の案件は、契約済み作品の配信開始にあわせて掲載されます。</span>
-    </div>
-  </div>
+<div class="wrap">
+<div class="board-head">
+<div>
+<div class="eyebrow" data-i18n="t100">Campaign board</div>
+<h2 class="sec-title" data-i18n="t101" style="margin-bottom:8px">切り抜く作品を選ぶ。</h2>
+<p class="sec-lead" data-i18n="t102">公開前・独占配信のモーションコミックに、誰よりも早くアクセスできます。</p>
+</div>
+<div class="filters">
+<span class="chip on" data-i18n="t103">すべて</span><span class="chip" data-i18n="t104">アクション</span><span class="chip" data-i18n="t105">ロマンス</span>
+<span class="chip" data-i18n="t106">ファンタジー</span><span class="chip" data-i18n="t107">新着</span>
+</div>
+</div>
+<div class="cards">
+<!-- card 1 -->
+<div class="cc">
+<div class="cc-art">
+<svg preserveAspectRatio="none" viewBox="0 0 400 132">
+<defs><linearGradient id="a1" x1="0" x2="400" y1="0" y2="132">
+<stop offset="0" stop-color="#FFE7CE"></stop><stop offset="1" stop-color="#FFFFFF"></stop></linearGradient></defs>
+<rect fill="url(#a1)" height="132" width="400"></rect>
+<g fill="none" opacity=".55" stroke="#F97316" stroke-width="1.4">
+<path d="M-20 110 L120 30 L200 78 L300 12 L420 60"></path>
+<path d="M-20 132 L110 60 L210 102 L310 40 L420 88" opacity=".5"></path>
+</g>
+<circle cx="318" cy="34" fill="#FF7A18" opacity=".26" r="30"></circle>
+<circle cx="318" cy="34" fill="#F59E0B" opacity=".55" r="14"></circle>
+</svg>
+<span class="cc-badge" data-i18n-html="t108"><i class="live-dot"></i>募集中</span>
+<span class="cc-days" data-i18n="t109">残り 42日</span>
+</div>
+<div class="cc-body">
+<div class="cc-title" data-i18n="t110">BLADE OF THE LAST SUN</div>
+<div class="cc-meta" data-i18n="t111">全24話・独占一次配信／EN・ES・TH・ID・KO</div>
+<div class="cc-rates">
+<div class="cc-rate"><div class="k" data-i18n="t112">TIER 1</div><div class="v" data-i18n-html="t113">¥0.5<small> /再生</small></div></div>
+<div class="cc-rate"><div class="k" data-i18n="t114">TIER 2</div><div class="v" data-i18n-html="t115">60%<small> /グッズ売上</small></div></div>
+</div>
+<div class="plats"><span class="plat" data-i18n="t116">TikTok</span><span class="plat" data-i18n="t117">Reels</span><span class="plat" data-i18n="t118">Shorts</span><span class="plat" data-i18n="t119">X</span></div>
+<div class="track"><i style="width:34%"></i></div>
+<div class="cc-foot"><span data-i18n="t120">予算消化 34%</span><span class="cc-qual" data-i18n="t121">参加条件なし</span></div>
+</div>
+</div>
+<!-- card 2 -->
+<div class="cc">
+<div class="cc-art">
+<svg preserveAspectRatio="none" viewBox="0 0 400 132">
+<defs><linearGradient id="a2" x1="0" x2="400" y1="0" y2="132">
+<stop offset="0" stop-color="#F0E4FB"></stop><stop offset="1" stop-color="#FFFFFF"></stop></linearGradient></defs>
+<rect fill="url(#a2)" height="132" width="400"></rect>
+<g fill="none" opacity=".55" stroke="#F59E0B" stroke-width="1.2">
+<ellipse cx="200" cy="66" rx="150" ry="46"></ellipse><ellipse cx="200" cy="66" rx="110" ry="34"></ellipse>
+<ellipse cx="200" cy="66" rx="70" ry="22"></ellipse>
+</g>
+<circle cx="200" cy="66" fill="#FF7A18" opacity=".7" r="17"></circle>
+</svg>
+<span class="cc-badge" data-i18n-html="t122"><i class="live-dot"></i>募集中</span>
+<span class="cc-days" data-i18n="t123">残り 28日</span>
+</div>
+<div class="cc-body">
+<div class="cc-title" data-i18n="t124">SILENT ORBIT</div>
+<div class="cc-meta" data-i18n="t125">全18話・独占一次配信／EN・ID・TH</div>
+<div class="cc-rates">
+<div class="cc-rate"><div class="k" data-i18n="t126">TIER 1</div><div class="v" data-i18n-html="t127">¥0.8<small> /再生</small></div></div>
+<div class="cc-rate"><div class="k" data-i18n="t128">TIER 2</div><div class="v" data-i18n-html="t129">60%<small> /グッズ売上</small></div></div>
+</div>
+<div class="plats"><span class="plat" data-i18n="t130">TikTok</span><span class="plat" data-i18n="t131">Shorts</span><span class="plat" data-i18n="t132">Reels</span></div>
+<div class="track"><i style="width:62%"></i></div>
+<div class="cc-foot"><span data-i18n="t133">予算消化 62%</span><span class="cc-qual" data-i18n="t134">参加条件なし</span></div>
+</div>
+</div>
+<!-- card 3 -->
+<div class="cc">
+<div class="cc-art">
+<svg preserveAspectRatio="none" viewBox="0 0 400 132">
+<defs><linearGradient id="a3" x1="0" x2="400" y1="0" y2="132">
+<stop offset="0" stop-color="#DDF2EF"></stop><stop offset="1" stop-color="#FFFFFF"></stop></linearGradient></defs>
+<rect fill="url(#a3)" height="132" width="400"></rect>
+<g opacity=".55">
+<rect fill="#F59E0B" height="46" opacity=".45" width="26" x="30" y="86"></rect>
+<rect fill="#F59E0B" height="70" opacity=".55" width="26" x="72" y="62"></rect>
+<rect fill="#F59E0B" height="60" opacity=".5" width="26" x="114" y="72"></rect>
+<rect fill="#FF9A2B" height="92" opacity=".55" width="26" x="156" y="40"></rect>
+<rect fill="#FF9A2B" height="78" opacity=".5" width="26" x="198" y="54"></rect>
+<rect fill="#FF7A18" height="108" opacity=".6" width="26" x="240" y="24"></rect>
+<rect fill="#FF7A18" height="84" opacity=".5" width="26" x="282" y="48"></rect>
+<rect fill="#FF7A18" height="116" opacity=".7" width="26" x="324" y="16"></rect>
+</g>
+</svg>
+<span class="cc-badge" data-i18n-html="t135"><i class="live-dot"></i>新着</span>
+<span class="cc-days" data-i18n="t136">残り 60日</span>
+</div>
+<div class="cc-body">
+<div class="cc-title" data-i18n="t137">NEON HANABI</div>
+<div class="cc-meta" data-i18n="t138">全32話・独占一次配信／EN・KO・ZH・TH・ID</div>
+<div class="cc-rates">
+<div class="cc-rate"><div class="k" data-i18n="t139">TIER 1</div><div class="v" data-i18n-html="t140">¥0.6<small> /再生</small></div></div>
+<div class="cc-rate"><div class="k" data-i18n="t141">TIER 2</div><div class="v" data-i18n-html="t142">60%<small> /グッズ売上</small></div></div>
+</div>
+<div class="plats"><span class="plat" data-i18n="t143">TikTok</span><span class="plat" data-i18n="t144">Reels</span><span class="plat" data-i18n="t145">Shorts</span><span class="plat" data-i18n="t146">X</span></div>
+<div class="track"><i style="width:11%"></i></div>
+<div class="cc-foot"><span data-i18n="t147">予算消化 11%</span><span class="cc-qual" data-i18n="t148">参加条件なし</span></div>
+</div>
+</div>
+</div>
+<div class="sample-note">
+<span data-i18n="t149" style="color:var(--brand-ink)">※</span>
+<span data-i18n="t150">掲載している作品名・単価・進捗はデザイン確認用のサンプルです。実際の案件は、契約済み作品の配信開始にあわせて掲載されます。</span>
+</div>
+</div>
 </section>
-
 <!-- ============ WHY ============ -->
 <section id="why">
-  <div class="wrap">
-    <div class="sec-head">
-      <div class="eyebrow">Why CLIPYIELD</div>
-      <h2 class="sec-title">同じ切り抜きでも、<br>戻ってくるものが違う。</h2>
-      <p class="sec-lead">汎用のクリッピング案件は「他社の広告素材を、ビュー数だけで精算する」仕組みです。CLIPYIELDは、原作の権利者そのものが運営しています。</p>
-    </div>
-
-    <div class="vs">
-      <div class="vs-col win">
-        <div class="vs-top">
-          <svg width="26" height="26" viewBox="0 0 32 32" fill="none">
-            <defs><linearGradient id="lg2" x1="0" y1="0" x2="32" y2="32">
-              <stop offset="0" stop-color="#FF7A18"/><stop offset="1" stop-color="#FFC93C"/></linearGradient></defs>
-            <rect x="1" y="1" width="30" height="30" rx="9" stroke="url(#lg2)" stroke-width="2"/>
-            <path d="M12 9.5 L22.5 16 L12 22.5 Z" fill="url(#lg2)"/>
-          </svg>
-          <div><div class="vs-name">CLIPYIELD</div><div class="vs-sub">原作権利者が直接運営するクリッパー経済圏</div></div>
-        </div>
-        <div class="vs-list">
-          <div class="vs-item">
-            <span class="ic ic-y"><svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3.2 3.2L13 5" stroke="#D9480F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-            <div><div class="h">二階建て報酬（再生＋グッズ売上60%）</div><div class="p">バズが売上に変わったとき、上の階の報酬が発生します。</div></div>
-          </div>
-          <div class="vs-item">
-            <span class="ic ic-y"><svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3.2 3.2L13 5" stroke="#D9480F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-            <div><div class="h">独占・一次配信コンテンツへの先行アクセス</div><div class="p">まだ誰も切り抜いていない素材を、最初に扱えます。</div></div>
-          </div>
-          <div class="vs-item">
-            <span class="ic ic-y"><svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3.2 3.2L13 5" stroke="#D9480F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-            <div><div class="h">権利者本人による公認</div><div class="p">許諾の判断が自社で完結するため、グレーゾーンのリスクを負わせません。</div></div>
-          </div>
-          <div class="vs-item">
-            <span class="ic ic-y"><svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3.2 3.2L13 5" stroke="#D9480F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-            <div><div class="h">購入まで自動トラッキング</div><div class="p">あなた専用リンク経由の購入を自動で追跡。申請作業は不要です。</div></div>
-          </div>
-          <div class="vs-item">
-            <span class="ic ic-y"><svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3.2 3.2L13 5" stroke="#D9480F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-            <div><div class="h">投稿してもブランドを毀損しない</div><div class="p">扱うのは公認のモーションコミック。企業広告そのものを流す案件と違い、あなたのアカウントの世界観を壊しません。</div></div>
-          </div>
-          <div class="vs-item">
-            <span class="ic ic-y"><svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3.2 3.2L13 5" stroke="#D9480F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-            <div><div class="h">参加条件なし</div><div class="p">審査・フォロワー数・最低再生数のしきい値のいずれも設けていません。</div></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="vs-col">
-        <div class="vs-top">
-          <span style="width:26px;height:26px;border-radius:8px;border:1px solid var(--line-strong);display:grid;place-items:center;color:var(--ink-3);font-size:12px;font-weight:800">?</span>
-          <div><div class="vs-name" style="color:var(--ink-2)">一般的なクリッピング案件</div><div class="vs-sub">汎用マーケットプレイス型</div></div>
-        </div>
-        <div class="vs-list">
-          <div class="vs-item">
-            <span class="ic ic-n"><svg width="12" height="12" viewBox="0 0 16 16"><path d="M3.5 8h9" stroke="#98A2B3" stroke-width="2.2" stroke-linecap="round"/></svg></span>
-            <div><div class="h">ビュー単価のみの単発精算</div><div class="p">再生が止まれば、そこで報酬も止まります。</div></div>
-          </div>
-          <div class="vs-item">
-            <span class="ic ic-n"><svg width="12" height="12" viewBox="0 0 16 16"><path d="M3.5 8h9" stroke="#98A2B3" stroke-width="2.2" stroke-linecap="round"/></svg></span>
-            <div><div class="h">既に出回っている一般素材が対象</div><div class="p">同じ素材を大勢が同時に切り抜きます。</div></div>
-          </div>
-          <div class="vs-item">
-            <span class="ic ic-n"><svg width="12" height="12" viewBox="0 0 16 16"><path d="M3.5 8h9" stroke="#98A2B3" stroke-width="2.2" stroke-linecap="round"/></svg></span>
-            <div><div class="h">許諾範囲が案件ごとに曖昧</div><div class="p">権利の判断がプラットフォーム外にあります。</div></div>
-          </div>
-          <div class="vs-item">
-            <span class="ic ic-n"><svg width="12" height="12" viewBox="0 0 16 16"><path d="M3.5 8h9" stroke="#98A2B3" stroke-width="2.2" stroke-linecap="round"/></svg></span>
-            <div><div class="h">購入起点のトラッキングなし</div><div class="p">ビュー数以外の貢献は報酬に反映されません。</div></div>
-          </div>
-          <div class="vs-item">
-            <span class="ic ic-n"><svg width="12" height="12" viewBox="0 0 16 16"><path d="M3.5 8h9" stroke="#98A2B3" stroke-width="2.2" stroke-linecap="round"/></svg></span>
-            <div><div class="h">企業の公式広告を扱う場合がある</div><div class="p">投稿内容次第で、クリッパー自身の評判に影響し得ます。</div></div>
-          </div>
-          <div class="vs-item">
-            <span class="ic ic-n"><svg width="12" height="12" viewBox="0 0 16 16"><path d="M3.5 8h9" stroke="#98A2B3" stroke-width="2.2" stroke-linecap="round"/></svg></span>
-            <div><div class="h">案件ごとの最低視聴数のしきい値</div><div class="p">一定の再生数に届かないと精算対象にならない設計が一般的です。</div></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="wrap">
+<div class="sec-head">
+<div class="eyebrow" data-i18n="t151">Why CLIPYIELD</div>
+<h2 class="sec-title" data-i18n-html="t152">同じ切り抜きでも、<br/>戻ってくるものが違う。</h2>
+<p class="sec-lead" data-i18n="t153">汎用のクリッピング案件は「他社の広告素材を、ビュー数だけで精算する」仕組みです。CLIPYIELDは、原作の権利者そのものが運営しています。</p>
+</div>
+<div class="vs">
+<div class="vs-col win">
+<div class="vs-top">
+<svg fill="none" height="26" viewBox="0 0 32 32" width="26">
+<defs><linearGradient id="lg2" x1="0" x2="32" y1="0" y2="32">
+<stop offset="0" stop-color="#FF7A18"></stop><stop offset="1" stop-color="#FFC93C"></stop></linearGradient></defs>
+<rect height="30" rx="9" stroke="url(#lg2)" stroke-width="2" width="30" x="1" y="1"></rect>
+<path d="M12 9.5 L22.5 16 L12 22.5 Z" fill="url(#lg2)"></path>
+</svg>
+<div><div class="vs-name" data-i18n="t154">CLIPYIELD</div><div class="vs-sub" data-i18n="t155">原作権利者が直接運営するクリッパー経済圏</div></div>
+</div>
+<div class="vs-list">
+<div class="vs-item">
+<span class="ic ic-y"><svg fill="none" height="13" viewBox="0 0 16 16" width="13"><path d="M3 8.5l3.2 3.2L13 5" stroke="#D9480F" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"></path></svg></span>
+<div><div class="h" data-i18n="t156">二階建て報酬（再生＋グッズ売上60%）</div><div class="p" data-i18n="t157">バズが売上に変わったとき、上の階の報酬が発生します。</div></div>
+</div>
+<div class="vs-item">
+<span class="ic ic-y"><svg fill="none" height="13" viewBox="0 0 16 16" width="13"><path d="M3 8.5l3.2 3.2L13 5" stroke="#D9480F" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"></path></svg></span>
+<div><div class="h" data-i18n="t158">独占・一次配信コンテンツへの先行アクセス</div><div class="p" data-i18n="t159">まだ誰も切り抜いていない素材を、最初に扱えます。</div></div>
+</div>
+<div class="vs-item">
+<span class="ic ic-y"><svg fill="none" height="13" viewBox="0 0 16 16" width="13"><path d="M3 8.5l3.2 3.2L13 5" stroke="#D9480F" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"></path></svg></span>
+<div><div class="h" data-i18n="t160">権利者本人による公認</div><div class="p" data-i18n="t161">許諾の判断が自社で完結するため、グレーゾーンのリスクを負わせません。</div></div>
+</div>
+<div class="vs-item">
+<span class="ic ic-y"><svg fill="none" height="13" viewBox="0 0 16 16" width="13"><path d="M3 8.5l3.2 3.2L13 5" stroke="#D9480F" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"></path></svg></span>
+<div><div class="h" data-i18n="t162">購入まで自動トラッキング</div><div class="p" data-i18n="t163">あなた専用リンク経由の購入を自動で追跡。申請作業は不要です。</div></div>
+</div>
+<div class="vs-item">
+<span class="ic ic-y"><svg fill="none" height="13" viewBox="0 0 16 16" width="13"><path d="M3 8.5l3.2 3.2L13 5" stroke="#D9480F" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"></path></svg></span>
+<div><div class="h" data-i18n="t164">投稿してもブランドを毀損しない</div><div class="p" data-i18n="t165">扱うのは公認のモーションコミック。企業広告そのものを流す案件と違い、あなたのアカウントの世界観を壊しません。</div></div>
+</div>
+<div class="vs-item">
+<span class="ic ic-y"><svg fill="none" height="13" viewBox="0 0 16 16" width="13"><path d="M3 8.5l3.2 3.2L13 5" stroke="#D9480F" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"></path></svg></span>
+<div><div class="h" data-i18n="t166">参加条件なし</div><div class="p" data-i18n="t167">審査・フォロワー数・最低再生数のしきい値のいずれも設けていません。</div></div>
+</div>
+</div>
+</div>
+<div class="vs-col">
+<div class="vs-top">
+<span data-i18n="t168" style="width:26px;height:26px;border-radius:8px;border:1px solid var(--line-strong);display:grid;place-items:center;color:var(--ink-3);font-size:12px;font-weight:800">?</span>
+<div><div class="vs-name" data-i18n="t169" style="color:var(--ink-2)">一般的なクリッピング案件</div><div class="vs-sub" data-i18n="t170">汎用マーケットプレイス型</div></div>
+</div>
+<div class="vs-list">
+<div class="vs-item">
+<span class="ic ic-n"><svg height="12" viewBox="0 0 16 16" width="12"><path d="M3.5 8h9" stroke="#98A2B3" stroke-linecap="round" stroke-width="2.2"></path></svg></span>
+<div><div class="h" data-i18n="t171">ビュー単価のみの単発精算</div><div class="p" data-i18n="t172">再生が止まれば、そこで報酬も止まります。</div></div>
+</div>
+<div class="vs-item">
+<span class="ic ic-n"><svg height="12" viewBox="0 0 16 16" width="12"><path d="M3.5 8h9" stroke="#98A2B3" stroke-linecap="round" stroke-width="2.2"></path></svg></span>
+<div><div class="h" data-i18n="t173">既に出回っている一般素材が対象</div><div class="p" data-i18n="t174">同じ素材を大勢が同時に切り抜きます。</div></div>
+</div>
+<div class="vs-item">
+<span class="ic ic-n"><svg height="12" viewBox="0 0 16 16" width="12"><path d="M3.5 8h9" stroke="#98A2B3" stroke-linecap="round" stroke-width="2.2"></path></svg></span>
+<div><div class="h" data-i18n="t175">許諾範囲が案件ごとに曖昧</div><div class="p" data-i18n="t176">権利の判断がプラットフォーム外にあります。</div></div>
+</div>
+<div class="vs-item">
+<span class="ic ic-n"><svg height="12" viewBox="0 0 16 16" width="12"><path d="M3.5 8h9" stroke="#98A2B3" stroke-linecap="round" stroke-width="2.2"></path></svg></span>
+<div><div class="h" data-i18n="t177">購入起点のトラッキングなし</div><div class="p" data-i18n="t178">ビュー数以外の貢献は報酬に反映されません。</div></div>
+</div>
+<div class="vs-item">
+<span class="ic ic-n"><svg height="12" viewBox="0 0 16 16" width="12"><path d="M3.5 8h9" stroke="#98A2B3" stroke-linecap="round" stroke-width="2.2"></path></svg></span>
+<div><div class="h" data-i18n="t179">企業の公式広告を扱う場合がある</div><div class="p" data-i18n="t180">投稿内容次第で、クリッパー自身の評判に影響し得ます。</div></div>
+</div>
+<div class="vs-item">
+<span class="ic ic-n"><svg height="12" viewBox="0 0 16 16" width="12"><path d="M3.5 8h9" stroke="#98A2B3" stroke-linecap="round" stroke-width="2.2"></path></svg></span>
+<div><div class="h" data-i18n="t181">案件ごとの最低視聴数のしきい値</div><div class="p" data-i18n="t182">一定の再生数に届かないと精算対象にならない設計が一般的です。</div></div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
-
 <!-- ============ HOW ============ -->
 <section id="how" style="background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
-  <div class="wrap">
-    <div class="sec-head">
-      <div class="eyebrow">Getting started</div>
-      <h2 class="sec-title">登録から初回報酬まで、4ステップ。</h2>
-      <p class="sec-lead">審査待ちはありません。アカウントをつないだその日から切り抜けます。</p>
-    </div>
-
-    <div class="steps">
-      <div class="step">
-        <div class="step-n"><b>01</b> ／ JOIN</div>
-        <h3>登録する</h3>
-        <p>メールアドレスだけで数分。審査もフォロワー要件もありません。</p>
-        <div class="step-vis">
-          <div class="sv-row"><span class="chkbox on"></span>メールアドレス</div>
-          <div class="sv-row"><span class="chkbox on"></span>利用規約に同意</div>
-          <div class="sv-row"><span class="chkbox"></span>審査待ち<span style="margin-left:auto;color:#0B7A55;font-size:10.5px;font-weight:700">不要</span></div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-n"><b>02</b> ／ CONNECT</div>
-        <h3>SNSをつなぐ</h3>
-        <p>投稿先アカウントを連携。再生数と成果が自動で集計されます。</p>
-        <div class="step-vis">
-          <div class="sv-grid">
-            <span class="sv-pill on">TikTok ✓</span><span class="sv-pill on">Reels ✓</span>
-            <span class="sv-pill">Shorts</span><span class="sv-pill">X</span>
-          </div>
-          <div class="sv-row" style="margin-top:10px"><span class="chkbox on"></span>@your_handle<span style="margin-left:auto"><span class="st st-paid" style="font-size:9.5px">Verified</span></span></div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-n"><b>03</b> ／ CLIP &amp; POST</div>
-        <h3>切り抜いて投稿</h3>
-        <p>案件ボードから素材をダウンロードし、自由に編集して投稿します。</p>
-        <div class="step-vis">
-          <div class="sv-row"><span class="chkbox on"></span>素材をダウンロード</div>
-          <div class="sv-row"><span class="chkbox on"></span>紹介リンクを取得</div>
-          <div class="sv-row"><span class="chkbox on"></span>投稿URLを登録</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-n"><b>04</b> ／ GET PAID</div>
-        <h3>報酬を受け取る</h3>
-        <p>TIER1・TIER2をまとめて月次で精算。受取方法は選べます。</p>
-        <div class="step-vis">
-          <div class="sv-grid">
-            <span class="sv-pill on">銀行振込</span><span class="sv-pill">PayPal</span><span class="sv-pill">USDC</span>
-          </div>
-          <div class="sv-row" style="margin-top:10px">7月分<span class="st st-pend" style="margin-left:auto">処理中</span></div>
-          <div class="sv-row">6月分<span class="st st-paid" style="margin-left:auto">支払済</span></div>
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="wrap">
+<div class="sec-head">
+<div class="eyebrow" data-i18n="t183">Getting started</div>
+<h2 class="sec-title" data-i18n="t184">登録から初回報酬まで、4ステップ。</h2>
+<p class="sec-lead" data-i18n="t185">審査待ちはありません。アカウントをつないだその日から切り抜けます。</p>
+</div>
+<div class="steps">
+<div class="step">
+<div class="step-n" data-i18n-html="t186"><b>01</b> ／ JOIN</div>
+<h3 data-i18n="t187">登録する</h3>
+<p data-i18n="t188">メールアドレスだけで数分。審査もフォロワー要件もありません。</p>
+<div class="step-vis">
+<div class="sv-row" data-i18n-html="t189"><span class="chkbox on"></span>メールアドレス</div>
+<div class="sv-row" data-i18n-html="t190"><span class="chkbox on"></span>利用規約に同意</div>
+<div class="sv-row" data-i18n-html="t191"><span class="chkbox"></span>審査待ち<span style="margin-left:auto;color:#0B7A55;font-size:10.5px;font-weight:700">不要</span></div>
+</div>
+</div>
+<div class="step">
+<div class="step-n" data-i18n-html="t192"><b>02</b> ／ CONNECT</div>
+<h3 data-i18n="t193">SNSをつなぐ</h3>
+<p data-i18n="t194">投稿先アカウントを連携。再生数と成果が自動で集計されます。</p>
+<div class="step-vis">
+<div class="sv-grid">
+<span class="sv-pill on" data-i18n="t195">TikTok ✓</span><span class="sv-pill on" data-i18n="t196">Reels ✓</span>
+<span class="sv-pill" data-i18n="t197">Shorts</span><span class="sv-pill" data-i18n="t198">X</span>
+</div>
+<div class="sv-row" data-i18n-html="t199" style="margin-top:10px"><span class="chkbox on"></span>@your_handle<span style="margin-left:auto"><span class="st st-paid" style="font-size:9.5px">Verified</span></span></div>
+</div>
+</div>
+<div class="step">
+<div class="step-n" data-i18n-html="t200"><b>03</b> ／ CLIP &amp; POST</div>
+<h3 data-i18n="t201">切り抜いて投稿</h3>
+<p data-i18n="t202">案件ボードから素材をダウンロードし、自由に編集して投稿します。</p>
+<div class="step-vis">
+<div class="sv-row" data-i18n-html="t203"><span class="chkbox on"></span>素材をダウンロード</div>
+<div class="sv-row" data-i18n-html="t204"><span class="chkbox on"></span>紹介リンクを取得</div>
+<div class="sv-row" data-i18n-html="t205"><span class="chkbox on"></span>投稿URLを登録</div>
+</div>
+</div>
+<div class="step">
+<div class="step-n" data-i18n-html="t206"><b>04</b> ／ GET PAID</div>
+<h3 data-i18n="t207">報酬を受け取る</h3>
+<p data-i18n="t208">TIER1・TIER2をまとめて月次で精算。受取方法は選べます。</p>
+<div class="step-vis">
+<div class="sv-grid">
+<span class="sv-pill on" data-i18n="t209">銀行振込</span><span class="sv-pill" data-i18n="t210">PayPal</span><span class="sv-pill" data-i18n="t211">USDC</span>
+</div>
+<div class="sv-row" data-i18n-html="t212" style="margin-top:10px">7月分<span class="st st-pend" style="margin-left:auto">処理中</span></div>
+<div class="sv-row" data-i18n-html="t213">6月分<span class="st st-paid" style="margin-left:auto">支払済</span></div>
+</div>
+</div>
+</div>
+</div>
 </section>
-
 <!-- ============ FAQ ============ -->
 <section id="faq">
-  <div class="wrap">
-    <div class="sec-head">
-      <div class="eyebrow">FAQ</div>
-      <h2 class="sec-title">よくある質問</h2>
-    </div>
-    <div class="faq">
-      <div class="qa"><h4><span>Q</span>フォロワーが少なくても参加できますか？</h4><p>できます。審査・フォロワー数・最低再生数のいずれも参加条件にしていません。1再生目から報酬の対象です。</p></div>
-      <div class="qa"><h4><span>Q</span>切り抜いた動画の権利はどうなりますか？</h4><p>素材は原作者と正式に契約したうえでCLIPYIELDが提供しています。許諾範囲は案件ごとに明示され、権利の判断はすべて運営側で完結します。</p></div>
-      <div class="qa"><h4><span>Q</span>グッズ成果報酬は、いつ確定しますか？</h4><p>あなた専用リンク経由の購入が確定した時点で計上され、返品期間の経過後に確定します。ダッシュボードで随時確認できます。</p></div>
-      <div class="qa"><h4><span>Q</span>報酬を得ていることを投稿に書く必要はありますか？</h4><p>はい。国・地域によっては成果報酬を得ている旨の開示が求められます。投稿時に必要な表記は、オンボーディング時にご案内します。</p></div>
-    </div>
-  </div>
+<div class="wrap">
+<div class="sec-head">
+<div class="eyebrow" data-i18n="t214">FAQ</div>
+<h2 class="sec-title" data-i18n="t215">よくある質問</h2>
+</div>
+<div class="faq">
+<div class="qa"><h4 data-i18n-html="t216"><span>Q</span>フォロワーが少なくても参加できますか？</h4><p data-i18n="t217">できます。審査・フォロワー数・最低再生数のいずれも参加条件にしていません。1再生目から報酬の対象です。</p></div>
+<div class="qa"><h4 data-i18n-html="t218"><span>Q</span>切り抜いた動画の権利はどうなりますか？</h4><p data-i18n="t219">素材は原作者と正式に契約したうえでCLIPYIELDが提供しています。許諾範囲は案件ごとに明示され、権利の判断はすべて運営側で完結します。</p></div>
+<div class="qa"><h4 data-i18n-html="t220"><span>Q</span>グッズ成果報酬は、いつ確定しますか？</h4><p data-i18n="t221">あなた専用リンク経由の購入が確定した時点で計上され、返品期間の経過後に確定します。ダッシュボードで随時確認できます。</p></div>
+<div class="qa"><h4 data-i18n-html="t222"><span>Q</span>報酬を得ていることを投稿に書く必要はありますか？</h4><p data-i18n="t223">はい。国・地域によっては成果報酬を得ている旨の開示が求められます。投稿時に必要な表記は、オンボーディング時にご案内します。</p></div>
+</div>
+</div>
 </section>
-
 <!-- ============ CTA ============ -->
 <section id="cta" style="padding-top:0">
-  <div class="wrap">
-    <div class="cta">
-      <h2>Clip once.<br><span class="grad-text">Earn twice.</span></h2>
-      <p>登録は無料。審査もフォロワー要件もありません。<br>今日つないで、今日から切り抜けます。</p>
-      <div class="hero-btns" style="margin-bottom:14px">
-        <a class="btn btn-primary" href="#">クリッパー登録（無料）</a>
-        <a class="btn btn-ghost" href="#board">案件を見る</a>
-      </div>
-      <div class="hero-note"><span><i class="dot"></i>Free to join</span><span><i class="dot"></i>No following required</span><span><i class="dot"></i>No view threshold</span></div>
-    </div>
-  </div>
+<div class="wrap">
+<div class="cta">
+<h2 data-i18n-html="t224">Clip once.<br/><span class="grad-text">Earn twice.</span></h2>
+<p data-i18n-html="t225">登録は無料。審査もフォロワー要件もありません。<br/>今日つないで、今日から切り抜けます。</p>
+<div class="hero-btns" style="margin-bottom:14px">
+<a class="btn btn-primary" data-i18n="t226" href="#">クリッパー登録（無料）</a>
+<a class="btn btn-ghost" data-i18n="t227" href="#board">案件を見る</a>
+</div>
+<div class="hero-note"><span data-i18n-html="t228"><i class="dot"></i>Free to join</span><span data-i18n-html="t229"><i class="dot"></i>No following required</span><span data-i18n-html="t230"><i class="dot"></i>No view threshold</span></div>
+</div>
+</div>
 </section>
-
 <!-- ============ FOOTER ============ -->
 <footer>
-  <div class="wrap">
-    <div class="foot">
-      <div class="foot-brand">
-        <a class="logo" href="#top">
-          <svg width="24" height="24" viewBox="0 0 32 32" fill="none">
-            <defs><linearGradient id="lg3" x1="0" y1="0" x2="32" y2="32">
-              <stop offset="0" stop-color="#FF7A18"/><stop offset="1" stop-color="#FFC93C"/></linearGradient></defs>
-            <rect x="1" y="1" width="30" height="30" rx="9" stroke="url(#lg3)" stroke-width="2"/>
-            <path d="M12 9.5 L22.5 16 L12 22.5 Z" fill="url(#lg3)"/>
-          </svg>
+<div class="wrap">
+<div class="foot">
+<div class="foot-brand">
+<a class="logo" href="#top">
+<svg fill="none" height="24" viewBox="0 0 32 32" width="24">
+<defs><linearGradient id="lg3" x1="0" x2="32" y1="0" y2="32">
+<stop offset="0" stop-color="#FF7A18"></stop><stop offset="1" stop-color="#FFC93C"></stop></linearGradient></defs>
+<rect height="30" rx="9" stroke="url(#lg3)" stroke-width="2" width="30" x="1" y="1"></rect>
+<path d="M12 9.5 L22.5 16 L12 22.5 Z" fill="url(#lg3)"></path>
+</svg>
           CLIPYIELD
         </a>
-        <p>公式ライセンスのモーションコミックを切り抜いて、再生とグッズ売上の二階建てで稼ぐクリッパー向けプラットフォーム。</p>
-      </div>
-      <div class="fcol"><h5>PLATFORM</h5>
-        <a href="#rewards">報酬モデル</a><a href="#board">案件ボード</a><a href="#how">はじめ方</a><a href="#faq">FAQ</a></div>
-      <div class="fcol"><h5>CREATORS</h5>
-        <a href="#">クリッパーガイド</a><a href="#">素材の使い方</a><a href="#">報酬の受け取り</a><a href="#">開示表記について</a></div>
-      <div class="fcol"><h5>LEGAL</h5>
-        <a href="#">利用規約</a><a href="#">クリッパー規約</a><a href="#">プライバシーポリシー</a><a href="#">お問い合わせ</a></div>
-    </div>
-    <div class="foot-btm">
-      <span>© 2026 CLIPYIELD</span>
-      <span>社内デザイン確認用プロトタイプ／掲載数値はサンプルです</span>
-    </div>
-  </div>
+<p data-i18n="t232">公式ライセンスのモーションコミックを切り抜いて、再生とグッズ売上の二階建てで稼ぐクリッパー向けプラットフォーム。</p>
+</div>
+<div class="fcol"><h5 data-i18n="t233">PLATFORM</h5>
+<a data-i18n="t234" href="#rewards">報酬モデル</a><a data-i18n="t235" href="#board">案件ボード</a><a data-i18n="t236" href="#how">はじめ方</a><a data-i18n="t237" href="#faq">FAQ</a></div>
+<div class="fcol"><h5 data-i18n="t238">CREATORS</h5>
+<a data-i18n="t239" href="#">クリッパーガイド</a><a data-i18n="t240" href="#">素材の使い方</a><a data-i18n="t241" href="#">報酬の受け取り</a><a data-i18n="t242" href="#">開示表記について</a></div>
+<div class="fcol"><h5 data-i18n="t243">LEGAL</h5>
+<a data-i18n="t244" href="#">利用規約</a><a data-i18n="t245" href="#">クリッパー規約</a><a data-i18n="t246" href="#">プライバシーポリシー</a><a data-i18n="t247" href="#">お問い合わせ</a></div>
+</div>
+<div class="foot-btm">
+<span data-i18n="t248">© 2026 CLIPYIELD</span>
+<span data-i18n="t249">社内デザイン確認用プロトタイプ／掲載数値はサンプルです</span>
+</div>
+</div>
 </footer>
-
 <script>
 (function(){
   var r1=document.getElementById('r1'),r2=document.getElementById('r2');
@@ -973,5 +971,39 @@ footer{border-top:1px solid var(--line);padding:64px 0 44px;background:var(--bg-
 <style>
 @media(max-width:820px){ .sim-grid{grid-template-columns:1fr !important;gap:26px !important} }
 </style>
+<script>
+(function(){
+  var DICT = {"en":{"t001":"<b>Internal design preview</b> — campaign names, figures and rankings shown here are placeholder samples for layout review (not actual results).","t003":"Rewards","t004":"Campaigns","t005":"Why CLIPYIELD","t006":"How it works","t007":"FAQ","t008":"Log in","t009":"Start free","t010":"<b>TWO-TIER</b> Get paid for views. Get paid again when it sells.","t012":"Just clip and post officially licensed motion comics.<br/>On top of view-based rewards, you keep <b>60%</b> of every merch sale made through your link.","t013":"Sign up free","t014":"See how you earn","t015":"<i class=\"dot\"></i>No approval process","t016":"<i class=\"dot\"></i>No follower minimum","t017":"<i class=\"dot\"></i>No view threshold","t019":"Jul · TIER1+TIER2 <span class=\"st st-pend\">Processing</span>","t020":"Jun · TIER1+TIER2 <span class=\"st st-paid\">Paid</span>","t021":"May · TIER1 <span class=\"st st-paid\">Paid</span>","t024":"Confirmed earnings (MTD)","t027":"Total views","t030":"Purchases via link","t031":"142","t033":"Views & conversions","t034":"Last 30 days","t035":"<i style=\"background:linear-gradient(90deg,#FF7A18,#F5A623)\"></i>Views","t036":"<i style=\"background:rgba(16,24,40,.18)\"></i>Sale events","t037":"THIS MONTH / Breakdown","t039":"View rewards","t042":"Merch commission","t044":"Views by country","t055":"Top clippers this month","t068":"¥0.5<span style=\"font-size:.42em;letter-spacing:0;color:var(--ink-3)\"> / view</span>","t069":"TIER 1 · View rewards","t070":"Base earnings that build up the same day, in step with how far your post travels.","t072":"TIER 2 · Merch commission","t073":"60% of every merch sale made through your link. No cap.","t074":"0<span style=\"font-size:.42em;letter-spacing:0;color:var(--ink-3)\"> requirements</span>","t075":"Barriers to join","t076":"No approval, no follower count, no view minimum.","t078":"Going viral isn’t the end.<br/>It compounds, because it’s <span class=\"grad-text\">two-tier</span>.","t079":"A typical clipping campaign pays once, based on views, and stops there. CLIPYIELD adds a second layer: commission earned when your posts actually sell merch.","t081":"¥0.5<small> / view (varies by campaign)</small>","t082":"Views on the clips you post convert directly into earnings. Each campaign sets its own rate, tallied daily on your dashboard. There is no minimum view threshold, so you earn from the very first view.","t084":"60%<small> / merch sales via your link</small>","t085":"When someone buys merch through your personal referral link, 60% of that sale is paid to you. Purchase tracking is automated on our side — no claims to file. Even if views stay modest, reaching the right people pays.","t086":"Earnings simulator","t087":"Monthly total views","t089":"Merch sales via your link","t091":"TIER 1 rates vary by campaign (¥0.5/view used as the baseline). TIER 2 is calculated at 60% of merch sales. This simulator illustrates how the reward model works and is not a guarantee of earnings.","t096":"Earnings breakdown","t097":"View rewards","t098":"Merch commission","t099":"At the same view count, CLIPYIELD’s structure means <b style=\"color:var(--ink)\">your earnings rise with every unit of merch sold</b>. On a views-only campaign, that second floor simply does not exist.","t101":"Choose what you clip.","t102":"Get first access to exclusive, pre-release motion comics — before anyone else.","t103":"All","t104":"Action","t105":"Romance","t106":"Fantasy","t107":"New","t108":"<i class=\"live-dot\"></i>Open","t109":"42 days left","t111":"24 episodes · Exclusive first release / EN·ES·TH·ID·KO","t113":"¥0.5<small> /view</small>","t115":"60%<small> /merch sales</small>","t120":"Budget used 34%","t121":"No requirements","t122":"<i class=\"live-dot\"></i>Open","t123":"28 days left","t125":"18 episodes · Exclusive first release / EN·ID·TH","t127":"¥0.8<small> /view</small>","t129":"60%<small> /merch sales</small>","t133":"Budget used 62%","t134":"No requirements","t135":"<i class=\"live-dot\"></i>New","t136":"60 days left","t138":"32 episodes · Exclusive first release / EN·KO·ZH·TH·ID","t140":"¥0.6<small> /view</small>","t142":"60%<small> /merch sales</small>","t147":"Budget used 11%","t148":"No requirements","t150":"Titles, rates and progress shown are samples for design review. Real campaigns will be listed as contracted titles begin distribution.","t152":"Same clip.<br/>Very different return.","t153":"Generic clipping campaigns settle up on views alone, using someone else’s ad material. CLIPYIELD is run by the rights holder of the original work itself.","t155":"A clipper economy run directly by the rights holder","t156":"Two-tier rewards (views + 60% of merch sales)","t157":"When the buzz turns into sales, the second tier kicks in.","t158":"Early access to exclusive, first-release content","t159":"You get to work with footage no one has clipped yet.","t160":"Authorized by the rights holder directly","t161":"Permissions are decided in-house, so you never carry grey-zone risk.","t162":"Automatic tracking all the way to purchase","t163":"Purchases through your personal link are tracked automatically. No claims to file.","t164":"Posting will not damage your brand","t165":"You work with authorized motion comics. Unlike campaigns that push corporate ads, nothing here breaks the world you have built on your account.","t166":"No entry requirements","t167":"No approval process, no follower count, no minimum view threshold.","t169":"Typical clipping campaigns","t170":"Generic marketplace model","t171":"One-off settlement on view rate only","t172":"When the views stop, the earnings stop.","t173":"Built around footage already in circulation","t174":"Crowds of clippers work the same material at once.","t175":"Licensing scope is vague, campaign by campaign","t176":"Rights decisions sit outside the platform.","t177":"No purchase-level tracking","t178":"Contributions beyond raw views never reach your payout.","t179":"May involve straight corporate advertising","t180":"Depending on what you post, it can affect your own reputation as a clipper.","t181":"Per-campaign minimum view thresholds","t182":"It is common for a post to earn nothing unless it clears a set view count.","t184":"From sign-up to first payout in four steps.","t185":"There is no waiting on approval. You can start clipping the day you connect your account.","t186":"<b>01</b> / JOIN","t187":"Sign up","t188":"A few minutes with just an email address. No approval, no follower requirements.","t189":"<span class=\"chkbox on\"></span>Email address","t190":"<span class=\"chkbox on\"></span>Agree to terms","t191":"<span class=\"chkbox\"></span>Approval queue<span style=\"margin-left:auto;color:#0B7A55;font-size:10.5px;font-weight:700\">None</span>","t192":"<b>02</b> / CONNECT","t193":"Connect your socials","t194":"Link the accounts you post from. Views and conversions are tallied automatically.","t200":"<b>03</b> / CLIP &amp; POST","t201":"Clip and post","t202":"Download source material from the campaign board, edit it freely, and post.","t203":"<span class=\"chkbox on\"></span>Download material","t204":"<span class=\"chkbox on\"></span>Get referral link","t205":"<span class=\"chkbox on\"></span>Register post URL","t206":"<b>04</b> / GET PAID","t207":"Get paid","t208":"TIER 1 and TIER 2 are settled together, monthly. Choose how you get paid.","t209":"Bank transfer","t212":"July<span class=\"st st-pend\" style=\"margin-left:auto\">Processing</span>","t213":"June<span class=\"st st-paid\" style=\"margin-left:auto\">Paid</span>","t215":"Frequently asked questions","t216":"<span>Q</span>Can I join with a small following?","t217":"Yes. Approval, follower count and minimum views are none of them entry conditions. You earn from the very first view.","t218":"<span>Q</span>Who holds the rights to the clips I make?","t219":"All source material is provided by CLIPYIELD under formal contracts with the original creators. The scope of the licence is stated for each campaign, and every rights decision is settled by us.","t220":"<span>Q</span>When does merch commission become final?","t221":"It is recorded the moment a purchase through your personal link is confirmed, and becomes final once the return window has passed. You can check it any time on your dashboard.","t222":"<span>Q</span>Do I need to disclose that I am being paid?","t223":"Yes. Some countries and regions require disclosure that you receive performance-based compensation. We will walk you through the wording you need during onboarding.","t225":"Signing up is free. No approval, no follower requirements.<br/>Connect today, start clipping today.","t226":"Sign up free","t227":"Browse campaigns","t232":"The clipper platform where you clip officially licensed motion comics and earn on two tiers — views and merch sales.","t234":"Rewards","t235":"Campaigns","t236":"How it works","t237":"FAQ","t239":"Clipper guide","t240":"Using the material","t241":"Getting paid","t242":"Disclosure requirements","t244":"Terms of service","t245":"Clipper agreement","t246":"Privacy policy","t247":"Contact","t249":"Internal design preview / figures shown are samples"},"zh":{"t001":"<b>内部设计确认用原型</b>｜页面中的项目名称、数值与排行等均为版面确认用的示例内容（并非实际数据）","t003":"报酬模式","t004":"项目看板","t005":"CLIPYIELD 的不同","t006":"如何开始","t007":"常见问题","t008":"登录","t009":"免费开始","t010":"<b>TWO-TIER</b> 播放有报酬，卖出再拿一次。","t012":"只需剪辑并发布官方授权的动态漫画。<br/>除播放报酬外，通过你的专属链接售出的周边销售额的<b>60%</b>也会不断累积。","t013":"免费注册","t014":"查看报酬模式","t015":"<i class=\"dot\"></i>无需审核","t016":"<i class=\"dot\"></i>无粉丝数要求","t017":"<i class=\"dot\"></i>无最低播放门槛","t019":"7月 · TIER1+TIER2 <span class=\"st st-pend\">处理中</span>","t020":"6月 · TIER1+TIER2 <span class=\"st st-paid\">已支付</span>","t021":"5月 · TIER1 <span class=\"st st-paid\">已支付</span>","t024":"已确认报酬（本月）","t027":"总播放量","t030":"经由链接的购买","t031":"142笔","t033":"播放量与成效趋势","t034":"最近30天","t035":"<i style=\"background:linear-gradient(90deg,#FF7A18,#F5A623)\"></i>播放量","t036":"<i style=\"background:rgba(16,24,40,.18)\"></i>成效发生点","t037":"THIS MONTH ／ 明细","t039":"播放报酬","t042":"周边成效报酬","t044":"各国播放占比","t045":"美国","t047":"印度尼西亚","t049":"泰国","t051":"韩国","t053":"其他","t055":"本月切片师排行","t068":"¥0.5<span style=\"font-size:.42em;letter-spacing:0;color:var(--ink-3)\"> / 次播放</span>","t069":"TIER 1・播放报酬","t070":"发布内容传播得越广，当天即可累积的基础报酬。","t072":"TIER 2・周边成效报酬","t073":"通过你的链接售出的周边销售额的60%，上不封顶。","t075":"参与门槛","t076":"不设审核、粉丝数与最低播放量的任何要求。","t078":"爆红不是终点。<br/>因为是<span class=\"grad-text\">双层结构</span>，报酬会持续累积。","t079":"一般的切片项目只按播放量一次性结算便告结束。CLIPYIELD 在播放报酬之上，叠加了你的内容实际带动周边销售时产生的成效报酬。","t081":"¥0.5<small>／次播放（因项目而异）</small>","t082":"你发布的切片作品，其播放量会直接转化为报酬。每个项目设定各自的单价，并在仪表板上按日汇总。由于没有最低播放门槛，即使起步很小，也从第1次播放开始计入。","t084":"60%<small>／经由链接的周边销售额</small>","t085":"当有人通过你的专属推荐链接购买周边时，该笔销售额的60%将支付给你。购买追踪由平台自动完成，无需任何申请手续。即使播放量没有暴涨，只要触达对的人，报酬同样可观。","t086":"Earnings simulator ／ 收益模拟器","t087":"每月总播放量","t089":"经由你的链接的周边销售额","t091":"TIER1单价因项目而异（基准值 ¥0.5／次播放）。TIER2按周边销售额的60%计算。本模拟器仅用于说明报酬结构，并不构成收益保证。","t096":"报酬明细","t097":"播放报酬","t098":"周边成效报酬","t099":"即使播放量相同，CLIPYIELD 的结构也能让<b style=\"color:var(--ink)\">周边卖得越多、报酬就越高</b>。在只按播放单价一次性结算的项目中，并不存在这一层。","t101":"选择你要剪辑的作品。","t102":"你可以比任何人都更早接触到未公开、独家发行的动态漫画。","t103":"全部","t104":"动作","t105":"恋爱","t106":"奇幻","t107":"最新","t108":"<i class=\"live-dot\"></i>招募中","t109":"剩余 42天","t111":"全24话・独家首发／EN・ES・TH・ID・KO","t113":"¥0.5<small> /次播放</small>","t115":"60%<small> /周边销售额</small>","t120":"预算消耗 34%","t121":"无参与条件","t122":"<i class=\"live-dot\"></i>招募中","t123":"剩余 28天","t125":"全18话・独家首发／EN・ID・TH","t127":"¥0.8<small> /次播放</small>","t129":"60%<small> /周边销售额</small>","t133":"预算消耗 62%","t134":"无参与条件","t135":"<i class=\"live-dot\"></i>最新","t136":"剩余 60天","t138":"全32话・独家首发／EN・KO・ZH・TH・ID","t140":"¥0.6<small> /次播放</small>","t142":"60%<small> /周边销售额</small>","t147":"预算消耗 11%","t148":"无参与条件","t150":"此处显示的作品名称、单价与进度均为设计确认用示例。实际项目将随已签约作品开始发行时上线。","t152":"同样是切片，<br/>回报却不一样。","t153":"通用型切片项目的机制是「用别家的广告素材，只按播放量结算」。而 CLIPYIELD 由原作版权方本人直接运营。","t155":"由原作版权方直接运营的切片师经济圈","t156":"双层报酬（播放＋周边销售额60%）","t157":"当热度转化为销售时，上层报酬随之产生。","t158":"优先获取独家・首发内容","t159":"你可以第一个使用尚无人剪辑过的素材。","t160":"由版权方本人正式授权","t161":"授权判断在我们内部即可完成，不会让你承担灰色地带的风险。","t162":"直至购买的全自动追踪","t163":"自动追踪经由你专属链接的购买，无需申请手续。","t164":"发布内容不会损害你的个人品牌","t165":"你处理的是获得授权的动态漫画。与直接投放企业广告的项目不同，不会破坏你账号的既有调性。","t166":"无参与条件","t167":"不设审核、粉丝数与最低播放量的任何门槛。","t169":"一般的切片项目","t170":"通用市场平台型","t171":"仅按播放单价一次性结算","t172":"播放一旦停止，报酬也随之停止。","t173":"以已在流通的通用素材为对象","t174":"大量切片师同时剪辑同一素材。","t175":"授权范围因项目而异且模糊","t176":"权利判断在平台之外。","t177":"没有以购买为起点的追踪","t178":"播放量以外的贡献不会反映到报酬中。","t179":"有时需要处理企业的官方广告","t180":"视发布内容而定，可能影响切片师自身的声誉。","t181":"各项目设有最低观看数门槛","t182":"未达到一定播放量便不纳入结算，是常见的设计。","t184":"从注册到首次报酬，只需4步。","t185":"没有审核等待。连接账号当天即可开始剪辑。","t187":"注册","t188":"只需邮箱地址，几分钟即可完成。无需审核，也没有粉丝数要求。","t189":"<span class=\"chkbox on\"></span>邮箱地址","t190":"<span class=\"chkbox on\"></span>同意用户条款","t191":"<span class=\"chkbox\"></span>等待审核<span style=\"margin-left:auto;color:#0B7A55;font-size:10.5px;font-weight:700\">无需</span>","t193":"连接社交账号","t194":"连接你的发布账号。播放量与成效将自动汇总。","t201":"剪辑并发布","t202":"从项目看板下载素材，自由编辑后发布。","t203":"<span class=\"chkbox on\"></span>下载素材","t204":"<span class=\"chkbox on\"></span>获取推荐链接","t205":"<span class=\"chkbox on\"></span>登记发布链接","t207":"领取报酬","t208":"TIER1与TIER2按月合并结算，收款方式可自由选择。","t209":"银行转账","t212":"7月<span class=\"st st-pend\" style=\"margin-left:auto\">处理中</span>","t213":"6月<span class=\"st st-paid\" style=\"margin-left:auto\">已支付</span>","t215":"常见问题","t216":"<span>Q</span>粉丝很少也可以参加吗？","t217":"可以。审核、粉丝数与最低播放量均不作为参与条件。从第1次播放起即计入报酬。","t218":"<span>Q</span>我剪辑的视频，权利归属如何？","t219":"所有素材均由 CLIPYIELD 在与原作者正式签约的前提下提供。授权范围会在各项目中明示，权利判断全部由运营方完成。","t220":"<span>Q</span>周边成效报酬何时确定？","t221":"在经由你专属链接的购买确认时即计入，并于退货期结束后确定。你可随时在仪表板中查看。","t222":"<span>Q</span>需要在贴文中标明自己获得报酬吗？","t223":"需要。部分国家与地区要求披露你正在获得成效报酬。发布时所需的标注，我们会在新手引导中说明。","t225":"注册免费，无需审核，也没有粉丝数要求。<br/>今天连接，今天就能开始剪辑。","t226":"免费注册","t227":"查看项目","t228":"<i class=\"dot\"></i>免费加入","t229":"<i class=\"dot\"></i>无粉丝数要求","t230":"<i class=\"dot\"></i>无播放门槛","t232":"一个面向切片师的平台：剪辑官方授权的动态漫画，以播放与周边销售的双层结构获得报酬。","t234":"报酬模式","t235":"项目看板","t236":"如何开始","t237":"常见问题","t239":"切片师指南","t240":"素材使用方法","t241":"报酬领取","t242":"关于披露标注","t244":"用户条款","t245":"切片师条款","t246":"隐私政策","t247":"联系我们","t249":"内部设计确认用原型／页面数值为示例"}};
+  var nodes = [].slice.call(document.querySelectorAll('[data-i18n],[data-i18n-html]'));
+  var base = {};
+  nodes.forEach(function(el){
+    var k = el.getAttribute('data-i18n');
+    if(k){ base[k] = el.textContent; return; }
+    k = el.getAttribute('data-i18n-html');
+    base[k] = el.innerHTML;
+  });
+  var btns = [].slice.call(document.querySelectorAll('.lang-b'));
+  function apply(lang){
+    var d = DICT[lang] || {};
+    nodes.forEach(function(el){
+      var k = el.getAttribute('data-i18n');
+      if(k){ el.textContent = (d[k] != null ? d[k] : base[k]); return; }
+      k = el.getAttribute('data-i18n-html');
+      el.innerHTML = (d[k] != null ? d[k] : base[k]);
+    });
+    document.documentElement.setAttribute('lang', lang);
+    btns.forEach(function(b){
+      var on = b.getAttribute('data-lang') === lang;
+      b.classList.toggle('is-on', on);
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+  }
+  btns.forEach(function(b){
+    b.addEventListener('click', function(){ apply(b.getAttribute('data-lang')); });
+  });
+  var m = /[?&]lang=(ja|en|zh)/.exec(location.search);
+  apply(m ? m[1] : 'ja');
+})();
+</script>
 </body>
 </html>
