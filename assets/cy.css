@@ -179,6 +179,21 @@ a{color:inherit;text-decoration:none}
 .track{height:6px;border-radius:999px;background:rgba(16,24,40,.07);overflow:hidden}
 .track i{display:block;height:100%;border-radius:999px;background:var(--grad)}
 
+/* SNS linking */
+.social-row{display:flex;align-items:center;gap:14px;padding:16px 2px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.social-row:last-child{border-bottom:0}
+.social-ic{width:42px;height:42px;border-radius:12px;flex:0 0 42px;display:grid;place-items:center;
+  font-weight:800;font-size:13px;color:#fff;letter-spacing:.02em}
+.social-meta{min-width:150px}
+.social-meta .nm{font-weight:700;font-size:14.5px;letter-spacing:-.01em}
+.social-meta .st-line{font-size:12px;color:var(--ink-3);margin-top:3px;display:flex;align-items:center;gap:8px}
+.social-meta .st-line b{color:var(--ink);font-weight:700}
+.social-action{margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+.social-action input{border:1px solid var(--line-strong);border-radius:10px;padding:9px 12px;font-size:13px;
+  font-family:inherit;color:var(--ink);background:var(--surface);width:180px;max-width:52vw}
+.social-action input:focus{outline:none;border-color:var(--brand-1);box-shadow:0 0 0 3px rgba(255,140,30,.16)}
+.badge-verified{background:rgba(14,159,110,.12);color:#0B7A55}
+
 /* toast */
 .toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(20px);
   background:var(--ink);color:#fff;font-size:13px;font-weight:600;padding:12px 20px;border-radius:999px;

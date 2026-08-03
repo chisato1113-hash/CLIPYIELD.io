@@ -33,6 +33,7 @@
     <div class="sub" id="subhi">今日の再生報酬とグッズ成果報酬をまとめて確認できます。</div>
     <div class="tabs">
       <button class="tab on" data-tab="overview" type="button">概要</button>
+      <button class="tab" data-tab="socials" type="button">SNS連携</button>
       <button class="tab" data-tab="board" type="button">案件ボード</button>
       <button class="tab" data-tab="posts" type="button">投稿</button>
       <button class="tab" data-tab="payouts" type="button">報酬・支払い</button>
@@ -73,6 +74,20 @@
         <div id="ranking"></div>
         <div class="card-h" style="margin-top:24px"><h3 style="font-size:14px">国別の再生シェア</h3><span class="s">サンプル</span></div>
         <div id="countries"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SNS LINKING ===================== -->
+  <section class="panel" id="p-socials">
+    <div class="card">
+      <div class="card-h">
+        <div><h3>SNS連携</h3><span class="s">投稿先アカウントを連携すると、再生数と成果が自動で集計されます。案件ボードから素材を切り抜く前に連携しておきましょう。</span></div>
+        <span class="s" id="socials-count">未連携</span>
+      </div>
+      <div id="socials-list"></div>
+      <div class="empty" style="padding:16px 0 0;text-align:left;color:var(--ink-3);font-size:11.5px;line-height:1.8">
+        ※ このデモでは連携情報はブラウザ内にのみ保存されます。実際のSNS認証（OAuth）や再生数の自動取得は行いません。本番ではここから各SNSの公式連携に接続します。
       </div>
     </div>
   </section>
@@ -173,7 +188,7 @@
   $("whoami").textContent = user.handle;
   $("hi").textContent = "こんにちは、" + user.handle + " 👋";
   if (/[?&]welcome=1/.test(location.search)) {
-    $("subhi").textContent = "登録が完了しました。まずは「案件ボード」から切り抜く作品を選びましょう。";
+    $("subhi").textContent = "登録が完了しました。まずは「SNS連携」で投稿先アカウントをつなぎ、「案件ボード」から作品を選びましょう。";
   }
 
   $("logout").addEventListener("click", function(){
@@ -330,7 +345,59 @@
     });
   }
 
-  function renderAll(){ renderOverview(); renderBoard(); renderPosts(); renderPayouts(); }
+  /* ---- render: SNS linking ---- */
+  function renderSocials(){
+    var connected = 0;
+    $("socials-list").innerHTML = CY.SOCIAL_PLATFORMS.map(function(p){
+      var s = CY.socialFor(p.id);
+      if (s) connected++;
+      var icon = '<div class="social-ic" style="background:' + p.color + '">' + p.abbr + '</div>';
+      var meta, action;
+      if (s){
+        meta = '<div class="social-meta"><div class="nm">' + CY.esc(p.name) + '</div>' +
+               '<div class="st-line"><b>' + CY.esc(s.handle) + '</b><span class="badge badge-verified">連携済み</span></div></div>';
+        action = '<div class="social-action"><button class="btn btn-ghost btn-sm" data-unlink="' + p.id + '" type="button">連携を解除</button></div>';
+      } else {
+        meta = '<div class="social-meta"><div class="nm">' + CY.esc(p.name) + '</div>' +
+               '<div class="st-line">未連携</div></div>';
+        action = '<div class="social-action">' +
+                 '<input type="text" data-input="' + p.id + '" placeholder="@' + CY.esc(p.hint) + '"/>' +
+                 '<button class="btn btn-primary btn-sm" data-link="' + p.id + '" type="button">連携する</button></div>';
+      }
+      return '<div class="social-row">' + icon + meta + action + '</div>';
+    }).join("");
+
+    $("socials-count").textContent = connected > 0 ? (connected + " / " + CY.SOCIAL_PLATFORMS.length + " 連携済み") : "未連携";
+
+    $("socials-list").querySelectorAll("[data-link]").forEach(function(b){
+      b.addEventListener("click", function(){
+        var id = b.getAttribute("data-link");
+        var input = $("socials-list").querySelector('[data-input="' + id + '"]');
+        try {
+          var rec = CY.connectSocial(id, input ? input.value : "");
+          CY.toast(rec.handle + " を連携しました。");
+          renderAll();
+        } catch (ex) { CY.toast(ex.message); }
+      });
+    });
+    $("socials-list").querySelectorAll("[data-input]").forEach(function(inp){
+      inp.addEventListener("keydown", function(e){
+        if (e.key === "Enter"){ e.preventDefault();
+          var btn = $("socials-list").querySelector('[data-link="' + inp.getAttribute("data-input") + '"]');
+          if (btn) btn.click();
+        }
+      });
+    });
+    $("socials-list").querySelectorAll("[data-unlink]").forEach(function(b){
+      b.addEventListener("click", function(){
+        CY.disconnectSocial(b.getAttribute("data-unlink"));
+        CY.toast("連携を解除しました。");
+        renderAll();
+      });
+    });
+  }
+
+  function renderAll(){ renderOverview(); renderSocials(); renderBoard(); renderPosts(); renderPayouts(); }
 
   /* ---- modal (register post) ---- */
   var modal = $("modal");

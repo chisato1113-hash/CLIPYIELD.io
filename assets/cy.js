@@ -40,6 +40,14 @@
     }
   ];
 
+  /* ---- SNS platforms (mirrors the landing "SNSをつなぐ" step) ---- */
+  var SOCIAL_PLATFORMS = [
+    { id: "tiktok", name: "TikTok",           abbr: "TT", color: "#010101", hint: "ユーザー名（例: your_handle）" },
+    { id: "reels",  name: "Instagram Reels",  abbr: "IG", color: "linear-gradient(45deg,#F58529,#DD2A7B,#8134AF)", hint: "ユーザー名" },
+    { id: "shorts", name: "YouTube Shorts",   abbr: "YT", color: "#FF0000", hint: "チャンネル / ハンドル" },
+    { id: "x",      name: "X（旧Twitter）",    abbr: "X",  color: "#000000", hint: "ユーザー名" }
+  ];
+
   /* ---- tiny store helpers ---- */
   function read(key, fallback) {
     try { var v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; }
@@ -150,6 +158,28 @@
     return null;
   }
 
+  /* ---- SNS linking (demo: stores handle per platform, no real OAuth) ---- */
+  function connectSocial(platformId, handle) {
+    var u = current(); if (!u) return null;
+    handle = String(handle || "").trim().replace(/^@+/, "").replace(/\s+/g, "");
+    if (!handle) throw new Error("ユーザー名を入力してください。");
+    u.socials = (u.socials || []).filter(function (s) { return s.platform !== platformId; });
+    var rec = { platform: platformId, handle: "@" + handle, connectedAt: Date.now() };
+    u.socials.push(rec);
+    persist(u);
+    return rec;
+  }
+  function disconnectSocial(platformId) {
+    var u = current(); if (!u) return;
+    u.socials = (u.socials || []).filter(function (s) { return s.platform !== platformId; });
+    persist(u);
+  }
+  function socialFor(platformId) {
+    var u = current(); if (!u) return null;
+    var f = (u.socials || []).filter(function (s) { return s.platform === platformId; });
+    return f.length ? f[0] : null;
+  }
+
   /* earnings computed from the user's registered posts */
   function earnings(user) {
     var t1 = 0, t2 = 0, views = 0, orders = 0;
@@ -196,9 +226,11 @@
 
   global.CY = {
     CAMPAIGNS: CAMPAIGNS,
+    SOCIAL_PLATFORMS: SOCIAL_PLATFORMS,
     signup: signup, login: login, logout: logout, current: current,
     requireAuth: requireAuth, persist: persist,
     joinCampaign: joinCampaign, addPost: addPost, campaignById: campaignById,
+    connectSocial: connectSocial, disconnectSocial: disconnectSocial, socialFor: socialFor,
     earnings: earnings, refLink: refLink,
     yen: yen, num: num, toast: toast, esc: esc
   };
