@@ -192,7 +192,10 @@
   $("whoami").textContent = user.handle;
   $("hi").textContent = "こんにちは、" + user.handle + " 👋";
   if (/[?&]welcome=1/.test(location.search)) {
-    $("subhi").textContent = "登録が完了しました。「SNS連携」で投稿先アカウントを審査申請し、「本人確認」で個人IDを登録すると、すべての案件に参加できます。";
+    $("subhi").textContent = "登録が完了しました。「SNS連携」で投稿先アカウントを審査申請し、「本人確認」で書類を提出すると、すべての案件に参加できます。";
+  }
+  if (/[?&]kyc=submitted/.test(location.search)) {
+    setTimeout(function(){ CY.toast("本人確認を申請しました。審査中です。"); }, 300);
   }
 
   $("logout").addEventListener("click", function(){
@@ -256,17 +259,22 @@
   function renderBoard(){
     var u = CY.current();
     var verified = CY.identityVerified();
+    var idStatus = CY.identityStatus();
 
     // Identity gate banner
     if (verified){
       $("board-banner").innerHTML =
         '<div class="cy-banner ok"><div><div class="bt">本人確認済み</div>' +
         '<div class="bp">成果報酬（グッズ）案件を含む、すべての案件に参加できます。</div></div></div>';
+    } else if (idStatus === "pending"){
+      $("board-banner").innerHTML =
+        '<div class="cy-banner"><div><div class="bt">本人確認を審査中です</div>' +
+        '<div class="bp">承認されると成果報酬案件に参加できます。デモでは数秒で自動承認されます。</div></div></div>';
     } else {
       $("board-banner").innerHTML =
         '<div class="cy-banner"><div><div class="bt">本人確認が未完了です</div>' +
-        '<div class="bp">「本人確認必須」の成果報酬案件に参加するには、個人IDの登録が必要です。再生報酬のみの案件は本人確認なしで参加できます。</div></div>' +
-        '<button class="btn btn-primary btn-sm" data-goverify="1" type="button">個人IDを登録</button></div>';
+        '<div class="bp">「本人確認必須」の成果報酬案件に参加するには、本人確認（書類・セルフィーの提出）が必要です。再生報酬のみの案件は本人確認なしで参加できます。</div></div>' +
+        '<button class="btn btn-primary btn-sm" data-goverify="1" type="button">本人確認を始める</button></div>';
     }
 
     $("board-cards").innerHTML = CY.CAMPAIGNS.map(function(c){
@@ -280,7 +288,9 @@
         action = '<div class="reflink"><input readonly value="' + CY.esc(u.joined[c.id].ref) + '"/><button class="btn btn-ghost btn-sm" data-copy="' + CY.esc(u.joined[c.id].ref) + '" type="button">コピー</button></div>' +
           '<button class="btn btn-primary btn-sm btn-block" data-post="' + c.id + '" type="button" style="margin-top:10px">この案件に投稿を登録</button>';
       } else if (locked){
-        action = '<button class="btn btn-ghost btn-sm btn-block" data-goverify="1" type="button">🔒 本人確認して参加</button>';
+        action = (idStatus === "pending")
+          ? '<button class="btn btn-ghost btn-sm btn-block" data-goverify="1" type="button">🔒 本人確認を審査中</button>'
+          : '<button class="btn btn-ghost btn-sm btn-block" data-goverify="1" type="button">🔒 本人確認して参加</button>';
       } else {
         action = '<button class="btn btn-primary btn-sm btn-block" data-join="' + c.id + '" type="button">この案件に参加する</button>';
       }
@@ -319,8 +329,9 @@
         } catch (ex) { CY.toast(ex.message); }
       });
     });
-    // "本人確認して参加" / banner button → jump to the 本人確認 tab
+    // "本人確認して参加" / banner button → KYC page (unstarted) or 本人確認 tab (in review)
     function goVerify(){
+      if (CY.identityStatus() === "none"){ location.href = "kyc.html"; return; }
       document.querySelector('.tab[data-tab="payouts"]').click();
       var card = $("identity-card");
       if (card) card.scrollIntoView({ behavior:"smooth", block:"center" });
@@ -393,15 +404,22 @@
   var reviewTimer = null;
   function scheduleReviews(){
     var u = CY.current(); if (!u) return;
-    var pend = (u.socials || []).filter(function(s){ return (s.status || "approved") === "pending"; });
-    if (!pend.length) return;
     var now = Date.now();
-    var waits = pend.map(function(s){ return Math.max(0, CY.REVIEW_MS - (now - (s.connectedAt || 0))); });
+    var waits = [];
+    (u.socials || []).forEach(function(s){
+      if ((s.status || "approved") === "pending") waits.push(Math.max(0, CY.REVIEW_MS - (now - (s.connectedAt || 0))));
+    });
+    if (u.identity && u.identity.status === "pending"){
+      waits.push(Math.max(0, CY.KYC_REVIEW_MS - (now - (u.identity.submittedAt || 0))));
+    }
+    if (!waits.length) return;
     var next = Math.min.apply(null, waits) + 150;
     clearTimeout(reviewTimer);
     reviewTimer = setTimeout(function(){
-      var changed = CY.refreshSocialReviews();
-      if (changed) CY.toast("SNSアカウントの審査が完了しました。");
+      var sns = CY.refreshSocialReviews();
+      var kyc = CY.refreshKycReview();
+      if (sns) CY.toast("SNSアカウントの審査が完了しました。");
+      if (kyc) CY.toast("本人確認が完了しました。全案件に参加できます。");
       renderAll();
     }, next);
   }
@@ -472,39 +490,35 @@
     scheduleReviews();
   }
 
-  /* ---- render: 本人確認（個人ID） ---- */
+  /* ---- render: 本人確認（KYC） ---- */
   function renderIdentity(){
+    CY.refreshKycReview();
     var u = CY.current();
-    var id = u.identity || { registered:false };
-    if (id.registered){
+    var id = u.identity || { status:"none" };
+    var status = CY.identityStatus();
+
+    if (status === "verified"){
       $("identity-card").innerHTML =
-        '<div class="card-h"><h3>本人確認（個人ID）</h3><span class="badge badge-verified">確認済み</span></div>' +
+        '<div class="card-h"><h3>本人確認（KYC）</h3><span class="badge badge-verified">確認済み</span></div>' +
         '<div class="idbox"><div class="idava">✓</div>' +
-          '<div><div style="font-weight:700;font-size:14.5px">' + CY.esc(id.name) + '</div>' +
-          '<div style="font-size:12.5px;color:var(--ink-3);margin-top:3px">個人ID: ' + CY.esc(id.idMasked || "") + '</div></div>' +
-          '<button class="btn btn-ghost btn-sm" id="id-clear" type="button" style="margin-left:auto">登録を解除（デモ）</button></div>' +
+          '<div><div style="font-weight:700;font-size:14.5px">' + CY.esc(id.name || "本人確認済み") + '</div>' +
+          '<div style="font-size:12.5px;color:var(--ink-3);margin-top:3px">提出書類: ' + CY.esc(CY.docTypeName(id.docType) || "—") + '</div></div>' +
+          '<button class="btn btn-ghost btn-sm" id="id-clear" type="button" style="margin-left:auto">解除（デモ）</button></div>' +
         '<div style="font-size:11.5px;color:var(--ink-3);margin-top:14px;line-height:1.8">本人確認が完了しているため、成果報酬（グッズ）案件を含むすべての案件に参加できます。</div>';
       var clr = $("id-clear");
-      if (clr) clr.addEventListener("click", function(){ CY.clearIdentity(); CY.toast("本人確認の登録を解除しました。"); renderAll(); });
+      if (clr) clr.addEventListener("click", function(){ CY.clearIdentity(); CY.toast("本人確認を解除しました。"); renderAll(); });
+    } else if (status === "pending"){
+      $("identity-card").innerHTML =
+        '<div class="card-h"><h3>本人確認（KYC）</h3><span class="badge badge-pending">審査中</span></div>' +
+        '<div class="idbox"><div class="idava" style="background:rgba(217,119,6,.14);color:#B45309">⏳</div>' +
+          '<div><div style="font-weight:700;font-size:14.5px">本人確認を審査中です</div>' +
+          '<div style="font-size:12.5px;color:var(--ink-3);margin-top:3px">提出書類: ' + CY.esc(CY.docTypeName(id.docType) || "—") + '</div></div></div>' +
+        '<div style="font-size:11.5px;color:var(--ink-3);margin-top:14px;line-height:1.8">審査には通常1〜2営業日かかります（このデモでは数秒で自動承認されます）。承認されると成果報酬案件に参加できます。</div>';
     } else {
       $("identity-card").innerHTML =
-        '<div class="card-h"><div><h3>本人確認（個人ID）</h3><span class="s">成果報酬（グッズ）案件に参加するには本人確認が必要です。再生報酬のみの案件は本人確認なしでも参加できます。</span></div><span class="badge badge-pending">未登録</span></div>' +
-        '<div class="form-err" id="id-err"></div>' +
-        '<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">' +
-          '<div class="field" style="margin-bottom:0"><label for="id-name">氏名</label><input id="id-name" type="text" placeholder="山田 太郎"/></div>' +
-          '<div class="field" style="margin-bottom:0"><label for="id-number">個人ID（本人確認番号）</label><input id="id-number" type="text" inputmode="numeric" placeholder="6文字以上"/></div>' +
-        '</div>' +
-        '<button class="btn btn-primary btn-sm" id="id-submit" type="button" style="margin-top:16px">本人確認を登録</button>' +
-        '<div style="font-size:11px;color:var(--ink-3);margin-top:12px;line-height:1.8">※ デモのため実在の身分証番号は入力しないでください。入力値は末尾4桁のみマスク表示で保存され、完全な番号は保存されません。本番では各国の本人確認（KYC）フローに接続します。</div>';
-      var err = $("id-err");
-      $("id-submit").addEventListener("click", function(){
-        err.classList.remove("on");
-        try {
-          CY.registerIdentity($("id-name").value, $("id-number").value);
-          CY.toast("本人確認を登録しました。全案件に参加できます。");
-          renderAll();
-        } catch (ex) { err.textContent = ex.message; err.classList.add("on"); }
-      });
+        '<div class="card-h"><div><h3>本人確認（KYC）</h3><span class="s">成果報酬（グッズ）案件に参加するには本人確認が必要です。再生報酬のみの案件は本人確認なしでも参加できます。</span></div><span class="badge badge-pending">未完了</span></div>' +
+        '<div style="font-size:12.5px;color:var(--ink-2);line-height:1.9;margin-bottom:16px">専用ページで本人確認書類（パスポート・運転免許証・マイナンバーカード）とセルフィーを提出し、審査を受けます。</div>' +
+        '<a class="btn btn-primary btn-sm" href="kyc.html">本人確認を始める</a>';
     }
   }
 

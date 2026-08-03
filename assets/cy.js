@@ -15,6 +15,19 @@
   // Simulated SNS review time. In production this is staff review (1–2 business
   // days); in this demo a connected account auto-approves after a few seconds.
   var REVIEW_MS = 4000;
+  // Simulated KYC (本人確認) review time.
+  var KYC_REVIEW_MS = 5000;
+
+  // Accepted identity documents for the KYC flow.
+  var DOC_TYPES = [
+    { id: "passport", name: "パスポート",           note: "顔写真のあるページ" },
+    { id: "license",  name: "運転免許証",           note: "表面" },
+    { id: "mynumber", name: "マイナンバーカード",   note: "顔写真のある面" }
+  ];
+  function docTypeName(id) {
+    for (var i = 0; i < DOC_TYPES.length; i++) if (DOC_TYPES[i].id === id) return DOC_TYPES[i].name;
+    return id || "";
+  }
 
   /* ---- campaigns (shared catalogue, mirrors the landing board) ---- */
   var CAMPAIGNS = [
@@ -107,7 +120,7 @@
       socials: [],  // { platform, handle, status: "pending"|"approved", connectedAt }
       joined: {},   // campaignId -> { joinedAt, ref }
       posts: [],    // { id, campaignId, url, views, sales, at }
-      identity: { registered: false }, // 本人確認（個人ID）
+      identity: { status: "none" }, // 本人確認（KYC）: none|pending|verified
       payoutMethod: "銀行振込"
     };
     users[email] = user;
@@ -226,27 +239,47 @@
     return (u.socials || []).filter(function (s) { return socialStatus(s) === "approved"; }).length;
   }
 
-  /* ---- 本人確認（個人ID）: gates campaigns flagged requiresId ---- */
-  function registerIdentity(name, idNumber) {
+  /* ---- 本人確認（KYC）: gates campaigns flagged requiresId ----
+     Submitted on the dedicated kyc.html page. IMPORTANT: uploaded document /
+     selfie images are NEVER stored — only the document type + status metadata.
+     In production this connects to a KYC provider. */
+  function submitKyc(info) {
     var u = current(); if (!u) return null;
-    name = String(name || "").trim();
-    var digits = String(idNumber || "").replace(/[^0-9A-Za-z]/g, "");
-    if (!name) throw new Error("氏名を入力してください。");
-    if (digits.length < 6) throw new Error("個人ID（本人確認番号）は6文字以上で入力してください。");
-    // Store only a masked form + the registered flag — never the full number.
-    var masked = "＊＊＊＊" + digits.slice(-4);
-    u.identity = { registered: true, name: name, idMasked: masked, registeredAt: Date.now() };
+    info = info || {};
+    if (!info.docType)     throw new Error("本人確認書類の種類を選択してください。");
+    if (!info.hasDocument) throw new Error("本人確認書類の画像をアップロードしてください。");
+    if (!info.hasSelfie)   throw new Error("セルフィー（顔写真）をアップロードしてください。");
+    u.identity = {
+      status: "pending",
+      docType: info.docType,
+      name: String(info.name || "").trim(),
+      submittedAt: Date.now()
+    };
     persist(u);
     return u.identity;
   }
+  // Flip a pending KYC to verified once the (simulated) review window passes.
+  function refreshKycReview() {
+    var u = current(); if (!u) return false;
+    var id = u.identity;
+    if (id && id.status === "pending" && Date.now() - (id.submittedAt || 0) >= KYC_REVIEW_MS) {
+      id.status = "verified"; id.verifiedAt = Date.now();
+      persist(u); return true;
+    }
+    return false;
+  }
+  function identityStatus() {
+    var u = current(); if (!u) return "none";
+    var id = u.identity;
+    if (!id) return "none";
+    if (id.registered === true) return "verified"; // legacy records
+    return id.status || "none";
+  }
+  function identityVerified() { return identityStatus() === "verified"; }
   function clearIdentity() {
     var u = current(); if (!u) return;
-    u.identity = { registered: false };
+    u.identity = { status: "none" };
     persist(u);
-  }
-  function identityVerified() {
-    var u = current();
-    return !!(u && u.identity && u.identity.registered);
   }
 
   /* earnings computed from the user's registered posts */
@@ -296,13 +329,15 @@
   global.CY = {
     CAMPAIGNS: CAMPAIGNS,
     SOCIAL_PLATFORMS: SOCIAL_PLATFORMS,
-    REVIEW_MS: REVIEW_MS,
+    DOC_TYPES: DOC_TYPES,
+    REVIEW_MS: REVIEW_MS, KYC_REVIEW_MS: KYC_REVIEW_MS,
     signup: signup, login: login, logout: logout, current: current,
     requireAuth: requireAuth, persist: persist,
     joinCampaign: joinCampaign, addPost: addPost, campaignById: campaignById,
     connectSocial: connectSocial, disconnectSocial: disconnectSocial, socialFor: socialFor,
     refreshSocialReviews: refreshSocialReviews, socialStatus: socialStatus, approvedSocialCount: approvedSocialCount,
-    registerIdentity: registerIdentity, clearIdentity: clearIdentity, identityVerified: identityVerified,
+    submitKyc: submitKyc, refreshKycReview: refreshKycReview, identityStatus: identityStatus,
+    identityVerified: identityVerified, clearIdentity: clearIdentity, docTypeName: docTypeName,
     earnings: earnings, refLink: refLink,
     yen: yen, num: num, toast: toast, esc: esc
   };
