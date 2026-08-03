@@ -94,9 +94,10 @@
 
   <!-- ===================== CAMPAIGN BOARD ===================== -->
   <section class="panel" id="p-board">
-    <div class="card-h"><h3>案件ボード</h3><span class="s">公開前・独占配信のモーションコミック。参加すると専用の紹介リンクが発行されます。</span></div>
+    <div class="card-h"><h3>案件ボード</h3><span class="s">映画・ドラマ・アニメ・音楽・漫画・YouTubeの公式ライセンス素材。参加すると専用の紹介リンクが発行されます。</span></div>
     <div id="board-banner"></div>
-    <div class="kpis" id="board-cards" style="grid-template-columns:repeat(3,1fr)"></div>
+    <div class="filters" id="board-filters"></div>
+    <div id="board-cards"></div>
     <div class="empty" style="padding:14px 0;text-align:left;color:var(--ink-3);font-size:11.5px">※ 掲載している作品名・単価・進捗はデザイン確認用のサンプルです。</div>
   </section>
 
@@ -256,6 +257,7 @@
   }
 
   /* ---- render: campaign board ---- */
+  var boardFilter = "all";
   function renderBoard(){
     var u = CY.current();
     var verified = CY.identityVerified();
@@ -277,7 +279,24 @@
         '<button class="btn btn-primary btn-sm" data-goverify="1" type="button">本人確認を始める</button></div>';
     }
 
-    $("board-cards").innerHTML = CY.CAMPAIGNS.map(function(c){
+    // category filter chips (with counts)
+    $("board-filters").innerHTML = CY.CATEGORIES.map(function(cat){
+      var n = cat.id === "all" ? CY.CAMPAIGNS.length
+        : CY.CAMPAIGNS.filter(function(c){ return c.category === cat.id; }).length;
+      return '<button class="chip ' + (boardFilter===cat.id?"on":"") + '" data-cat="' + cat.id + '" type="button">' +
+        CY.esc(cat.name) + '<span class="cnt">' + n + '</span></button>';
+    }).join("");
+    $("board-filters").querySelectorAll("[data-cat]").forEach(function(b){
+      b.addEventListener("click", function(){ boardFilter = b.getAttribute("data-cat"); renderBoard(); });
+    });
+
+    var list = CY.CAMPAIGNS.filter(function(c){ return boardFilter === "all" || c.category === boardFilter; });
+    if (!list.length){
+      $("board-cards").innerHTML = '<div class="empty">このカテゴリーの案件は現在ありません。</div>';
+      return;
+    }
+
+    $("board-cards").innerHTML = list.map(function(c){
       var joined = !!(u.joined && u.joined[c.id]);
       var locked = c.requiresId && !verified;
       var badge = c.status === "new"
@@ -308,11 +327,15 @@
           '<div style="display:flex;align-items:center;gap:8px;justify-content:space-between"><div class="cc-title">' + CY.esc(c.title) + '</div>' +
             (joined ? '<span class="badge badge-joined">参加中</span>' : '<span class="badge badge-open">募集中</span>') + '</div>' +
           '<div class="cc-meta">' + CY.esc(c.meta) + '</div>' +
-          '<div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap">' + typeTag +
+          '<div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap">' +
+            '<span class="cc-cat">' + CY.esc(CY.categoryName(c.category)) + '</span>' + typeTag +
             (c.requiresId ? '<span class="badge badge-lock">本人確認必須</span>' : '') + '</div>' +
           '<div class="cc-rates"><div class="cc-rate"><div class="k">TIER 1</div><div class="v">¥' + c.tier1 + '<small> /再生</small></div></div>' +
             '<div class="cc-rate"><div class="k">TIER 2</div>' + tier2Cell + '</div></div>' +
-          '<div class="track" style="margin-bottom:6px"><i style="width:' + c.budgetUsed + '%"></i></div>' +
+          '<div class="cc-countries"><div class="lbl">募集国</div><div class="flags">' +
+            (c.countries || []).map(function(cc){ var co = CY.country(cc); return '<span class="cflag">' + co.flag + ' ' + cc + '</span>'; }).join("") +
+            '</div></div>' +
+          '<div class="track" style="margin:12px 0 6px"><i style="width:' + c.budgetUsed + '%"></i></div>' +
           '<div style="display:flex;justify-content:space-between;font-size:11px;color:var(--ink-3);margin-bottom:12px"><span>予算消化 ' + c.budgetUsed + '%</span>' +
             (c.requiresId ? '<span style="color:#B45309;font-weight:700">要本人確認</span>' : '<span style="color:#0B7A55;font-weight:700">参加条件なし</span>') + '</div>' +
           action +

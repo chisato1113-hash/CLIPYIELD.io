@@ -29,49 +29,151 @@
     return id || "";
   }
 
-  /* ---- campaigns (shared catalogue, mirrors the landing board) ---- */
+  /* ---- categories (media type) ---- */
+  var CATEGORIES = [
+    { id: "all",     name: "すべて" },
+    { id: "movie",   name: "映画" },
+    { id: "drama",   name: "ドラマ" },
+    { id: "anime",   name: "アニメ" },
+    { id: "music",   name: "音楽" },
+    { id: "manga",   name: "漫画" },
+    { id: "youtube", name: "YouTube" }
+  ];
+  function categoryName(id) {
+    for (var i = 0; i < CATEGORIES.length; i++) if (CATEGORIES[i].id === id) return CATEGORIES[i].name;
+    return id || "";
+  }
+
+  /* ---- countries a campaign is recruiting clippers for ---- */
+  var COUNTRIES = {
+    US: { flag: "🇺🇸", name: "アメリカ" },
+    JP: { flag: "🇯🇵", name: "日本" },
+    KR: { flag: "🇰🇷", name: "韓国" },
+    CN: { flag: "🇨🇳", name: "中国" },
+    TW: { flag: "🇹🇼", name: "台湾" },
+    TH: { flag: "🇹🇭", name: "タイ" },
+    ID: { flag: "🇮🇩", name: "インドネシア" },
+    PH: { flag: "🇵🇭", name: "フィリピン" },
+    VN: { flag: "🇻🇳", name: "ベトナム" },
+    ES: { flag: "🇪🇸", name: "スペイン語圏" }
+  };
+  function country(code) { return COUNTRIES[code] || { flag: "🏳️", name: code }; }
+
+  /* ---- campaigns (shared catalogue) ---- */
   var CAMPAIGNS = [
+    // ---- アニメ ----
     {
-      id: "blade",
+      id: "blade", category: "anime",
       title: "BLADE OF THE LAST SUN",
-      meta: "全24話・独占一次配信／EN・ES・TH・ID・KO",
+      meta: "アニメ・全24話／独占一次配信",
+      countries: ["US", "ES", "TH", "ID", "KR"],
       tier1: 0.03, tier2: 60, daysLeft: 42, budgetUsed: 34,
-      status: "open", genre: "action", requiresId: true,
+      status: "open", requiresId: true,
       plats: ["TikTok", "Reels", "Shorts", "X"], art: "a1"
     },
     {
-      id: "orbit",
+      id: "hanabi", category: "anime",
+      title: "NEON HANABI",
+      meta: "アニメ・全32話／独占一次配信",
+      countries: ["US", "KR", "CN", "TH", "ID"],
+      tier1: 0.03, tier2: 60, daysLeft: 60, budgetUsed: 11,
+      status: "new", requiresId: true,
+      plats: ["TikTok", "Reels", "Shorts", "X"], art: "a3"
+    },
+    // ---- 漫画 ----
+    {
+      id: "orbit", category: "manga",
       title: "SILENT ORBIT",
-      meta: "全18話・独占一次配信／EN・ID・TH",
+      meta: "漫画・全18話／独占先行配信",
+      countries: ["US", "ID", "TH"],
       tier1: 0.03, tier2: 55, daysLeft: 28, budgetUsed: 62,
-      status: "open", genre: "fantasy", requiresId: true,
+      status: "open", requiresId: true,
       plats: ["TikTok", "Shorts", "Reels"], art: "a2"
     },
     {
-      id: "hanabi",
-      title: "NEON HANABI",
-      meta: "全32話・独占一次配信／EN・KO・ZH・TH・ID",
-      tier1: 0.03, tier2: 60, daysLeft: 60, budgetUsed: 11,
-      status: "new", genre: "romance", requiresId: true,
-      plats: ["TikTok", "Reels", "Shorts", "X"], art: "a3"
-    },
-    {
-      // View-only campaign: no merch, so TIER2 = 0 (higher TIER1 to compensate)
-      id: "echo",
+      id: "echo", category: "manga",
       title: "ECHOES OF TOKYO",
-      meta: "全12話・独占一次配信／EN・JA・KO",
+      meta: "漫画・全12話／独占先行配信",
+      countries: ["US", "JP", "KR"],
       tier1: 0.05, tier2: 0, daysLeft: 35, budgetUsed: 20,
-      status: "open", genre: "fantasy", requiresId: false,
+      status: "open", requiresId: false,
       plats: ["TikTok", "Reels", "Shorts"], art: "a4"
     },
+    // ---- 映画 ----
     {
-      // View-only campaign (no merch line)
-      id: "diner",
-      title: "MIDNIGHT DINER STORIES",
-      meta: "全20話・独占一次配信／EN・TH・ID・ZH",
-      tier1: 0.04, tier2: 0, daysLeft: 50, budgetUsed: 8,
-      status: "new", genre: "romance", requiresId: false,
-      plats: ["TikTok", "Shorts", "X"], art: "a5"
+      id: "shibuya", category: "movie",
+      title: "MIDNIGHT IN SHIBUYA",
+      meta: "映画・本編118分／公式予告＆名シーン",
+      countries: ["JP", "US", "TW", "TH"],
+      tier1: 0.04, tier2: 50, daysLeft: 45, budgetUsed: 18,
+      status: "new", requiresId: true,
+      plats: ["TikTok", "Reels", "Shorts"], art: "a5"
+    },
+    {
+      id: "ferry", category: "movie",
+      title: "THE LAST FERRY",
+      meta: "映画・本編96分／公式クリップ配布",
+      countries: ["US", "ID", "PH"],
+      tier1: 0.03, tier2: 0, daysLeft: 30, budgetUsed: 41,
+      status: "open", requiresId: false,
+      plats: ["TikTok", "Shorts", "X"], art: "a1"
+    },
+    // ---- ドラマ ----
+    {
+      id: "office2049", category: "drama",
+      title: "OFFICE 2049",
+      meta: "ドラマ・全10話／独占配信・見どころ",
+      countries: ["JP", "KR", "TW"],
+      tier1: 0.03, tier2: 45, daysLeft: 52, budgetUsed: 27,
+      status: "open", requiresId: true,
+      plats: ["TikTok", "Reels", "Shorts"], art: "a2"
+    },
+    {
+      id: "hanasaku", category: "drama",
+      title: "花咲く頃に",
+      meta: "ドラマ・全8話／公式名場面",
+      countries: ["JP", "TW", "TH"],
+      tier1: 0.04, tier2: 0, daysLeft: 38, budgetUsed: 9,
+      status: "new", requiresId: false,
+      plats: ["TikTok", "Shorts", "Reels"], art: "a3"
+    },
+    // ---- 音楽 ----
+    {
+      id: "aurora", category: "music",
+      title: "AURORA SOUND",
+      meta: "音楽・公式MV／アーティスト公認",
+      countries: ["US", "KR", "JP", "ID"],
+      tier1: 0.05, tier2: 40, daysLeft: 25, budgetUsed: 55,
+      status: "open", requiresId: true,
+      plats: ["TikTok", "Reels", "Shorts", "X"], art: "a4"
+    },
+    {
+      id: "yoake", category: "music",
+      title: "夜明けのメロディ",
+      meta: "音楽・公式ライブ映像／切り抜き公認",
+      countries: ["JP", "TW", "KR"],
+      tier1: 0.04, tier2: 0, daysLeft: 47, budgetUsed: 13,
+      status: "new", requiresId: false,
+      plats: ["TikTok", "Shorts", "Reels"], art: "a5"
+    },
+    // ---- YouTube ----
+    {
+      id: "gamelegends", category: "youtube",
+      title: "GAME LEGENDS 実況アーカイブ",
+      meta: "YouTube・公式アーカイブ／許諾済み",
+      countries: ["US", "ID", "PH", "TH"],
+      tier1: 0.03, tier2: 35, daysLeft: 33, budgetUsed: 22,
+      status: "open", requiresId: true,
+      plats: ["TikTok", "Shorts", "Reels"], art: "a1"
+    },
+    {
+      id: "creatorclip", category: "youtube",
+      title: "クリエイター公式クリップ",
+      meta: "YouTube・公式チャンネル素材／公認",
+      countries: ["US", "JP", "ID"],
+      tier1: 0.04, tier2: 0, daysLeft: 58, budgetUsed: 6,
+      status: "new", requiresId: false,
+      plats: ["TikTok", "Shorts", "X"], art: "a3"
     }
   ];
 
@@ -328,6 +430,7 @@
 
   global.CY = {
     CAMPAIGNS: CAMPAIGNS,
+    CATEGORIES: CATEGORIES, categoryName: categoryName, country: country,
     SOCIAL_PLATFORMS: SOCIAL_PLATFORMS,
     DOC_TYPES: DOC_TYPES,
     REVIEW_MS: REVIEW_MS, KYC_REVIEW_MS: KYC_REVIEW_MS,
