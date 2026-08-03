@@ -37,6 +37,24 @@
       tier1: 0.03, tier2: 60, daysLeft: 60, budgetUsed: 11,
       status: "new", genre: "romance",
       plats: ["TikTok", "Reels", "Shorts", "X"], art: "a3"
+    },
+    {
+      // View-only campaign: no merch, so TIER2 = 0 (higher TIER1 to compensate)
+      id: "echo",
+      title: "ECHOES OF TOKYO",
+      meta: "全12話・独占一次配信／EN・JA・KO",
+      tier1: 0.05, tier2: 0, daysLeft: 35, budgetUsed: 20,
+      status: "open", genre: "fantasy",
+      plats: ["TikTok", "Reels", "Shorts"], art: "a4"
+    },
+    {
+      // View-only campaign (no merch line)
+      id: "diner",
+      title: "MIDNIGHT DINER STORIES",
+      meta: "全20話・独占一次配信／EN・TH・ID・ZH",
+      tier1: 0.04, tier2: 0, daysLeft: 50, budgetUsed: 8,
+      status: "new", genre: "romance",
+      plats: ["TikTok", "Shorts", "X"], art: "a5"
     }
   ];
 
