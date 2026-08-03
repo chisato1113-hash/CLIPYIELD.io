@@ -177,7 +177,9 @@
     var defs = {
       a1:'<svg preserveAspectRatio="none" viewBox="0 0 400 112"><defs><linearGradient id="g_a1" x1="0" x2="400" y1="0" y2="112"><stop offset="0" stop-color="#FFE7CE"></stop><stop offset="1" stop-color="#fff"></stop></linearGradient></defs><rect fill="url(#g_a1)" height="112" width="400"></rect><g fill="none" opacity=".55" stroke="#F97316" stroke-width="1.4"><path d="M-20 96 L120 26 L200 66 L300 10 L420 52"></path></g><circle cx="318" cy="30" fill="#FF7A18" opacity=".26" r="26"></circle><circle cx="318" cy="30" fill="#F59E0B" opacity=".55" r="12"></circle></svg>',
       a2:'<svg preserveAspectRatio="none" viewBox="0 0 400 112"><defs><linearGradient id="g_a2" x1="0" x2="400" y1="0" y2="112"><stop offset="0" stop-color="#F0E4FB"></stop><stop offset="1" stop-color="#fff"></stop></linearGradient></defs><rect fill="url(#g_a2)" height="112" width="400"></rect><g fill="none" opacity=".55" stroke="#F59E0B" stroke-width="1.2"><ellipse cx="200" cy="56" rx="150" ry="40"></ellipse><ellipse cx="200" cy="56" rx="100" ry="28"></ellipse></g><circle cx="200" cy="56" fill="#FF7A18" opacity=".7" r="15"></circle></svg>',
-      a3:'<svg preserveAspectRatio="none" viewBox="0 0 400 112"><defs><linearGradient id="g_a3" x1="0" x2="400" y1="0" y2="112"><stop offset="0" stop-color="#DDF2EF"></stop><stop offset="1" stop-color="#fff"></stop></linearGradient></defs><rect fill="url(#g_a3)" height="112" width="400"></rect><g opacity=".55"><rect fill="#F59E0B" height="40" opacity=".45" width="24" x="40" y="66"></rect><rect fill="#FF9A2B" height="80" opacity=".55" width="24" x="140" y="26"></rect><rect fill="#FF7A18" height="96" opacity=".6" width="24" x="240" y="12"></rect><rect fill="#FF7A18" height="70" opacity=".5" width="24" x="320" y="36"></rect></g></svg>'
+      a3:'<svg preserveAspectRatio="none" viewBox="0 0 400 112"><defs><linearGradient id="g_a3" x1="0" x2="400" y1="0" y2="112"><stop offset="0" stop-color="#DDF2EF"></stop><stop offset="1" stop-color="#fff"></stop></linearGradient></defs><rect fill="url(#g_a3)" height="112" width="400"></rect><g opacity=".55"><rect fill="#F59E0B" height="40" opacity=".45" width="24" x="40" y="66"></rect><rect fill="#FF9A2B" height="80" opacity=".55" width="24" x="140" y="26"></rect><rect fill="#FF7A18" height="96" opacity=".6" width="24" x="240" y="12"></rect><rect fill="#FF7A18" height="70" opacity=".5" width="24" x="320" y="36"></rect></g></svg>',
+      a4:'<svg preserveAspectRatio="none" viewBox="0 0 400 112"><defs><linearGradient id="g_a4" x1="0" x2="400" y1="0" y2="112"><stop offset="0" stop-color="#FDE9D8"></stop><stop offset="1" stop-color="#fff"></stop></linearGradient></defs><rect fill="url(#g_a4)" height="112" width="400"></rect><g fill="none" stroke="#FF7A18" opacity=".5" stroke-width="1.3"><circle cx="200" cy="56" r="18"></circle><circle cx="200" cy="56" r="34"></circle><circle cx="200" cy="56" r="50"></circle></g><circle cx="200" cy="56" r="7" fill="#FF7A18" opacity=".8"></circle></svg>',
+      a5:'<svg preserveAspectRatio="none" viewBox="0 0 400 112"><defs><linearGradient id="g_a5" x1="0" x2="400" y1="0" y2="112"><stop offset="0" stop-color="#E7ECFB"></stop><stop offset="1" stop-color="#fff"></stop></linearGradient></defs><rect fill="url(#g_a5)" height="112" width="400"></rect><g fill="none" stroke="#F59E0B" opacity=".55" stroke-width="1.6"><path d="M-10 78 Q80 40 170 66 T360 54 T420 60"></path><path d="M-10 92 Q90 60 180 84 T380 72" opacity=".5"></path></g><circle cx="300" cy="40" r="20" fill="#FFC93C" opacity=".5"></circle></svg>'
     };
     return defs[id] || defs.a1;
   }
@@ -260,6 +262,13 @@
         ? '<div class="reflink"><input readonly value="' + CY.esc(u.joined[c.id].ref) + '"/><button class="btn btn-ghost btn-sm" data-copy="' + CY.esc(u.joined[c.id].ref) + '" type="button">コピー</button></div>' +
           '<button class="btn btn-primary btn-sm btn-block" data-post="' + c.id + '" type="button" style="margin-top:10px">この案件に投稿を登録</button>'
         : '<button class="btn btn-primary btn-sm btn-block" data-join="' + c.id + '" type="button">この案件に参加する</button>';
+      var hasT2 = c.tier2 > 0;
+      var tier2Cell = hasT2
+        ? '<div class="v">' + c.tier2 + '%<small> /グッズ売上</small></div>'
+        : '<div class="v" style="color:var(--ink-3)">—<small> なし</small></div>';
+      var typeTag = hasT2
+        ? '<span class="badge badge-open" style="background:rgba(255,160,40,.16);color:#C2410C">二階建て</span>'
+        : '<span class="badge" style="background:rgba(16,24,40,.06);color:var(--ink-2)">再生報酬のみ</span>';
       return '<div class="cc">' +
         '<div class="cc-art">' + art(c.art) + badge +
           '<span class="cc-badge" style="left:auto;right:12px;background:rgba(255,255,255,.9)">残り ' + c.daysLeft + '日</span></div>' +
@@ -267,8 +276,9 @@
           '<div style="display:flex;align-items:center;gap:8px;justify-content:space-between"><div class="cc-title">' + CY.esc(c.title) + '</div>' +
             (joined ? '<span class="badge badge-joined">参加中</span>' : '<span class="badge badge-open">募集中</span>') + '</div>' +
           '<div class="cc-meta">' + CY.esc(c.meta) + '</div>' +
+          '<div style="margin-top:8px">' + typeTag + '</div>' +
           '<div class="cc-rates"><div class="cc-rate"><div class="k">TIER 1</div><div class="v">¥' + c.tier1 + '<small> /再生</small></div></div>' +
-            '<div class="cc-rate"><div class="k">TIER 2</div><div class="v">' + c.tier2 + '%<small> /グッズ売上</small></div></div></div>' +
+            '<div class="cc-rate"><div class="k">TIER 2</div>' + tier2Cell + '</div></div>' +
           '<div class="track" style="margin-bottom:6px"><i style="width:' + c.budgetUsed + '%"></i></div>' +
           '<div style="display:flex;justify-content:space-between;font-size:11px;color:var(--ink-3);margin-bottom:12px"><span>予算消化 ' + c.budgetUsed + '%</span><span style="color:#0B7A55;font-weight:700">参加条件なし</span></div>' +
           action +
@@ -405,6 +415,21 @@
     var u = CY.current();
     return CY.CAMPAIGNS.filter(function(c){ return u.joined && u.joined[c.id]; });
   }
+  // Disable the merch-sales field when the chosen campaign has no TIER2.
+  function updateModalSalesState(){
+    var c = CY.campaignById($("m-campaign").value);
+    var sales = $("m-sales");
+    var field = sales.closest(".field");
+    if (c && !(c.tier2 > 0)){
+      sales.value = ""; sales.disabled = true;
+      sales.placeholder = "この案件は再生報酬のみ";
+      if (field){ field.style.opacity = ".45"; field.title = "この案件はグッズ成果報酬（TIER2）がありません"; }
+    } else {
+      sales.disabled = false;
+      sales.placeholder = "例: 12000";
+      if (field){ field.style.opacity = "1"; field.title = ""; }
+    }
+  }
   function openModal(preselect){
     var opts = joinedCampaignOptions();
     if (!opts.length){
@@ -417,8 +442,10 @@
     }).join("");
     $("m-url").value = ""; $("m-views").value = ""; $("m-sales").value = "";
     $("m-err").classList.remove("on");
+    updateModalSalesState();
     modal.classList.add("on");
   }
+  $("m-campaign").addEventListener("change", updateModalSalesState);
   function closeModal(){ modal.classList.remove("on"); }
   $("add-post").addEventListener("click", function(){ openModal(); });
   $("m-cancel").addEventListener("click", closeModal);
