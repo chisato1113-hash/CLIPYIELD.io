@@ -36,7 +36,7 @@
       <button class="tab" data-tab="socials" type="button">SNS連携</button>
       <button class="tab" data-tab="board" type="button">案件ボード</button>
       <button class="tab" data-tab="posts" type="button">投稿</button>
-      <button class="tab" data-tab="payouts" type="button">報酬・支払い</button>
+      <button class="tab" data-tab="payouts" type="button">本人確認・報酬</button>
     </div>
   </div>
 
@@ -95,6 +95,7 @@
   <!-- ===================== CAMPAIGN BOARD ===================== -->
   <section class="panel" id="p-board">
     <div class="card-h"><h3>案件ボード</h3><span class="s">公開前・独占配信のモーションコミック。参加すると専用の紹介リンクが発行されます。</span></div>
+    <div id="board-banner"></div>
     <div class="kpis" id="board-cards" style="grid-template-columns:repeat(3,1fr)"></div>
     <div class="empty" style="padding:14px 0;text-align:left;color:var(--ink-3);font-size:11.5px">※ 掲載している作品名・単価・進捗はデザイン確認用のサンプルです。</div>
   </section>
@@ -110,8 +111,9 @@
     </div>
   </section>
 
-  <!-- ===================== PAYOUTS ===================== -->
+  <!-- ===================== IDENTITY + PAYOUTS ===================== -->
   <section class="panel" id="p-payouts">
+    <div class="card" id="identity-card" style="margin-bottom:20px"></div>
     <div class="grid-2">
       <div class="card">
         <div class="card-h"><h3>今月の見込み報酬</h3><span class="s">確定報酬は返品期間の経過後に確定します。</span></div>
@@ -190,7 +192,7 @@
   $("whoami").textContent = user.handle;
   $("hi").textContent = "こんにちは、" + user.handle + " 👋";
   if (/[?&]welcome=1/.test(location.search)) {
-    $("subhi").textContent = "登録が完了しました。まずは「SNS連携」で投稿先アカウントをつなぎ、「案件ボード」から作品を選びましょう。";
+    $("subhi").textContent = "登録が完了しました。「SNS連携」で投稿先アカウントを審査申請し、「本人確認」で個人IDを登録すると、すべての案件に参加できます。";
   }
 
   $("logout").addEventListener("click", function(){
@@ -253,15 +255,35 @@
   /* ---- render: campaign board ---- */
   function renderBoard(){
     var u = CY.current();
+    var verified = CY.identityVerified();
+
+    // Identity gate banner
+    if (verified){
+      $("board-banner").innerHTML =
+        '<div class="cy-banner ok"><div><div class="bt">本人確認済み</div>' +
+        '<div class="bp">成果報酬（グッズ）案件を含む、すべての案件に参加できます。</div></div></div>';
+    } else {
+      $("board-banner").innerHTML =
+        '<div class="cy-banner"><div><div class="bt">本人確認が未完了です</div>' +
+        '<div class="bp">「本人確認必須」の成果報酬案件に参加するには、個人IDの登録が必要です。再生報酬のみの案件は本人確認なしで参加できます。</div></div>' +
+        '<button class="btn btn-primary btn-sm" data-goverify="1" type="button">個人IDを登録</button></div>';
+    }
+
     $("board-cards").innerHTML = CY.CAMPAIGNS.map(function(c){
       var joined = !!(u.joined && u.joined[c.id]);
+      var locked = c.requiresId && !verified;
       var badge = c.status === "new"
         ? '<span class="cc-badge"><i class="live-dot"></i>新着</span>'
         : '<span class="cc-badge"><i class="live-dot"></i>募集中</span>';
-      var action = joined
-        ? '<div class="reflink"><input readonly value="' + CY.esc(u.joined[c.id].ref) + '"/><button class="btn btn-ghost btn-sm" data-copy="' + CY.esc(u.joined[c.id].ref) + '" type="button">コピー</button></div>' +
-          '<button class="btn btn-primary btn-sm btn-block" data-post="' + c.id + '" type="button" style="margin-top:10px">この案件に投稿を登録</button>'
-        : '<button class="btn btn-primary btn-sm btn-block" data-join="' + c.id + '" type="button">この案件に参加する</button>';
+      var action;
+      if (joined){
+        action = '<div class="reflink"><input readonly value="' + CY.esc(u.joined[c.id].ref) + '"/><button class="btn btn-ghost btn-sm" data-copy="' + CY.esc(u.joined[c.id].ref) + '" type="button">コピー</button></div>' +
+          '<button class="btn btn-primary btn-sm btn-block" data-post="' + c.id + '" type="button" style="margin-top:10px">この案件に投稿を登録</button>';
+      } else if (locked){
+        action = '<button class="btn btn-ghost btn-sm btn-block" data-goverify="1" type="button">🔒 本人確認して参加</button>';
+      } else {
+        action = '<button class="btn btn-primary btn-sm btn-block" data-join="' + c.id + '" type="button">この案件に参加する</button>';
+      }
       var hasT2 = c.tier2 > 0;
       var tier2Cell = hasT2
         ? '<div class="v">' + c.tier2 + '%<small> /グッズ売上</small></div>'
@@ -276,11 +298,13 @@
           '<div style="display:flex;align-items:center;gap:8px;justify-content:space-between"><div class="cc-title">' + CY.esc(c.title) + '</div>' +
             (joined ? '<span class="badge badge-joined">参加中</span>' : '<span class="badge badge-open">募集中</span>') + '</div>' +
           '<div class="cc-meta">' + CY.esc(c.meta) + '</div>' +
-          '<div style="margin-top:8px">' + typeTag + '</div>' +
+          '<div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap">' + typeTag +
+            (c.requiresId ? '<span class="badge badge-lock">本人確認必須</span>' : '') + '</div>' +
           '<div class="cc-rates"><div class="cc-rate"><div class="k">TIER 1</div><div class="v">¥' + c.tier1 + '<small> /再生</small></div></div>' +
             '<div class="cc-rate"><div class="k">TIER 2</div>' + tier2Cell + '</div></div>' +
           '<div class="track" style="margin-bottom:6px"><i style="width:' + c.budgetUsed + '%"></i></div>' +
-          '<div style="display:flex;justify-content:space-between;font-size:11px;color:var(--ink-3);margin-bottom:12px"><span>予算消化 ' + c.budgetUsed + '%</span><span style="color:#0B7A55;font-weight:700">参加条件なし</span></div>' +
+          '<div style="display:flex;justify-content:space-between;font-size:11px;color:var(--ink-3);margin-bottom:12px"><span>予算消化 ' + c.budgetUsed + '%</span>' +
+            (c.requiresId ? '<span style="color:#B45309;font-weight:700">要本人確認</span>' : '<span style="color:#0B7A55;font-weight:700">参加条件なし</span>') + '</div>' +
           action +
         '</div></div>';
     }).join("");
@@ -288,11 +312,21 @@
     // wire buttons
     $("board-cards").querySelectorAll("[data-join]").forEach(function(b){
       b.addEventListener("click", function(){
-        CY.joinCampaign(b.getAttribute("data-join"));
-        CY.toast("案件に参加しました。紹介リンクを発行しました。");
-        renderAll();
+        try {
+          CY.joinCampaign(b.getAttribute("data-join"));
+          CY.toast("案件に参加しました。紹介リンクを発行しました。");
+          renderAll();
+        } catch (ex) { CY.toast(ex.message); }
       });
     });
+    // "本人確認して参加" / banner button → jump to the 本人確認 tab
+    function goVerify(){
+      document.querySelector('.tab[data-tab="payouts"]').click();
+      var card = $("identity-card");
+      if (card) card.scrollIntoView({ behavior:"smooth", block:"center" });
+    }
+    $("board-banner").querySelectorAll("[data-goverify]").forEach(function(b){ b.addEventListener("click", goVerify); });
+    $("board-cards").querySelectorAll("[data-goverify]").forEach(function(b){ b.addEventListener("click", goVerify); });
     $("board-cards").querySelectorAll("[data-copy]").forEach(function(b){
       b.addEventListener("click", function(){
         var v = b.getAttribute("data-copy");
@@ -355,29 +389,58 @@
     });
   }
 
-  /* ---- render: SNS linking ---- */
+  /* ---- SNS review auto-approval timer (single shared timer) ---- */
+  var reviewTimer = null;
+  function scheduleReviews(){
+    var u = CY.current(); if (!u) return;
+    var pend = (u.socials || []).filter(function(s){ return (s.status || "approved") === "pending"; });
+    if (!pend.length) return;
+    var now = Date.now();
+    var waits = pend.map(function(s){ return Math.max(0, CY.REVIEW_MS - (now - (s.connectedAt || 0))); });
+    var next = Math.min.apply(null, waits) + 150;
+    clearTimeout(reviewTimer);
+    reviewTimer = setTimeout(function(){
+      var changed = CY.refreshSocialReviews();
+      if (changed) CY.toast("SNSアカウントの審査が完了しました。");
+      renderAll();
+    }, next);
+  }
+
+  /* ---- render: SNS linking (with review status) ---- */
   function renderSocials(){
-    var connected = 0;
+    CY.refreshSocialReviews();
+    var approved = 0, pending = 0;
     $("socials-list").innerHTML = CY.SOCIAL_PLATFORMS.map(function(p){
       var s = CY.socialFor(p.id);
-      if (s) connected++;
+      var st = CY.socialStatus(s);
+      if (st === "approved") approved++;
+      if (st === "pending") pending++;
       var icon = '<div class="social-ic" style="background:' + p.color + '">' + p.abbr + '</div>';
       var meta, action;
-      if (s){
+      if (s && st === "approved"){
         meta = '<div class="social-meta"><div class="nm">' + CY.esc(p.name) + '</div>' +
-               '<div class="st-line"><b>' + CY.esc(s.handle) + '</b><span class="badge badge-verified">連携済み</span></div></div>';
+               '<div class="st-line"><i class="rev-dot approved"></i><b>' + CY.esc(s.handle) + '</b>' +
+               '<span class="badge badge-verified">審査承認済み</span></div></div>';
         action = '<div class="social-action"><button class="btn btn-ghost btn-sm" data-unlink="' + p.id + '" type="button">連携を解除</button></div>';
+      } else if (s && st === "pending"){
+        meta = '<div class="social-meta"><div class="nm">' + CY.esc(p.name) + '</div>' +
+               '<div class="st-line"><i class="rev-dot pending"></i><b>' + CY.esc(s.handle) + '</b>' +
+               '<span class="badge badge-pending">審査中</span></div></div>';
+        action = '<div class="social-action"><button class="btn btn-ghost btn-sm" data-unlink="' + p.id + '" type="button">申請を取消</button></div>';
       } else {
         meta = '<div class="social-meta"><div class="nm">' + CY.esc(p.name) + '</div>' +
                '<div class="st-line">未連携</div></div>';
         action = '<div class="social-action">' +
                  '<input type="text" data-input="' + p.id + '" placeholder="@' + CY.esc(p.hint) + '"/>' +
-                 '<button class="btn btn-primary btn-sm" data-link="' + p.id + '" type="button">連携する</button></div>';
+                 '<button class="btn btn-primary btn-sm" data-link="' + p.id + '" type="button">連携を申請</button></div>';
       }
       return '<div class="social-row">' + icon + meta + action + '</div>';
     }).join("");
 
-    $("socials-count").textContent = connected > 0 ? (connected + " / " + CY.SOCIAL_PLATFORMS.length + " 連携済み") : "未連携";
+    var parts = [];
+    if (approved) parts.push(approved + " 承認済み");
+    if (pending) parts.push(pending + " 審査中");
+    $("socials-count").textContent = parts.length ? parts.join(" ・ ") : "未連携";
 
     $("socials-list").querySelectorAll("[data-link]").forEach(function(b){
       b.addEventListener("click", function(){
@@ -385,7 +448,7 @@
         var input = $("socials-list").querySelector('[data-input="' + id + '"]');
         try {
           var rec = CY.connectSocial(id, input ? input.value : "");
-          CY.toast(rec.handle + " を連携しました。");
+          CY.toast(rec.handle + " の連携を申請しました。審査中です。");
           renderAll();
         } catch (ex) { CY.toast(ex.message); }
       });
@@ -405,9 +468,47 @@
         renderAll();
       });
     });
+
+    scheduleReviews();
   }
 
-  function renderAll(){ renderOverview(); renderSocials(); renderBoard(); renderPosts(); renderPayouts(); }
+  /* ---- render: 本人確認（個人ID） ---- */
+  function renderIdentity(){
+    var u = CY.current();
+    var id = u.identity || { registered:false };
+    if (id.registered){
+      $("identity-card").innerHTML =
+        '<div class="card-h"><h3>本人確認（個人ID）</h3><span class="badge badge-verified">確認済み</span></div>' +
+        '<div class="idbox"><div class="idava">✓</div>' +
+          '<div><div style="font-weight:700;font-size:14.5px">' + CY.esc(id.name) + '</div>' +
+          '<div style="font-size:12.5px;color:var(--ink-3);margin-top:3px">個人ID: ' + CY.esc(id.idMasked || "") + '</div></div>' +
+          '<button class="btn btn-ghost btn-sm" id="id-clear" type="button" style="margin-left:auto">登録を解除（デモ）</button></div>' +
+        '<div style="font-size:11.5px;color:var(--ink-3);margin-top:14px;line-height:1.8">本人確認が完了しているため、成果報酬（グッズ）案件を含むすべての案件に参加できます。</div>';
+      var clr = $("id-clear");
+      if (clr) clr.addEventListener("click", function(){ CY.clearIdentity(); CY.toast("本人確認の登録を解除しました。"); renderAll(); });
+    } else {
+      $("identity-card").innerHTML =
+        '<div class="card-h"><div><h3>本人確認（個人ID）</h3><span class="s">成果報酬（グッズ）案件に参加するには本人確認が必要です。再生報酬のみの案件は本人確認なしでも参加できます。</span></div><span class="badge badge-pending">未登録</span></div>' +
+        '<div class="form-err" id="id-err"></div>' +
+        '<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">' +
+          '<div class="field" style="margin-bottom:0"><label for="id-name">氏名</label><input id="id-name" type="text" placeholder="山田 太郎"/></div>' +
+          '<div class="field" style="margin-bottom:0"><label for="id-number">個人ID（本人確認番号）</label><input id="id-number" type="text" inputmode="numeric" placeholder="6文字以上"/></div>' +
+        '</div>' +
+        '<button class="btn btn-primary btn-sm" id="id-submit" type="button" style="margin-top:16px">本人確認を登録</button>' +
+        '<div style="font-size:11px;color:var(--ink-3);margin-top:12px;line-height:1.8">※ デモのため実在の身分証番号は入力しないでください。入力値は末尾4桁のみマスク表示で保存され、完全な番号は保存されません。本番では各国の本人確認（KYC）フローに接続します。</div>';
+      var err = $("id-err");
+      $("id-submit").addEventListener("click", function(){
+        err.classList.remove("on");
+        try {
+          CY.registerIdentity($("id-name").value, $("id-number").value);
+          CY.toast("本人確認を登録しました。全案件に参加できます。");
+          renderAll();
+        } catch (ex) { err.textContent = ex.message; err.classList.add("on"); }
+      });
+    }
+  }
+
+  function renderAll(){ renderOverview(); renderSocials(); renderIdentity(); renderBoard(); renderPosts(); renderPayouts(); }
 
   /* ---- modal (register post) ---- */
   var modal = $("modal");

@@ -12,6 +12,10 @@
     session: "cy_session_v1"
   };
 
+  // Simulated SNS review time. In production this is staff review (1–2 business
+  // days); in this demo a connected account auto-approves after a few seconds.
+  var REVIEW_MS = 4000;
+
   /* ---- campaigns (shared catalogue, mirrors the landing board) ---- */
   var CAMPAIGNS = [
     {
@@ -19,7 +23,7 @@
       title: "BLADE OF THE LAST SUN",
       meta: "全24話・独占一次配信／EN・ES・TH・ID・KO",
       tier1: 0.03, tier2: 60, daysLeft: 42, budgetUsed: 34,
-      status: "open", genre: "action",
+      status: "open", genre: "action", requiresId: true,
       plats: ["TikTok", "Reels", "Shorts", "X"], art: "a1"
     },
     {
@@ -27,7 +31,7 @@
       title: "SILENT ORBIT",
       meta: "全18話・独占一次配信／EN・ID・TH",
       tier1: 0.03, tier2: 55, daysLeft: 28, budgetUsed: 62,
-      status: "open", genre: "fantasy",
+      status: "open", genre: "fantasy", requiresId: true,
       plats: ["TikTok", "Shorts", "Reels"], art: "a2"
     },
     {
@@ -35,7 +39,7 @@
       title: "NEON HANABI",
       meta: "全32話・独占一次配信／EN・KO・ZH・TH・ID",
       tier1: 0.03, tier2: 60, daysLeft: 60, budgetUsed: 11,
-      status: "new", genre: "romance",
+      status: "new", genre: "romance", requiresId: true,
       plats: ["TikTok", "Reels", "Shorts", "X"], art: "a3"
     },
     {
@@ -44,7 +48,7 @@
       title: "ECHOES OF TOKYO",
       meta: "全12話・独占一次配信／EN・JA・KO",
       tier1: 0.05, tier2: 0, daysLeft: 35, budgetUsed: 20,
-      status: "open", genre: "fantasy",
+      status: "open", genre: "fantasy", requiresId: false,
       plats: ["TikTok", "Reels", "Shorts"], art: "a4"
     },
     {
@@ -53,7 +57,7 @@
       title: "MIDNIGHT DINER STORIES",
       meta: "全20話・独占一次配信／EN・TH・ID・ZH",
       tier1: 0.04, tier2: 0, daysLeft: 50, budgetUsed: 8,
-      status: "new", genre: "romance",
+      status: "new", genre: "romance", requiresId: false,
       plats: ["TikTok", "Shorts", "X"], art: "a5"
     }
   ];
@@ -100,9 +104,10 @@
       pass: hash(password),
       handle: handleFromEmail(email),
       createdAt: Date.now(),
-      socials: [],
+      socials: [],  // { platform, handle, status: "pending"|"approved", connectedAt }
       joined: {},   // campaignId -> { joinedAt, ref }
       posts: [],    // { id, campaignId, url, views, sales, at }
+      identity: { registered: false }, // 本人確認（個人ID）
       payoutMethod: "銀行振込"
     };
     users[email] = user;
@@ -147,6 +152,10 @@
 
   function joinCampaign(campaignId) {
     var u = current(); if (!u) return null;
+    var c = campaignById(campaignId);
+    if (c && c.requiresId && !identityVerified()) {
+      throw new Error("この案件への参加には本人確認（個人ID登録）が必要です。");
+    }
     if (!u.joined[campaignId]) {
       u.joined[campaignId] = { joinedAt: Date.now(), ref: refLink(u, campaignId) };
       persist(u);
@@ -182,10 +191,23 @@
     handle = String(handle || "").trim().replace(/^@+/, "").replace(/\s+/g, "");
     if (!handle) throw new Error("ユーザー名を入力してください。");
     u.socials = (u.socials || []).filter(function (s) { return s.platform !== platformId; });
-    var rec = { platform: platformId, handle: "@" + handle, connectedAt: Date.now() };
+    // New connections enter review ("審査中") before they are approved.
+    var rec = { platform: platformId, handle: "@" + handle, status: "pending", connectedAt: Date.now() };
     u.socials.push(rec);
     persist(u);
     return rec;
+  }
+  // Flip any pending SNS reviews that have passed the (simulated) review window.
+  function refreshSocialReviews() {
+    var u = current(); if (!u) return false;
+    var changed = false, now = Date.now();
+    (u.socials || []).forEach(function (s) {
+      if (s.status === "pending" && now - (s.connectedAt || 0) >= REVIEW_MS) {
+        s.status = "approved"; s.approvedAt = now; changed = true;
+      }
+    });
+    if (changed) persist(u);
+    return changed;
   }
   function disconnectSocial(platformId) {
     var u = current(); if (!u) return;
@@ -196,6 +218,35 @@
     var u = current(); if (!u) return null;
     var f = (u.socials || []).filter(function (s) { return s.platform === platformId; });
     return f.length ? f[0] : null;
+  }
+  // Legacy records (before review existed) are treated as approved.
+  function socialStatus(s) { return s ? (s.status || "approved") : null; }
+  function approvedSocialCount() {
+    var u = current(); if (!u) return 0;
+    return (u.socials || []).filter(function (s) { return socialStatus(s) === "approved"; }).length;
+  }
+
+  /* ---- 本人確認（個人ID）: gates campaigns flagged requiresId ---- */
+  function registerIdentity(name, idNumber) {
+    var u = current(); if (!u) return null;
+    name = String(name || "").trim();
+    var digits = String(idNumber || "").replace(/[^0-9A-Za-z]/g, "");
+    if (!name) throw new Error("氏名を入力してください。");
+    if (digits.length < 6) throw new Error("個人ID（本人確認番号）は6文字以上で入力してください。");
+    // Store only a masked form + the registered flag — never the full number.
+    var masked = "＊＊＊＊" + digits.slice(-4);
+    u.identity = { registered: true, name: name, idMasked: masked, registeredAt: Date.now() };
+    persist(u);
+    return u.identity;
+  }
+  function clearIdentity() {
+    var u = current(); if (!u) return;
+    u.identity = { registered: false };
+    persist(u);
+  }
+  function identityVerified() {
+    var u = current();
+    return !!(u && u.identity && u.identity.registered);
   }
 
   /* earnings computed from the user's registered posts */
@@ -245,10 +296,13 @@
   global.CY = {
     CAMPAIGNS: CAMPAIGNS,
     SOCIAL_PLATFORMS: SOCIAL_PLATFORMS,
+    REVIEW_MS: REVIEW_MS,
     signup: signup, login: login, logout: logout, current: current,
     requireAuth: requireAuth, persist: persist,
     joinCampaign: joinCampaign, addPost: addPost, campaignById: campaignById,
     connectSocial: connectSocial, disconnectSocial: disconnectSocial, socialFor: socialFor,
+    refreshSocialReviews: refreshSocialReviews, socialStatus: socialStatus, approvedSocialCount: approvedSocialCount,
+    registerIdentity: registerIdentity, clearIdentity: clearIdentity, identityVerified: identityVerified,
     earnings: earnings, refLink: refLink,
     yen: yen, num: num, toast: toast, esc: esc
   };
