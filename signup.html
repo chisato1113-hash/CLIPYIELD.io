@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>クリッパー登録 — CLIPYIELD</title>
+<link rel="stylesheet" href="assets/cy.css"/>
+</head>
+<body>
+<div class="note-bar"><div class="wrap"><b>社内デザイン確認用プロトタイプ</b>｜アカウント情報はこのブラウザ内にのみ保存されます（デモ）</div></div>
+
+<nav class="nav">
+  <div class="wrap nav-in">
+    <a class="logo" href="index.html">
+      <svg fill="none" height="26" viewBox="0 0 32 32" width="26">
+        <defs><linearGradient id="lg" x1="0" x2="32" y1="0" y2="32"><stop offset="0" stop-color="#FF7A18"></stop><stop offset="1" stop-color="#FFC93C"></stop></linearGradient></defs>
+        <rect height="30" rx="9" stroke="url(#lg)" stroke-width="2" width="30" x="1" y="1"></rect>
+        <path d="M12 9.5 L22.5 16 L12 22.5 Z" fill="url(#lg)"></path>
+        <path d="M8 12.5 L8 19.5" stroke="url(#lg)" stroke-linecap="round" stroke-width="2.4"></path>
+      </svg>
+      CLIPYIELD
+    </a>
+    <div class="nav-cta">
+      <span style="font-size:13px;color:var(--ink-3)">アカウントをお持ちですか？</span>
+      <a class="btn btn-ghost btn-sm" href="login.html">ログイン</a>
+    </div>
+  </div>
+</nav>
+
+<div class="auth-wrap">
+  <aside class="auth-aside">
+    <div class="eyebrow">Join CLIPYIELD</div>
+    <h2>今日つないで、<br/><span class="grad-text">今日から切り抜ける。</span></h2>
+    <p>公式ライセンスのモーションコミックを切り抜いて、再生報酬とグッズ売上の二階建てで稼ぐ。審査もフォロワー要件もありません。</p>
+    <ul class="auth-points">
+      <li><span class="ck"><svg fill="none" height="12" viewBox="0 0 16 16" width="12"><path d="M3 8.5l3.2 3.2L13 5" stroke="#170C02" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4"></path></svg></span>審査なし・フォロワー数の条件なし</li>
+      <li><span class="ck"><svg fill="none" height="12" viewBox="0 0 16 16" width="12"><path d="M3 8.5l3.2 3.2L13 5" stroke="#170C02" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4"></path></svg></span>最低再生数のしきい値なし・1再生目から加算</li>
+      <li><span class="ck"><svg fill="none" height="12" viewBox="0 0 16 16" width="12"><path d="M3 8.5l3.2 3.2L13 5" stroke="#170C02" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4"></path></svg></span>公式許諾素材のみ・著作権BANの心配なし</li>
+    </ul>
+  </aside>
+
+  <main class="auth-main">
+    <div class="auth-card">
+      <h1>クリッパー登録（無料）</h1>
+      <p class="sub">メールアドレスだけで数分。すぐに案件ボードへアクセスできます。</p>
+
+      <div class="form-err" id="err"></div>
+
+      <form id="form" novalidate>
+        <div class="field">
+          <label for="email">メールアドレス</label>
+          <input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required/>
+        </div>
+        <div class="field">
+          <label for="pass">パスワード</label>
+          <input id="pass" name="pass" type="password" autocomplete="new-password" placeholder="6文字以上" required/>
+          <div class="hint">このデモではパスワードはブラウザ内にのみ保存されます。</div>
+        </div>
+        <div class="field check">
+          <input id="agree" name="agree" type="checkbox"/>
+          <label for="agree"><a href="#" style="color:var(--brand-ink);font-weight:700">利用規約</a>および<a href="#" style="color:var(--brand-ink);font-weight:700">プライバシーポリシー</a>に同意します。</label>
+        </div>
+        <button class="btn btn-primary btn-block" type="submit" id="submit">アカウントを作成</button>
+      </form>
+
+      <div class="auth-alt">すでに登録済みの方は <a href="login.html">ログイン</a></div>
+    </div>
+  </main>
+</div>
+
+<footer class="app-foot">© 2026 CLIPYIELD ・ 社内デザイン確認用プロトタイプ</footer>
+
+<script src="assets/cy.js"></script>
+<script>
+(function(){
+  // already logged in? go to dashboard
+  if (CY.current()) { location.href = "dashboard.html"; return; }
+
+  var form = document.getElementById("form");
+  var err = document.getElementById("err");
+  function showErr(msg){ err.textContent = msg; err.classList.add("on"); }
+
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
+    err.classList.remove("on");
+    var email = document.getElementById("email").value;
+    var pass  = document.getElementById("pass").value;
+    if (!document.getElementById("agree").checked){ showErr("利用規約への同意が必要です。"); return; }
+    try {
+      CY.signup(email, pass);
+      location.href = "dashboard.html?welcome=1";
+    } catch (ex) {
+      showErr(ex.message);
+    }
+  });
+})();
+</script>
+</body>
+</html>
