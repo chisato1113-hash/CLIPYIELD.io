@@ -21,6 +21,8 @@
       CLIPYIELD
     </a>
     <div class="nav-cta">
+      <a class="btn btn-ghost btn-sm" href="client-dashboard.html">📊 ダッシュボード</a>
+      <a class="btn btn-ghost btn-sm" href="client-billing.html">💳 支払い方法</a>
       <span class="nav-user"><span class="av" id="avatar">C</span><span id="orgName">—</span></span>
       <button class="btn btn-ghost btn-sm" id="logout" type="button">ログアウト</button>
     </div>
@@ -36,6 +38,11 @@
 
 <form id="subForm">
 <div class="sub-body">
+
+  <div class="pay-banner" id="payBanner" style="display:none">
+    <span>⚠️ お支払い方法が未登録です。案件を公開するには支払い方法の登録が必要です。</span>
+    <a class="btn btn-primary btn-sm" href="client-billing.html">支払い方法を登録</a>
+  </div>
 
   <!-- 案件名 -->
   <div class="sub-card">
@@ -77,10 +84,10 @@
     </div>
   </div>
 
-  <!-- 2) 支払い再生単価設定 -->
+  <!-- 2) 支払い単価・グッズアフィリエイト -->
   <div class="sub-card">
-    <div class="ch"><span class="no">3</span><h3>支払い再生単価設定</h3></div>
-    <div class="cs">TIER1（再生報酬）の1再生あたり単価と、TIER2（グッズ成果報酬）の料率を設定します。</div>
+    <div class="ch"><span class="no">3</span><h3>支払い単価・グッズアフィリエイト設定</h3></div>
+    <div class="cs">TIER1（再生報酬）の単価とTIER2（グッズ成果報酬）の料率、そしてグッズのアフィリエイトリンクを設定します。</div>
     <div class="sub-grid">
       <div class="field">
         <label for="cpv">TIER1 再生単価（1再生あたり）</label>
@@ -92,6 +99,21 @@
         <div class="in-affix suffix"><input id="rate" type="number" min="30" max="60" step="1" value="60"/><span class="suf">%</span></div>
         <div class="hint">30〜60% の範囲で設定してください。</div>
       </div>
+    </div>
+
+    <div class="field" style="margin-top:18px;margin-bottom:0">
+      <label for="productUrl">グッズ商品／ストアURL</label>
+      <input id="productUrl" type="url" placeholder="https://shop.example.com/products/blade-tee"/>
+      <div class="hint">このURLを起点に、クリッパー配布用のアフィリエイトリンクを自動生成します。</div>
+    </div>
+    <div class="field" style="margin-top:14px;margin-bottom:0">
+      <label for="affLink">グッズアフィリエイトリンク（自動生成）</label>
+      <div class="reflink">
+        <input id="affLink" readonly placeholder="商品URLを入力すると自動生成されます"/>
+        <button class="btn btn-ghost btn-sm" type="button" id="genAff">再生成</button>
+        <button class="btn btn-ghost btn-sm" type="button" id="copyAff">コピー</button>
+      </div>
+      <div class="hint">クリッパーが案件に参加すると、このリンクに各クリッパー固有の識別子（<code>&amp;clip=…</code>）を付与した<b>専用アフィリエイトリンク</b>が発行され、経由購入がそのクリッパーのTIER2成果報酬として自動で紐づきます。</div>
     </div>
   </div>
 
@@ -190,6 +212,9 @@
     CYClient.logout(); location.href = "client-login.html";
   });
 
+  // remind the client to register a payment method
+  if (!CYClient.getBilling()) document.getElementById('payBanner').style.display = 'flex';
+
   /* ---- file storage (names only in demo) ---- */
   var files = [];
   var fileInput = document.getElementById('fileInput');
@@ -222,6 +247,26 @@
     });
   });
 
+  /* ---- goods affiliate link ---- */
+  var productUrl = document.getElementById('productUrl');
+  var affLink = document.getElementById('affLink');
+  function genAffiliate(){
+    affLink.value = CYClient.makeAffiliateBase(productUrl.value);
+  }
+  productUrl.addEventListener('change', function(){
+    if (productUrl.value.trim()) genAffiliate(); else affLink.value = '';
+    update();
+  });
+  document.getElementById('genAff').addEventListener('click', function(){
+    if (!productUrl.value.trim()){ showToast('先にグッズ商品／ストアURLを入力してください'); productUrl.focus(); return; }
+    genAffiliate(); update(); showToast('アフィリエイトリンクを再生成しました');
+  });
+  document.getElementById('copyAff').addEventListener('click', function(){
+    if (!affLink.value){ showToast('先にリンクを生成してください'); return; }
+    if (navigator.clipboard) navigator.clipboard.writeText(affLink.value);
+    showToast('アフィリエイトリンクをコピーしました');
+  });
+
   /* ---- chip toggles ---- */
   function wireChips(id){
     var box = document.getElementById(id);
@@ -248,6 +293,8 @@
       license: $('license').value.trim(),
       cpv: parseFloat($('cpv').value)||0,
       rate: parseInt($('rate').value,10)||0,
+      productUrl: productUrl.value.trim(),
+      affiliateBase: affLink.value.trim(),
       deadline: $('deadline').value,
       budget: parseInt($('budget').value,10)||0,
       sns: getSns(),
@@ -268,6 +315,7 @@
       '<b>タイトル</b>：'+ (d.title||'（未入力）') +'<br>'+
       '<b>素材</b>：'+ d.files.length +' 件<br>'+
       '<b>TIER1 単価</b>：'+ yen(d.cpv).replace('¥','¥') +' / 再生　　<b>TIER2 料率</b>：'+ d.rate +'%<br>'+
+      '<b>グッズアフィリンク</b>：'+ (d.affiliateBase ? '<span style="word-break:break-all">'+d.affiliateBase+'</span>' : '（未生成）') +'<br>'+
       '<b>募集期限</b>：'+ (d.deadline||'（未設定）') +'<br>'+
       '<b>上限予算</b>：'+ (d.budget? yen(d.budget) : '（未設定）') +'<br>'+
       '<b>対象SNS</b>：'+ (d.sns.length? d.sns.join('・') : '（未選択）') +'<br>'+
@@ -286,6 +334,10 @@
     var d = collect();
     if (!d.title){ showToast('案件タイトルを入力してください'); $('title').focus(); return; }
     if (!d.files.length){ showToast('素材を1件以上追加してください'); return; }
+    if (d.rate > 0){
+      if (!d.productUrl){ showToast('グッズ商品／ストアURLを入力してください'); productUrl.focus(); return; }
+      if (!d.affiliateBase){ genAffiliate(); d.affiliateBase = affLink.value.trim(); }
+    }
     if (!d.deadline){ showToast('募集期限を設定してください'); $('deadline').focus(); return; }
     if (!d.sns.length){ showToast('対象SNSを1つ以上選択してください'); return; }
     if (!d.countries.length){ showToast('対象国を1つ以上選択してください'); return; }

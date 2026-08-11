@@ -55,7 +55,13 @@
     ID: { flag: "🇮🇩", name: "インドネシア" },
     PH: { flag: "🇵🇭", name: "フィリピン" },
     VN: { flag: "🇻🇳", name: "ベトナム" },
-    ES: { flag: "🇪🇸", name: "スペイン語圏" }
+    ES: { flag: "🇪🇸", name: "スペイン語圏" },
+    WW: { flag: "🌐", name: "全世界" }
+  };
+  // client 入稿フォームの国名 → 国コード
+  var COUNTRY_NAME_TO_CODE = {
+    "日本": "JP", "アメリカ": "US", "インドネシア": "ID", "タイ": "TH",
+    "韓国": "KR", "台湾": "TW", "中国": "CN", "全世界": "WW"
   };
   function country(code) { return COUNTRIES[code] || { flag: "🏳️", name: code }; }
 
@@ -260,9 +266,56 @@
     return u;
   }
 
+  /* ---- client-submitted campaigns bridge ----
+     Campaigns created in the client 入稿ポータル (localStorage key cy_submissions)
+     are surfaced to clippers here, so a client's グッズアフィリエイトリンク flows all
+     the way through to the clipper's personal referral link and TIER2 purchases. */
+  var ART_BY_CAT = { anime: "a1", manga: "a2", music: "a3", drama: "a4", movie: "a5", youtube: "a3" };
+  function clientCampaigns() {
+    var subs;
+    try { subs = JSON.parse(localStorage.getItem("cy_submissions") || "[]"); }
+    catch (e) { subs = []; }
+    return subs.map(function (s) {
+      var codes = (s.countries || []).map(function (n) { return COUNTRY_NAME_TO_CODE[n] || n; });
+      var daysLeft = 30;
+      if (s.deadline) {
+        daysLeft = Math.max(0, Math.ceil((new Date(s.deadline).getTime() - Date.now()) / 86400000));
+      }
+      var hasMerch = (s.rate || 0) > 0 && !!s.affiliateBase;
+      return {
+        id: s.id,
+        category: s.category || "anime",
+        title: s.title || "無題の案件",
+        meta: "クライアント入稿・" + (s.org || "権利者") + (s.files ? "／素材" + s.files.length + "点" : ""),
+        countries: codes,
+        tier1: s.cpv || 0.03,
+        tier2: s.rate || 0,
+        daysLeft: daysLeft,
+        budgetUsed: 0,
+        status: "new",
+        requiresId: hasMerch,          // グッズ成果報酬あり = 本人確認必須
+        plats: s.sns || [],
+        affiliateBase: s.affiliateBase || "",
+        productUrl: s.productUrl || "",
+        budget: s.budget || 0,
+        source: "client",
+        art: ART_BY_CAT[s.category] || "a1"
+      };
+    });
+  }
+  function allCampaigns() { return CAMPAIGNS.concat(clientCampaigns()); }
+
   /* ---- domain actions ---- */
   function refLink(user, campaignId) {
-    return "https://clip.yield/r/" + user.handle.replace("@", "") + "/" + campaignId;
+    var handle = user.handle.replace("@", "");
+    var c = campaignById(campaignId);
+    // client 案件で グッズアフィリエイトリンクがある場合は、その基点リンクに
+    // クリッパー固有の識別子を付与した「専用アフィリエイトリンク」を発行する。
+    if (c && c.affiliateBase) {
+      var sep = c.affiliateBase.indexOf("?") >= 0 ? "&" : "?";
+      return c.affiliateBase + sep + "clip=" + handle;
+    }
+    return "https://clip.yield/r/" + handle + "/" + campaignId;
   }
 
   function joinCampaign(campaignId) {
@@ -296,7 +349,8 @@
   }
 
   function campaignById(id) {
-    for (var i = 0; i < CAMPAIGNS.length; i++) if (CAMPAIGNS[i].id === id) return CAMPAIGNS[i];
+    var all = allCampaigns();
+    for (var i = 0; i < all.length; i++) if (all[i].id === id) return all[i];
     return null;
   }
 
@@ -437,6 +491,7 @@
     signup: signup, login: login, logout: logout, current: current,
     requireAuth: requireAuth, persist: persist,
     joinCampaign: joinCampaign, addPost: addPost, campaignById: campaignById,
+    clientCampaigns: clientCampaigns, allCampaigns: allCampaigns,
     connectSocial: connectSocial, disconnectSocial: disconnectSocial, socialFor: socialFor,
     refreshSocialReviews: refreshSocialReviews, socialStatus: socialStatus, approvedSocialCount: approvedSocialCount,
     submitKyc: submitKyc, refreshKycReview: refreshKycReview, identityStatus: identityStatus,

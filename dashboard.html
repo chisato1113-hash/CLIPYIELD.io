@@ -281,8 +281,9 @@
 
     // category filter chips (with counts)
     $("board-filters").innerHTML = CY.CATEGORIES.map(function(cat){
-      var n = cat.id === "all" ? CY.CAMPAIGNS.length
-        : CY.CAMPAIGNS.filter(function(c){ return c.category === cat.id; }).length;
+      var _all = CY.allCampaigns();
+      var n = cat.id === "all" ? _all.length
+        : _all.filter(function(c){ return c.category === cat.id; }).length;
       return '<button class="chip ' + (boardFilter===cat.id?"on":"") + '" data-cat="' + cat.id + '" type="button">' +
         CY.esc(cat.name) + '<span class="cnt">' + n + '</span></button>';
     }).join("");
@@ -290,7 +291,7 @@
       b.addEventListener("click", function(){ boardFilter = b.getAttribute("data-cat"); renderBoard(); });
     });
 
-    var list = CY.CAMPAIGNS.filter(function(c){ return boardFilter === "all" || c.category === boardFilter; });
+    var list = CY.allCampaigns().filter(function(c){ return boardFilter === "all" || c.category === boardFilter; });
     if (!list.length){
       $("board-cards").innerHTML = '<div class="empty">このカテゴリーの案件は現在ありません。</div>';
       return;
@@ -304,7 +305,11 @@
         : '<span class="cc-badge"><i class="live-dot"></i>募集中</span>';
       var action;
       if (joined){
-        action = '<div class="reflink"><input readonly value="' + CY.esc(u.joined[c.id].ref) + '"/><button class="btn btn-ghost btn-sm" data-copy="' + CY.esc(u.joined[c.id].ref) + '" type="button">コピー</button></div>' +
+        var linkLabel = c.affiliateBase
+          ? '<div style="font-size:11px;font-weight:700;color:var(--brand-ink);margin-bottom:6px">🛍 あなた専用のグッズアフィリエイトリンク<span style="color:var(--ink-3);font-weight:600">（このリンク経由の購入がTIER2として集計されます）</span></div>'
+          : '<div style="font-size:11px;font-weight:700;color:var(--ink-2);margin-bottom:6px">あなた専用の紹介リンク</div>';
+        action = linkLabel +
+          '<div class="reflink"><input readonly value="' + CY.esc(u.joined[c.id].ref) + '"/><button class="btn btn-ghost btn-sm" data-copy="' + CY.esc(u.joined[c.id].ref) + '" type="button">コピー</button></div>' +
           '<button class="btn btn-primary btn-sm btn-block" data-post="' + c.id + '" type="button" style="margin-top:10px">この案件に投稿を登録</button>';
       } else if (locked){
         action = (idStatus === "pending")
@@ -329,6 +334,7 @@
           '<div class="cc-meta">' + CY.esc(c.meta) + '</div>' +
           '<div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap">' +
             '<span class="cc-cat">' + CY.esc(CY.categoryName(c.category)) + '</span>' + typeTag +
+            (c.source === "client" ? '<span class="badge" style="background:rgba(59,130,246,.14);color:#1D4ED8">クライアント入稿</span>' : '') +
             (c.requiresId ? '<span class="badge badge-lock">本人確認必須</span>' : '') + '</div>' +
           '<div class="cc-rates"><div class="cc-rate"><div class="k">TIER 1</div><div class="v">¥' + c.tier1 + '<small> /再生</small></div></div>' +
             '<div class="cc-rate"><div class="k">TIER 2</div>' + tier2Cell + '</div></div>' +
@@ -551,7 +557,7 @@
   var modal = $("modal");
   function joinedCampaignOptions(){
     var u = CY.current();
-    return CY.CAMPAIGNS.filter(function(c){ return u.joined && u.joined[c.id]; });
+    return CY.allCampaigns().filter(function(c){ return u.joined && u.joined[c.id]; });
   }
   // Disable the merch-sales field when the chosen campaign has no TIER2.
   function updateModalSalesState(){
