@@ -24,10 +24,15 @@ clipyield-site/
 ├── client.html            # クライアント案件入稿フォーム
 ├── client-dashboard.html  # クライアント案件進捗ダッシュボード（META風・日次/週次/月次）
 ├── client-billing.html    # クライアント支払い方法登録（カード／銀行振込）
+├── column.html            # 公開コラム一覧（SEO・クリッパー募集）
+├── article.html           # コラム記事詳細（?slug=…・SEOメタ/JSON-LD動的注入）
+├── admin-login.html       # 運営ログイン（コラム管理）
+├── admin.html             # 運営管理画面：記事のCRUD＋AI下書き生成
 ├── assets/
-│   ├── cy.css          # 共有デザインシステム（全ページ・法務・入稿・分析・決済UIを含む）
+│   ├── cy.css          # 共有デザインシステム（全ページ・法務・入稿・分析・決済・コラムUI）
 │   ├── cy.js           # クリッパー側の認証・データ層（localStorage）＋入稿案件の橋渡し
-│   └── client.js       # クライアント側の認証・入稿・アフィリンク・分析・支払い方法データ層
+│   ├── client.js       # クライアント側の認証・入稿・アフィリンク・分析・支払い方法データ層
+│   └── column.js       # コラムのデータ層＋Markdown＋運営認証＋AI連携シーム
 └── README.md
 ```
 
@@ -119,6 +124,49 @@ META の広告管理画面を参考にした、案件別の進捗ビューです
 > 番号は保持せず（`client.js` は brand + last4 のみ保存）、本番では PCI DSS 準拠の決済代行
 > （Stripe / GMO 等）でトークン化して扱う前提です。デモ用テスト番号 `4242 4242 4242 4242`
 > で動作確認できます。
+
+## SEOコラム（クリッパー募集）と運営管理画面
+
+クリッパー募集用のSEOコラムと、その運営管理画面（記事CRUD）です。データ層は `column.js`。
+
+### 公開側（SEO対策）
+
+- `column.html` … 記事一覧。カテゴリー絞り込み、カードグリッド、`Blog` の JSON-LD。
+- `article.html?slug=<slug>` … 記事詳細。読み込み時に **title / meta description / OGP /
+  Twitter Card / canonical / JSON-LD（`BlogPosting` ＋ `BreadcrumbList`）** を動的注入。
+  本文は軽量Markdown（見出し・リスト・引用・リンク・画像・強調）を安全にHTML化（XSS対策済み）。
+  末尾にクリッパー登録CTAと関連記事。
+
+> ⚠️ SEOの本番運用では、クライアント側レンダリングよりも **静的生成（SSG）/ SSR** で
+> 記事HTMLを事前生成する方が確実です。本デモは localStorage ＋ JS描画のため、将来は
+> ヘッドレスCMS / SSG（記事データは同じスキーマ）へ移行する前提です。
+
+### 運営管理画面（`admin-login.html` → `admin.html`）
+
+- 記事の **作成・編集・削除**、**下書き／公開** の切り替え、公開前プレビュー（`?preview=1`）。
+- 設定項目：タイトル・スラッグ（自動）・カテゴリー・タグ・**カバー画像（URL または
+  アップロード＝base64、1.5MBまで）**・抜粋・本文（Markdown＋ライブプレビュー）・
+  **SEOメタ（SEOタイトル／メタディスクリプション／キーワード）**。
+
+```
+運営デモログイン →  ID: admin  /  PASS: clipyield-admin
+```
+
+### SEO記事作成AIとの連携（将来）
+
+管理画面の「🤖 SEO記事作成AI（下書き生成）」は、トピック／キーワードから下書きを生成します。
+現状は `column.js` の `CYColumn.ai.generate()` によるローカルのテンプレ生成（デモ）ですが、
+**手動フローとAIフローが同じコードパスを通る**よう設計しています：
+
+```
+AIが下書き生成  → CYColumn.createDraft({source:"ai", ...})
+（任意で人がレビュー/編集）→ CYColumn.save(article)
+公開（手動 or 自動）→ CYColumn.publish(id)
+```
+
+本番連携は `AI_CONFIG.endpoint` を設定し、`aiGenerate()` 内の `fetch()`（コメントで明示した
+INTEGRATION POINT）を実APIやMCPツールに差し替えるだけで、生成→レビュー→公開の自動フローが回ります。
+`AI_CONFIG.autoPublish` を `true` にすればレビューなしの自動公開も可能です。
 
 ## ローカルで確認する
 
