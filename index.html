@@ -350,6 +350,7 @@ footer{border-top:1px solid var(--line);padding:64px 0 44px;background:var(--bg-
 }
 @media(max-width:820px){
   .nav-links{display:none}
+  .nav-cta .btn-ghost{display:none}
   section{padding:76px 0}
   .tier-wrap,.vs,.faq{grid-template-columns:1fr}
   .strip-in{grid-template-columns:1fr}
@@ -372,6 +373,28 @@ footer{border-top:1px solid var(--line);padding:64px 0 44px;background:var(--bg-
   .pill b{font-size:9.5px;padding:3px 8px}
   .hero-bg .glow-a,.hero-bg .glow-b{opacity:.55}
 }
+/* ===== mobile hamburger menu ===== */
+.nav-burger{display:flex;flex-direction:column;justify-content:center;gap:5px;width:42px;height:38px;
+  border:1px solid var(--line-strong);border-radius:11px;background:var(--surface);cursor:pointer;padding:0 10px;flex:0 0 auto}
+.nav-burger span{display:block;height:2px;width:100%;background:var(--ink);border-radius:2px;
+  transition:transform .26s ease,opacity .2s ease}
+.nav-burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-burger.open span:nth-child(2){opacity:0}
+.nav-burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.nav-mobile{position:absolute;top:100%;left:0;right:0;background:var(--bg);border-bottom:1px solid var(--line);
+  box-shadow:0 24px 46px -22px rgba(16,24,40,.4);display:flex;flex-direction:column;max-height:calc(100vh - 66px);overflow-y:auto;
+  opacity:0;visibility:hidden;transform:translateY(-8px);pointer-events:none;
+  transition:opacity .2s ease,transform .22s ease,visibility .2s}
+.nav-mobile.open{opacity:1;visibility:visible;transform:translateY(0);pointer-events:auto}
+.nav-mobile a[href]{padding:15px 24px;font-size:15.5px;font-weight:600;color:var(--ink);border-bottom:1px solid var(--line)}
+.nav-mobile a[href]:active{background:var(--surface-2)}
+.nav-mobile .nav-mobile-cta{display:flex;flex-direction:column;gap:10px;padding:16px 20px 20px}
+.nav-mobile .nav-mobile-cta .btn{width:100%;height:48px;font-size:14.5px}
+.nav-scrim{position:fixed;inset:0;background:rgba(16,24,40,.4);z-index:55;opacity:0;visibility:hidden;
+  transition:opacity .2s ease,visibility .2s}
+.nav-scrim.open{opacity:1;visibility:visible}
+@media(min-width:821px){ .nav-burger,.nav-mobile,.nav-scrim{display:none} }
+
 /* ===== language switcher ===== */
 .lang{display:flex;align-items:center;gap:2px;padding:3px;border:1px solid var(--line-strong);border-radius:999px;background:var(--surface-2)}
 .lang-b{appearance:none;-webkit-appearance:none;border:0;background:transparent;color:var(--ink-3);font-family:inherit;font-size:12px;font-weight:700;letter-spacing:.02em;padding:5px 10px;border-radius:999px;cursor:pointer;line-height:1;white-space:nowrap;transition:color .15s ease,background .15s ease,box-shadow .15s ease}
@@ -427,9 +450,43 @@ html[lang="en"] body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Rob
 <div aria-label="Language" class="lang" role="group"><button class="lang-b is-on" data-lang="ja" type="button"><span class="l-full">日本語</span><span class="l-abbr">JA</span></button><button class="lang-b" data-lang="en" type="button"><span class="l-full">EN</span><span class="l-abbr">EN</span></button><button class="lang-b" data-lang="zh" type="button"><span class="l-full">中文</span><span class="l-abbr">中</span></button></div>
 <a class="btn btn-ghost btn-sm" data-i18n="t008" href="login.html">ログイン</a>
 <a class="btn btn-primary btn-sm" data-i18n="t009" href="signup.html">無料ではじめる</a>
+<button class="nav-burger" id="navBurger" type="button" aria-label="メニュー" aria-controls="navMobile" aria-expanded="false">
+<span></span><span></span><span></span>
+</button>
+</div>
+<div class="nav-mobile" id="navMobile">
+<a data-i18n="t003" href="#rewards">報酬モデル</a>
+<a data-i18n="t004" href="#board">案件ボード</a>
+<a data-i18n="t005" href="#why">CLIPYIELDの違い</a>
+<a data-i18n="t006" href="#how">はじめ方</a>
+<a data-i18n="t007" href="#faq">FAQ</a>
+<a data-i18n="t280" href="column.html">コラム</a>
+<div class="nav-mobile-cta">
+<a class="btn btn-ghost" data-i18n="t008" href="login.html">ログイン</a>
+<a class="btn btn-primary" data-i18n="t009" href="signup.html">無料ではじめる</a>
 </div>
 </div>
+</div>
+<div class="nav-scrim" id="navScrim"></div>
 </nav>
+<script>
+(function(){
+  var burger=document.getElementById('navBurger'), panel=document.getElementById('navMobile'), scrim=document.getElementById('navScrim');
+  if(!burger||!panel) return;
+  function set(open){
+    burger.classList.toggle('open',open);
+    panel.classList.toggle('open',open);
+    scrim.classList.toggle('open',open);
+    burger.setAttribute('aria-expanded',open?'true':'false');
+    document.body.style.overflow=open?'hidden':'';
+  }
+  burger.addEventListener('click',function(){ set(!panel.classList.contains('open')); });
+  scrim.addEventListener('click',function(){ set(false); });
+  panel.querySelectorAll('a[href]').forEach(function(a){ a.addEventListener('click',function(){ set(false); }); });
+  window.addEventListener('keydown',function(e){ if(e.key==='Escape') set(false); });
+  window.addEventListener('resize',function(){ if(window.innerWidth>820) set(false); });
+})();
+</script>
 <!-- ============ HERO ============ -->
 <header class="hero" id="top">
 <div class="hero-bg">
