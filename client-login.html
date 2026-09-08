@@ -10,82 +10,82 @@
 <div class="note-bar"><div class="wrap"><b>社内デザイン確認用プロトタイプ</b>｜クライアント入稿ポータル。アカウント情報はこのブラウザ内にのみ保存されます（デモ）。</div></div>
 
 <nav class="nav">
-  <div class="wrap nav-in">
-    <a class="logo" href="index.html">
-      <svg fill="none" height="26" viewBox="0 0 32 32" width="26">
-        <defs><linearGradient id="lg" x1="0" x2="32" y1="0" y2="32"><stop offset="0" stop-color="#FF7A18"></stop><stop offset="1" stop-color="#FFC93C"></stop></linearGradient></defs>
-        <rect height="30" rx="9" stroke="url(#lg)" stroke-width="2" width="30" x="1" y="1"></rect>
-        <path d="M12 9.5 L22.5 16 L12 22.5 Z" fill="url(#lg)"></path>
-        <path d="M8 12.5 L8 19.5" stroke="url(#lg)" stroke-linecap="round" stroke-width="2.4"></path>
-      </svg>
-      CLIPYIELD
-    </a>
-    <div class="nav-cta">
-      <span style="font-size:13px;color:var(--ink-3)">クリッパーの方は</span>
-      <a class="btn btn-ghost btn-sm" href="login.html">クリッパーログイン</a>
-    </div>
-  </div>
+ <div class="wrap nav-in">
+ <a class="logo" href="index.html">
+ <svg fill="none" height="26" viewBox="0 0 32 32" width="26">
+ <defs><linearGradient id="lg" x1="0" x2="32" y1="0" y2="32"><stop offset="0" stop-color="#FA6216"></stop><stop offset="1" stop-color="#FA6216"></stop></linearGradient></defs>
+ <rect height="30" rx="9" stroke="url(#lg)" stroke-width="2" width="30" x="1" y="1"></rect>
+ <path d="M12 9.5 L22.5 16 L12 22.5 Z" fill="url(#lg)"></path>
+ <path d="M8 12.5 L8 19.5" stroke="url(#lg)" stroke-linecap="round" stroke-width="2.4"></path>
+ </svg>
+ CLIPYIELD
+ </a>
+ <div class="nav-cta">
+ <span style="font-size:13px;color:var(--ink-3)">クリッパーの方は</span>
+ <a class="btn btn-ghost btn-sm" href="login.html">クリッパーログイン</a>
+ </div>
+ </div>
 </nav>
 
 <div class="auth-wrap">
-  <aside class="auth-aside">
-    <div class="eyebrow">For clients / rights holders</div>
-    <h2>案件を、<br/><span class="grad-text">CLIPYIELDへ入稿。</span></h2>
-    <p>権利者・広告主向けの入稿ポータルです。素材と条件を登録するだけで、審査後にクリッパーへ案件として公開されます。</p>
-    <ul class="auth-points">
-      <li><span class="ck"><svg fill="none" height="12" viewBox="0 0 16 16" width="12"><path d="M3 8.5l3.2 3.2L13 5" stroke="#170C02" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4"></path></svg></span>素材の格納と許諾範囲の設定</li>
-      <li><span class="ck"><svg fill="none" height="12" viewBox="0 0 16 16" width="12"><path d="M3 8.5l3.2 3.2L13 5" stroke="#170C02" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4"></path></svg></span>再生単価・上限予算・期限の指定</li>
-      <li><span class="ck"><svg fill="none" height="12" viewBox="0 0 16 16" width="12"><path d="M3 8.5l3.2 3.2L13 5" stroke="#170C02" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4"></path></svg></span>対象SNS・対象国・NG事項の指定</li>
-    </ul>
-  </aside>
+ <aside class="auth-aside">
+ <div class="eyebrow">For clients / rights holders</div>
+ <h2>案件を、<br/><span class="grad-text">CLIPYIELDへ入稿。</span></h2>
+ <p>権利者・広告主向けの入稿ポータルです。素材と条件を登録するだけで、審査後にクリッパーへ案件として公開されます。</p>
+ <ul class="auth-points">
+ <li><span class="ck"><svg fill="none" height="12" viewBox="0 0 16 16" width="12"><path d="M3 8.5l3.2 3.2L13 5" stroke="#170C02" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4"></path></svg></span>素材の格納と許諾範囲の設定</li>
+ <li><span class="ck"><svg fill="none" height="12" viewBox="0 0 16 16" width="12"><path d="M3 8.5l3.2 3.2L13 5" stroke="#170C02" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4"></path></svg></span>再生単価・上限予算・期限の指定</li>
+ <li><span class="ck"><svg fill="none" height="12" viewBox="0 0 16 16" width="12"><path d="M3 8.5l3.2 3.2L13 5" stroke="#170C02" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4"></path></svg></span>対象SNS・対象国・NG事項の指定</li>
+ </ul>
+ </aside>
 
-  <main class="auth-main">
-    <div class="auth-card">
-      <h1>クライアントログイン</h1>
-      <p class="sub">発行されたクライアントID／パスワードを入力してください。</p>
+ <main class="auth-main">
+ <div class="auth-card">
+ <h1>クライアントログイン</h1>
+ <p class="sub">発行されたクライアントID／パスワードを入力してください。</p>
 
-      <div class="form-err" id="err"></div>
+ <div class="form-err" id="err"></div>
 
-      <form id="form" novalidate>
-        <div class="field">
-          <label for="cid">クライアントID</label>
-          <input id="cid" name="cid" type="text" autocomplete="username" placeholder="例：clip-demo" required/>
-        </div>
-        <div class="field">
-          <label for="cpass">パスワード</label>
-          <input id="cpass" name="cpass" type="password" autocomplete="current-password" placeholder="パスワード" required/>
-        </div>
-        <button class="btn btn-primary btn-block" type="submit">ログインして入稿へ</button>
-      </form>
+ <form id="form" novalidate>
+ <div class="field">
+ <label for="cid">クライアントID</label>
+ <input id="cid" name="cid" type="text" autocomplete="username" placeholder="例：clip-demo" required/>
+ </div>
+ <div class="field">
+ <label for="cpass">パスワード</label>
+ <input id="cpass" name="cpass" type="password" autocomplete="current-password" placeholder="パスワード" required/>
+ </div>
+ <button class="btn btn-primary btn-block" type="submit">ログインして入稿へ</button>
+ </form>
 
-      <div class="divider">デモ用アカウント</div>
-      <div class="field" style="background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:13px 15px;margin-bottom:0">
-        <div style="font-size:12.5px;color:var(--ink-2);line-height:1.9">
-          ID：<b>clip-demo</b>　/　PASS：<b>clip1234</b><br/>
-          <span style="color:var(--ink-3)">上記はレビュー用のサンプルです。</span>
-        </div>
-      </div>
-    </div>
-  </main>
+ <div class="divider">デモ用アカウント</div>
+ <div class="field" style="background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:13px 15px;margin-bottom:0">
+ <div style="font-size:12.5px;color:var(--ink-2);line-height:1.9">
+ ID：<b>clip-demo</b>　/　PASS：<b>clip1234</b><br/>
+ <span style="color:var(--ink-3)">上記はレビュー用のサンプルです。</span>
+ </div>
+ </div>
+ </div>
+ </main>
 </div>
 
 <script src="assets/client.js"></script>
 <script>
 (function(){
-  CYClient.seed();
-  // already logged in? go straight to the form
-  if (CYClient.current()) { location.href = "client.html"; return; }
-  var form = document.getElementById('form');
-  var err = document.getElementById('err');
-  form.addEventListener('submit', function(e){
-    e.preventDefault();
-    err.classList.remove('on');
-    var id = document.getElementById('cid').value;
-    var pass = document.getElementById('cpass').value;
-    var r = CYClient.login(id, pass);
-    if (!r.ok) { err.textContent = r.error; err.classList.add('on'); return; }
-    location.href = "client.html";
-  });
+ CYClient.seed();
+ // already logged in? go straight to the form
+ if (CYClient.current()) { location.href = "client.html"; return; }
+ var form = document.getElementById('form');
+ var err = document.getElementById('err');
+ form.addEventListener('submit', function(e){
+ e.preventDefault();
+ err.classList.remove('on');
+ var id = document.getElementById('cid').value;
+ var pass = document.getElementById('cpass').value;
+ var r = CYClient.login(id, pass);
+ if (!r.ok) { err.textContent = r.error; err.classList.add('on'); return; }
+ location.href = "client.html";
+ });
 })();
 </script>
 </body>

@@ -4,29 +4,35 @@
    dashboard so they match the same visual language.
    モノクロ基調＋オレンジ差し色（clipping.net 参考）。
    ========================================================================== */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 :root{
-  --bg:#FFFFFF;
-  --bg-2:#F7F8FA;
+  /* CLIPYIELD Design Language v1.1 — MONOCHROME = platform / ORANGE = yield */
+  --bg:#FCFCFD;          /* cool near-white */
+  --bg-2:#F3F4F6;
   --surface:#FFFFFF;
-  --surface-2:#F7F9FC;
-  --line:rgba(10,10,12,.09);
-  --line-strong:rgba(10,10,12,.16);
-  --ink:#0A0A0B;
-  --ink-2:#41474F;
-  --ink-3:#767C86;
-  --brand-1:#FF6A00;
-  --brand-2:#FF8A1E;
-  --brand-ink:#E85D00;
-  --ok:#0E9F6E;
-  --danger:#E02424;
-  /* オレンジは差し色（アクセント）。土台はモノクロ。 */
-  --grad:linear-gradient(100deg,#FF6A00 0%,#FF8A1E 100%);
-  --grad-ink:linear-gradient(100deg,#E85D00 0%,#FF8A1E 100%);
-  --radius:16px;
+  --surface-2:#F3F4F6;
+  --line:#E4E6EA;        /* hairline */
+  --line-strong:#CFD2D8;
+  --ink:#0B0D0F;         /* text primary / dark surfaces */
+  --ink-2:#494F57;
+  --ink-3:#878E98;
+  --brand-1:#FA6216;     /* Yield orange (the ONE accent) */
+  --brand-2:#FA6216;
+  --brand-ink:#B8460C;   /* orange as TEXT on light (AA) */
+  --brand-hover:#E24E08;
+  --ok:#1F9D57;
+  --danger:#D23B2E;
+  --warning:#C98A00;
+  /* Orange is a semantic Yield signal — never a gradient wash. Flattened to solid. */
+  --grad:#FA6216;
+  --grad-ink:#B8460C;
+  --radius:14px;
   --maxw:1180px;
   --jp:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP","Yu Gothic",sans-serif;
+  --display:"Bricolage Grotesque","Inter",-apple-system,BlinkMacSystemFont,var(--jp);
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
   --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,var(--jp);
+  color-scheme:light;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
@@ -35,25 +41,31 @@ body{
   -webkit-font-smoothing:antialiased;line-height:1.6;letter-spacing:.01em;
 }
 a{color:inherit;text-decoration:none}
+h1,h2,h3,h4{font-family:var(--display);letter-spacing:-.02em;line-height:1.12}
 .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
-.grad-text{background:var(--grad-ink);-webkit-background-clip:text;background-clip:text;color:transparent}
-.eyebrow{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-3);font-weight:700}
+.grad-text{color:var(--brand-ink)}
+.eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);font-weight:500}
+/* Number Typography helpers — YIELD=Bricolage / PLATFORM=Inter / SYSTEM=mono */
+.num-y{font-family:var(--display);font-weight:700;letter-spacing:-.015em;font-variant-numeric:tabular-nums}
+.num-ui{font-family:var(--sans);font-variant-numeric:tabular-nums}
+.num-sys{font-family:var(--mono);font-variant-numeric:tabular-nums}
 
 /* ---------- buttons ---------- */
 .btn{
   display:inline-flex;align-items:center;justify-content:center;gap:8px;
-  border-radius:12px;font-weight:800;font-size:14px;letter-spacing:-.01em;
+  border-radius:12px;font-weight:600;font-size:14px;letter-spacing:0;
   padding:13px 22px;border:1px solid transparent;white-space:nowrap;cursor:pointer;
-  font-family:inherit;
-  transition:transform .16s ease,box-shadow .16s ease,background .16s ease,border-color .16s ease,color .16s ease;
+  font-family:var(--sans);
+  transition:background .16s ease,border-color .16s ease,color .16s ease,transform .05s ease;
 }
-/* 主ボタン＝黒。差し色オレンジは .btn-accent。 */
-.btn-primary{background:var(--ink);color:#fff;box-shadow:0 10px 24px -12px rgba(10,10,11,.5)}
-.btn-primary:hover{transform:translateY(-1px);box-shadow:0 16px 34px -14px rgba(10,10,11,.55)}
-.btn-accent{background:var(--grad);color:#1A0E00;box-shadow:0 10px 26px -12px rgba(255,106,0,.6)}
-.btn-accent:hover{transform:translateY(-1px);box-shadow:0 16px 38px -14px rgba(255,106,0,.7)}
+.btn:active{transform:translateY(1px)}
+/* Primary = ink (monochrome). Yield accent = .btn-accent (orange, no gradient/glow). */
+.btn-primary{background:var(--ink);color:#fff}
+.btn-primary:hover{background:#000}
+.btn-accent{background:var(--brand-1);color:#fff}
+.btn-accent:hover{background:var(--brand-hover)}
 .btn-ghost{border-color:var(--line-strong);color:var(--ink);background:transparent}
-.btn-ghost:hover{border-color:var(--ink);background:rgba(10,10,11,.03)}
+.btn-ghost:hover{border-color:var(--ink);background:rgba(11,13,15,.03)}
 .btn-sm{padding:9px 16px;font-size:13px;border-radius:10px}
 .btn-block{width:100%}
 .btn:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
@@ -76,8 +88,8 @@ a{color:inherit;text-decoration:none}
 .auth-aside{
   position:relative;overflow:hidden;padding:64px 56px;color:var(--ink);
   background:
-    radial-gradient(120% 90% at 100% 0%,rgba(255,140,30,.16),transparent 60%),
-    linear-gradient(160deg,#FFF6EE 0%,#F5F8FC 70%);
+    radial-gradient(120% 90% at 100% 0%,rgba(250,98,22,.06),transparent 60%),
+    linear-gradient(160deg,#EFF1F4 0%,#FCFCFD 74%);
   border-right:1px solid var(--line);
   display:flex;flex-direction:column;justify-content:center;
 }
@@ -101,7 +113,7 @@ a{color:inherit;text-decoration:none}
   font-size:14.5px;font-family:inherit;color:var(--ink);background:var(--surface);
   transition:border-color .15s ease,box-shadow .15s ease;
 }
-.field input:focus{outline:none;border-color:var(--brand-1);box-shadow:0 0 0 3px rgba(255,140,30,.16)}
+.field input:focus{outline:none;border-color:var(--brand-1);box-shadow:0 0 0 3px rgba(250,98,22,.06)}
 .field .hint{font-size:11.5px;color:var(--ink-3);margin-top:6px}
 .field.check{display:flex;align-items:flex-start;gap:10px}
 .field.check input{margin-top:3px;width:16px;height:16px;accent-color:var(--brand-1);flex:0 0 16px}
@@ -187,7 +199,7 @@ a{color:inherit;text-decoration:none}
 .badge{display:inline-flex;align-items:center;gap:6px;font-size:10.5px;font-weight:800;letter-spacing:.04em;
   padding:4px 9px;border-radius:999px}
 .badge-joined{background:rgba(14,159,110,.12);color:#0B7A55}
-.badge-open{background:rgba(255,160,40,.16);color:#C2410C}
+.badge-open{background:rgba(250,98,22,.16);color:#C2410C}
 
 /* referral / posts table */
 .reflink{display:flex;gap:8px;align-items:center;margin-top:10px}
@@ -220,7 +232,7 @@ a{color:inherit;text-decoration:none}
 .social-action{margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
 .social-action input{border:1px solid var(--line-strong);border-radius:10px;padding:9px 12px;font-size:13px;
   font-family:inherit;color:var(--ink);background:var(--surface);width:180px;max-width:52vw}
-.social-action input:focus{outline:none;border-color:var(--brand-1);box-shadow:0 0 0 3px rgba(255,140,30,.16)}
+.social-action input:focus{outline:none;border-color:var(--brand-1);box-shadow:0 0 0 3px rgba(250,98,22,.06)}
 .badge-verified{background:rgba(14,159,110,.12);color:#0B7A55}
 .badge-pending{background:rgba(217,119,6,.14);color:#B45309}
 .badge-lock{background:rgba(16,24,40,.06);color:var(--ink-2)}
@@ -232,7 +244,7 @@ a{color:inherit;text-decoration:none}
 
 /* inline banner (identity gate on the board) */
 .cy-banner{display:flex;align-items:center;gap:14px;flex-wrap:wrap;
-  border:1px solid rgba(217,119,6,.32);background:rgba(255,160,40,.10);
+  border:1px solid rgba(217,119,6,.32);background:rgba(250,98,22,.10);
   border-radius:14px;padding:14px 18px;margin-bottom:20px}
 .cy-banner .bt{font-size:13.5px;font-weight:700;color:#B45309}
 .cy-banner .bp{font-size:12px;color:var(--ink-2);margin-top:2px}
@@ -272,13 +284,13 @@ a{color:inherit;text-decoration:none}
   padding:16px 18px;cursor:pointer;transition:border-color .15s ease,background .15s ease}
 .doctype label:hover{border-color:rgba(16,24,40,.32)}
 .doctype input{accent-color:var(--brand-1);width:18px;height:18px;flex:0 0 18px}
-.doctype label.sel{border-color:var(--brand-1);background:rgba(255,140,30,.06)}
+.doctype label.sel{border-color:var(--brand-1);background:rgba(250,98,22,.06)}
 .doctype .dn{font-weight:700;font-size:14.5px}
 .doctype .dd{font-size:12px;color:var(--ink-3);margin-top:2px}
 
 .uploader{border:1.5px dashed var(--line-strong);border-radius:16px;padding:26px;text-align:center;
   background:rgba(16,24,40,.015);cursor:pointer;transition:border-color .15s ease,background .15s ease}
-.uploader:hover{border-color:var(--brand-1);background:rgba(255,140,30,.04)}
+.uploader:hover{border-color:var(--brand-1);background:rgba(250,98,22,.04)}
 .uploader.filled{border-style:solid;border-color:var(--ok);background:rgba(14,159,110,.04)}
 .uploader .up-ic{width:44px;height:44px;border-radius:12px;margin:0 auto 12px;display:grid;place-items:center;
   background:rgba(16,24,40,.06);font-size:20px}
@@ -336,15 +348,15 @@ footer.app-foot{border-top:1px solid var(--line);padding:26px 0;background:var(-
    Legal document pages (terms / clipper-terms / privacy / tokushoho)
    ========================================================================== */
 .legal-hero{background:
-    radial-gradient(120% 90% at 100% 0%,rgba(255,140,30,.14),transparent 60%),
-    linear-gradient(160deg,#FFF6EE 0%,#F7F9FC 72%);
+    radial-gradient(120% 90% at 100% 0%,rgba(250,98,22,.06),transparent 60%),
+    linear-gradient(160deg,#EFF1F4 0%,#FCFCFD 74%);
   border-bottom:1px solid var(--line);padding:52px 0 40px}
 .legal-hero .eyebrow{margin-bottom:14px}
 .legal-hero h1{font-size:clamp(26px,3.6vw,40px);font-weight:800;letter-spacing:-.04em;line-height:1.12}
 .legal-hero .meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
 .legal-hero .badge{font-size:11.5px;font-weight:700;color:var(--ink-2);background:var(--surface);
   border:1px solid var(--line-strong);border-radius:999px;padding:6px 13px}
-.legal-hero .badge.warn{color:var(--brand-ink);border-color:rgba(217,72,15,.35);background:rgba(255,140,30,.08)}
+.legal-hero .badge.warn{color:var(--brand-ink);border-color:rgba(217,72,15,.35);background:rgba(250,98,22,.08)}
 
 .legal-wrap{max-width:var(--maxw);margin:0 auto;padding:40px 28px 90px;
   display:grid;grid-template-columns:240px 1fr;gap:48px;align-items:start}
@@ -357,7 +369,7 @@ footer.app-foot{border-top:1px solid var(--line);padding:26px 0;background:var(-
 .legal-toc a.on{color:var(--brand-ink);border-left-color:var(--brand-1);font-weight:700}
 
 .legal-doc{min-width:0;max-width:760px}
-.legal-callout{border:1px solid rgba(217,72,15,.28);background:rgba(255,140,30,.06);
+.legal-callout{border:1px solid rgba(217,72,15,.28);background:rgba(250,98,22,.06);
   border-radius:14px;padding:16px 18px;font-size:13px;color:var(--ink-2);line-height:1.85;margin-bottom:34px}
 .legal-callout b{color:var(--brand-ink)}
 .legal-doc section{scroll-margin-top:86px;margin-bottom:36px}
@@ -397,7 +409,7 @@ mark.todo{background:rgba(255,203,60,.32);color:var(--brand-ink);font-weight:700
 .legal-related a{border:1px solid var(--line);border-radius:14px;padding:16px;background:var(--surface);
   transition:border-color .15s ease,transform .15s ease,box-shadow .15s ease;display:block}
 .legal-related a:hover{border-color:var(--brand-1);transform:translateY(-2px);
-  box-shadow:0 14px 34px -20px rgba(255,140,30,.6)}
+  box-shadow:0 14px 34px -20px rgba(250,98,22,.6)}
 .legal-related a .k{font-size:11px;color:var(--ink-3);font-weight:700;letter-spacing:.04em}
 .legal-related a .n{font-size:14px;font-weight:800;color:var(--ink);margin-top:4px}
 .legal-related a .d{font-size:12px;color:var(--ink-3);margin-top:6px;line-height:1.6}
@@ -430,7 +442,7 @@ mark.todo{background:rgba(255,203,60,.32);color:var(--brand-ink);font-weight:700
 .field textarea{min-height:110px;resize:vertical;line-height:1.7}
 .field textarea:focus,.field select:focus,
 .field input[type=number]:focus,.field input[type=date]:focus{
-  outline:none;border-color:var(--brand-1);box-shadow:0 0 0 3px rgba(255,140,30,.16)}
+  outline:none;border-color:var(--brand-1);box-shadow:0 0 0 3px rgba(250,98,22,.06)}
 .field .in-affix{position:relative;display:flex;align-items:center}
 .field .in-affix .pre,.field .in-affix .suf{position:absolute;color:var(--ink-3);font-size:13px;font-weight:700;pointer-events:none}
 .field .in-affix .pre{left:15px}.field .in-affix .suf{right:15px}
@@ -442,7 +454,7 @@ mark.todo{background:rgba(255,203,60,.32);color:var(--brand-ink);font-weight:700
   user-select:none;transition:border-color .15s ease,background .15s ease,color .15s ease}
 .chip input{position:absolute;opacity:0;width:0;height:0}
 .chip:hover{border-color:rgba(16,24,40,.3)}
-.chip.on{border-color:var(--brand-1);background:rgba(255,140,30,.08);color:var(--brand-ink)}
+.chip.on{border-color:var(--brand-1);background:rgba(250,98,22,.08);color:var(--brand-ink)}
 .chip .cx{width:16px;height:16px;border-radius:5px;border:1.5px solid var(--line-strong);
   display:grid;place-items:center;font-size:10px;color:#fff;background:transparent;transition:.15s}
 .chip.on .cx{background:var(--brand-1);border-color:var(--brand-1)}
@@ -468,7 +480,7 @@ mark.todo{background:rgba(255,203,60,.32);color:var(--brand-ink);font-weight:700
 .cd-topbar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:22px}
 .cd-select{border:1px solid var(--line-strong);border-radius:12px;padding:11px 14px;font-size:14px;
   font-family:inherit;background:var(--surface);color:var(--ink);font-weight:700;min-width:240px}
-.cd-select:focus{outline:none;border-color:var(--brand-1);box-shadow:0 0 0 3px rgba(255,140,30,.16)}
+.cd-select:focus{outline:none;border-color:var(--brand-1);box-shadow:0 0 0 3px rgba(250,98,22,.06)}
 .seg{display:inline-flex;background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:4px}
 .seg button{appearance:none;border:0;background:transparent;font-family:inherit;font-weight:700;font-size:13px;
   color:var(--ink-3);padding:8px 18px;border-radius:999px;cursor:pointer;transition:.15s}
@@ -537,7 +549,7 @@ mark.todo{background:rgba(255,203,60,.32);color:var(--brand-ink);font-weight:700
 .cd-grid .card{min-width:0}
 
 /* ---------- client payment method registration ---------- */
-.pay-warn{border:1px solid rgba(217,72,15,.28);background:rgba(255,140,30,.06);border-radius:12px;
+.pay-warn{border:1px solid rgba(217,72,15,.28);background:rgba(250,98,22,.06);border-radius:12px;
   padding:12px 15px;font-size:12px;color:var(--brand-ink);line-height:1.7;margin-bottom:20px}
 .pay-forms > div{display:none}
 .pay-forms > div.on{display:block}
@@ -546,7 +558,7 @@ mark.todo{background:rgba(255,203,60,.32);color:var(--brand-ink);font-weight:700
 .saved-method{border:1px solid var(--line);border-radius:16px;background:
   linear-gradient(135deg,#12161F 0%,#232A3A 100%);color:#fff;padding:20px 22px;margin-bottom:18px;position:relative;overflow:hidden}
 .saved-method::after{content:"";position:absolute;right:-30px;top:-30px;width:120px;height:120px;border-radius:50%;
-  background:radial-gradient(circle,rgba(255,160,40,.4),transparent 70%)}
+  background:radial-gradient(circle,rgba(250,98,22,.28),transparent 70%)}
 .saved-method .sm-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:26px}
 .saved-method .sm-brand{font-size:14px;font-weight:800;letter-spacing:.02em}
 .saved-method .sm-badge{font-size:10.5px;font-weight:700;background:rgba(14,159,110,.25);color:#6EE7B7;
@@ -566,8 +578,8 @@ mark.todo{background:rgba(255,203,60,.32);color:var(--brand-ink);font-weight:700
    SEO column (blog) — public list + article, and operator admin console
    ========================================================================== */
 .col-hero{background:
-    radial-gradient(120% 90% at 100% 0%,rgba(255,140,30,.14),transparent 60%),
-    linear-gradient(160deg,#FFF6EE 0%,#F7F9FC 72%);
+    radial-gradient(120% 90% at 100% 0%,rgba(250,98,22,.06),transparent 60%),
+    linear-gradient(160deg,#EFF1F4 0%,#FCFCFD 74%);
   border-bottom:1px solid var(--line);padding:54px 0 42px}
 .col-hero h1{font-size:clamp(26px,3.6vw,40px);font-weight:800;letter-spacing:-.04em;line-height:1.14}
 .col-hero p{color:var(--ink-2);font-size:15px;margin-top:12px;max-width:640px;line-height:1.9}
@@ -576,7 +588,7 @@ mark.todo{background:rgba(255,203,60,.32);color:var(--brand-ink);font-weight:700
 .col-cat{appearance:none;border:1px solid var(--line-strong);background:var(--surface);font-family:inherit;
   font-size:12.5px;font-weight:700;color:var(--ink-2);border-radius:999px;padding:8px 16px;cursor:pointer;transition:.15s}
 .col-cat:hover{border-color:rgba(16,24,40,.32)}
-.col-cat.on{border-color:var(--brand-1);background:rgba(255,140,30,.08);color:var(--brand-ink)}
+.col-cat.on{border-color:var(--brand-1);background:rgba(250,98,22,.08);color:var(--brand-ink)}
 
 .col-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin:28px 0 60px}
 @media(max-width:900px){ .col-grid{grid-template-columns:repeat(2,1fr)} }
@@ -601,7 +613,7 @@ mark.todo{background:rgba(255,203,60,.32);color:var(--brand-ink);font-weight:700
 .breadcrumb a{color:var(--brand-ink);font-weight:600}
 .art-head h1{font-size:clamp(24px,3.2vw,34px);font-weight:800;letter-spacing:-.03em;line-height:1.3}
 .art-meta{display:flex;align-items:center;gap:10px;margin:16px 0 22px;font-size:12.5px;color:var(--ink-3);flex-wrap:wrap}
-.art-meta .cat{font-size:11px;font-weight:800;color:var(--brand-ink);background:rgba(255,140,30,.1);border-radius:999px;padding:4px 11px}
+.art-meta .cat{font-size:11px;font-weight:800;color:var(--brand-ink);background:rgba(250,98,22,.1);border-radius:999px;padding:4px 11px}
 .art-cover{width:100%;aspect-ratio:16/9;border-radius:16px;background-size:cover;background-position:center;margin-bottom:28px;
   display:grid;place-items:center;color:#fff;font-weight:800;font-size:19px;text-shadow:0 2px 12px rgba(0,0,0,.3)}
 .art-body{font-size:15.5px;color:var(--ink);line-height:1.95}
@@ -619,7 +631,7 @@ mark.todo{background:rgba(255,203,60,.32);color:var(--brand-ink);font-weight:700
 .art-tags{display:flex;gap:8px;flex-wrap:wrap;margin:26px 0}
 .art-tags span{font-size:11.5px;color:var(--ink-2);background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:5px 12px}
 .art-cta{border:1px solid var(--line);border-radius:18px;background:
-    linear-gradient(160deg,#FFF6EE,#F7F9FC);padding:26px;text-align:center;margin:34px 0}
+    linear-gradient(160deg,#F3F4F6,#FCFCFD);padding:26px;text-align:center;margin:34px 0}
 .art-cta h3{font-size:18px;font-weight:800;letter-spacing:-.02em;margin-bottom:6px}
 .art-cta p{font-size:13px;color:var(--ink-2);margin-bottom:16px}
 
@@ -634,11 +646,11 @@ mark.todo{background:rgba(255,203,60,.32);color:var(--brand-ink);font-weight:700
 .adm-tabs{display:flex;gap:4px;margin-left:auto}
 .adm-tab{appearance:none;border:0;background:transparent;font-family:inherit;font-size:12px;font-weight:700;
   color:var(--ink-3);padding:6px 12px;border-radius:999px;cursor:pointer}
-.adm-tab.on{background:rgba(255,140,30,.1);color:var(--brand-ink)}
+.adm-tab.on{background:rgba(250,98,22,.1);color:var(--brand-ink)}
 .adm-item{display:flex;align-items:center;gap:12px;padding:13px 18px;border-bottom:1px solid var(--line);cursor:pointer;transition:background .12s}
 .adm-item:last-child{border-bottom:0}
 .adm-item:hover{background:var(--surface-2)}
-.adm-item.sel{background:rgba(255,140,30,.06)}
+.adm-item.sel{background:rgba(250,98,22,.06)}
 .adm-item .th{width:46px;height:34px;border-radius:7px;background-size:cover;background-position:center;flex:0 0 46px;
   display:grid;place-items:center;color:#fff;font-size:10px;font-weight:800}
 .adm-item .ti{min-width:0;flex:1}
@@ -666,6 +678,8 @@ mark.todo{background:rgba(255,203,60,.32);color:var(--brand-ink);font-weight:700
 
 /* ---------- bold display overrides (monochrome, clipping.net-inspired) ---------- */
 .dash-head .hi,.auth-card h1,.auth-aside h2,.kyc-main h1,.legal-hero h1,.col-hero h1,
-.sub-head .hi,.art-cta h3,.modal h3,.card-h h3{font-weight:900}
-.kpi .vl,.cd-kpi .vl{font-weight:900;letter-spacing:-.04em}
+.sub-head .hi,.art-cta h3,.modal h3,.card-h h3{font-weight:800}
+.kpi .vl,.cd-kpi .vl{font-family:var(--display);font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+/* YIELD amounts = orange (Number Typography). Platform data (views/counts) stays ink. */
+.kpi .vl.y,.cd-kpi .vl.y,.vl.y{color:var(--brand-1)}
 .eyebrow{font-weight:800}

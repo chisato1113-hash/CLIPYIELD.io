@@ -10,45 +10,45 @@
 <div class="note-bar"><div class="wrap"><b>社内デザイン確認用プロトタイプ</b>｜媒体別・クリッパー別の指標はデモ用の擬似データです（案件IDから決定論的に生成）。</div></div>
 
 <nav class="nav">
-  <div class="wrap nav-in">
-    <a class="logo" href="index.html">
-      <svg fill="none" height="26" viewBox="0 0 32 32" width="26">
-        <defs><linearGradient id="lg" x1="0" x2="32" y1="0" y2="32"><stop offset="0" stop-color="#FF7A18"></stop><stop offset="1" stop-color="#FFC93C"></stop></linearGradient></defs>
-        <rect height="30" rx="9" stroke="url(#lg)" stroke-width="2" width="30" x="1" y="1"></rect>
-        <path d="M12 9.5 L22.5 16 L12 22.5 Z" fill="url(#lg)"></path>
-        <path d="M8 12.5 L8 19.5" stroke="url(#lg)" stroke-linecap="round" stroke-width="2.4"></path>
-      </svg>
-      CLIPYIELD
-    </a>
-    <div class="nav-cta">
-      <a class="btn btn-ghost btn-sm" href="client.html">＋ 案件を入稿</a>
-      <a class="btn btn-ghost btn-sm" href="client-billing.html">💳 支払い方法</a>
-      <span class="nav-user"><span class="av" id="avatar">C</span><span id="orgName">—</span></span>
-      <button class="btn btn-ghost btn-sm" id="logout" type="button">ログアウト</button>
-    </div>
-  </div>
+ <div class="wrap nav-in">
+ <a class="logo" href="index.html">
+ <svg fill="none" height="26" viewBox="0 0 32 32" width="26">
+ <defs><linearGradient id="lg" x1="0" x2="32" y1="0" y2="32"><stop offset="0" stop-color="#FA6216"></stop><stop offset="1" stop-color="#FA6216"></stop></linearGradient></defs>
+ <rect height="30" rx="9" stroke="url(#lg)" stroke-width="2" width="30" x="1" y="1"></rect>
+ <path d="M12 9.5 L22.5 16 L12 22.5 Z" fill="url(#lg)"></path>
+ <path d="M8 12.5 L8 19.5" stroke="url(#lg)" stroke-linecap="round" stroke-width="2.4"></path>
+ </svg>
+ CLIPYIELD
+ </a>
+ <div class="nav-cta">
+ <a class="btn btn-ghost btn-sm" href="client.html">＋ 案件を入稿</a>
+ <a class="btn btn-ghost btn-sm" href="client-billing.html">支払い方法</a>
+ <span class="nav-user"><span class="av" id="avatar">C</span><span id="orgName">—</span></span>
+ <button class="btn btn-ghost btn-sm" id="logout" type="button">ログアウト</button>
+ </div>
+ </div>
 </nav>
 
 <header class="sub-head">
-  <div class="sub-body cd-wide" style="padding-top:0;padding-bottom:0">
-    <div class="hi">案件進捗ダッシュボード</div>
-    <div class="sub">案件を選んで、参加クリッパー・媒体別の再生／エンゲージメント／クリック／CV を日次・週次・月次で確認できます。</div>
-  </div>
+ <div class="sub-body cd-wide" style="padding-top:0;padding-bottom:0">
+ <div class="hi">案件進捗ダッシュボード</div>
+ <div class="sub">案件を選んで、参加クリッパー・媒体別の再生／エンゲージメント／クリック／CV を日次・週次・月次で確認できます。</div>
+ </div>
 </header>
 
 <div class="sub-body cd-wide">
 
-  <div class="cd-topbar">
-    <select class="cd-select" id="campaign"></select>
-    <div class="seg" id="period">
-      <button data-g="day" type="button">日次</button>
-      <button data-g="week" type="button">週次</button>
-      <button data-g="month" class="on" type="button">月次</button>
-    </div>
-    <span class="cd-updated" id="updated">—</span>
-  </div>
+ <div class="cd-topbar">
+ <select class="cd-select" id="campaign"></select>
+ <div class="seg" id="period">
+ <button data-g="day" type="button">日次</button>
+ <button data-g="week" type="button">週次</button>
+ <button data-g="month" class="on" type="button">月次</button>
+ </div>
+ <span class="cd-updated" id="updated">—</span>
+ </div>
 
-  <div id="content"><!-- rendered --></div>
+ <div id="content"><!-- rendered --></div>
 
 </div>
 
@@ -57,162 +57,162 @@
 <script src="assets/client.js"></script>
 <script>
 (function(){
-  var client = CYClient.requireAuth("client-login.html");
-  if (!client) return;
+ var client = CYClient.requireAuth("client-login.html");
+ if (!client) return;
 
-  document.getElementById('orgName').textContent = client.org || client.id;
-  document.getElementById('avatar').textContent = (client.org || client.id).charAt(0).toUpperCase();
-  document.getElementById('logout').addEventListener('click', function(){
-    CYClient.logout(); location.href = "client-login.html";
-  });
+ document.getElementById('orgName').textContent = client.org || client.id;
+ document.getElementById('avatar').textContent = (client.org || client.id).charAt(0).toUpperCase();
+ document.getElementById('logout').addEventListener('click', function(){
+ CYClient.logout(); location.href = "client-login.html";
+ });
 
-  var SAMPLE = { id:"sample", title:"（サンプル）BLADE OF THE LAST SUN", sns:["TikTok","Instagram Reels","YouTube Shorts","X"], sample:true };
+ var SAMPLE = { id:"sample", title:"（サンプル）BLADE OF THE LAST SUN", sns:["TikTok","Instagram Reels","YouTube Shorts","X"], sample:true };
 
-  function campaigns(){
-    var subs = CYClient.listSubs();
-    var list = subs.map(function(s){ return { id:s.id, title:s.title||"無題の案件", sns:s.sns||[], org:s.org }; });
-    if (!list.length) list = [SAMPLE];
-    return list;
-  }
+ function campaigns(){
+ var subs = CYClient.listSubs();
+ var list = subs.map(function(s){ return { id:s.id, title:s.title||"無題の案件", sns:s.sns||[], org:s.org }; });
+ if (!list.length) list = [SAMPLE];
+ return list;
+ }
 
-  var state = { g:"month", metric:"views", campaignId:null };
+ var state = { g:"month", metric:"views", campaignId:null };
 
-  // ---- helpers ----
-  var $ = function(id){ return document.getElementById(id); };
-  function nf(n){ return Math.round(n).toLocaleString('ja-JP'); }
-  function kf(n){ // compact: 12.3万 / 1.2万 / 900
-    if (n >= 100000000) return (n/100000000).toFixed(1).replace(/\.0$/,'')+'億';
-    if (n >= 10000) return (n/10000).toFixed(1).replace(/\.0$/,'')+'万';
-    return nf(n);
-  }
-  function pf(n){ return n.toFixed(2)+'%'; }
-  function esc(s){ return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
+ // ---- helpers ----
+ var $ = function(id){ return document.getElementById(id); };
+ function nf(n){ return Math.round(n).toLocaleString('ja-JP'); }
+ function kf(n){ // compact: 12.3万 / 1.2万 / 900
+ if (n >= 100000000) return (n/100000000).toFixed(1).replace(/\.0$/,'')+'億';
+ if (n >= 10000) return (n/10000).toFixed(1).replace(/\.0$/,'')+'万';
+ return nf(n);
+ }
+ function pf(n){ return n.toFixed(2)+'%'; }
+ function esc(s){ return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
 
-  // ---- campaign selector ----
-  function fillCampaigns(){
-    var list = campaigns();
-    if (!state.campaignId || !list.some(function(c){return c.id===state.campaignId;})) state.campaignId = list[0].id;
-    $('campaign').innerHTML = list.map(function(c){
-      return '<option value="'+esc(c.id)+'"'+(c.id===state.campaignId?' selected':'')+'>'+esc(c.title)+'</option>';
-    }).join('');
-  }
-  function currentCampaign(){
-    var list = campaigns();
-    return list.filter(function(c){ return c.id===state.campaignId; })[0] || list[0];
-  }
+ // ---- campaign selector ----
+ function fillCampaigns(){
+ var list = campaigns();
+ if (!state.campaignId || !list.some(function(c){return c.id===state.campaignId;})) state.campaignId = list[0].id;
+ $('campaign').innerHTML = list.map(function(c){
+ return '<option value="'+esc(c.id)+'"'+(c.id===state.campaignId?' selected':'')+'>'+esc(c.title)+'</option>';
+ }).join('');
+ }
+ function currentCampaign(){
+ var list = campaigns();
+ return list.filter(function(c){ return c.id===state.campaignId; })[0] || list[0];
+ }
 
-  // ---- render ----
-  function render(){
-    var camp = currentCampaign();
-    var a = CYClient.analytics(camp, state.g);
-    var T = a.totals;
-    $('updated').textContent = '最終更新：' + new Date().toLocaleString('ja-JP',{month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'});
+ // ---- render ----
+ function render(){
+ var camp = currentCampaign();
+ var a = CYClient.analytics(camp, state.g);
+ var T = a.totals;
+ $('updated').textContent = '最終更新：' + new Date().toLocaleString('ja-JP',{month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'});
 
-    // views trend: last bucket vs previous
-    var s = a.series, trend = 0;
-    if (s.length >= 2){ var a2=s[s.length-1].views, b2=s[s.length-2].views; trend = b2>0 ? ((a2-b2)/b2*100) : 0; }
-    var trendStr = (trend>=0?'▲ +':'▼ ')+Math.abs(trend).toFixed(1)+'%';
+ // views trend: last bucket vs previous
+ var s = a.series, trend = 0;
+ if (s.length >= 2){ var a2=s[s.length-1].views, b2=s[s.length-2].views; trend = b2>0 ? ((a2-b2)/b2*100) : 0; }
+ var trendStr = (trend>=0?'▲ +':'▼ ')+Math.abs(trend).toFixed(1)+'%';
 
-    var metricName = { views:'再生数', clicks:'リンククリック', cv:'CV（購入）' }[state.metric];
-    var maxV = Math.max.apply(null, s.map(function(x){ return x[state.metric]; })) || 1;
+ var metricName = { views:'再生数', clicks:'リンククリック', cv:'CV（購入）' }[state.metric];
+ var maxV = Math.max.apply(null, s.map(function(x){ return x[state.metric]; })) || 1;
 
-    var html = ''+
-    // KPI row
-    '<div class="cd-kpis">'+
-      kpi('👥 参加クリッパー', nf(T.clippers)+'人', 'この案件に参加中', false)+
-      kpi('▶️ 総再生数', kf(T.views), trendStr+'（前期間比）', trend<0)+
-      kpi('💬 エンゲージメント', kf(T.eng), 'ENG率 '+pf(T.engRate), false)+
-      kpi('🖱 リンククリック', kf(T.clicks), 'CTR '+pf(T.ctr), false)+
-      kpi('🛒 CV（購入）', nf(T.cv)+'件', 'リンク経由の成果', false)+
-      kpi('🎯 CVR', pf(T.cvr), 'クリック→購入', false)+
-    '</div>'+
+ var html = ''+
+ // KPI row
+ '<div class="cd-kpis">'+
+ kpi('参加クリッパー', nf(T.clippers)+'人', 'この案件に参加中', false)+
+ kpi('総再生数', kf(T.views), trendStr+'（前期間比）', trend<0)+
+ kpi('エンゲージメント', kf(T.eng), 'ENG率 '+pf(T.engRate), false)+
+ kpi('リンククリック', kf(T.clicks), 'CTR '+pf(T.ctr), false)+
+ kpi('CV（購入）', nf(T.cv)+'件', 'リンク経由の成果', false)+
+ kpi('CVR', pf(T.cvr), 'クリック→購入', false)+
+ '</div>'+
 
-    '<div class="cd-grid">'+
-      // left column: chart + platform table
-      '<div>'+
-        '<div class="card" style="margin-bottom:18px">'+
-          '<div class="card-h"><h3>推移（'+({day:'日次',week:'週次',month:'月次'}[state.g])+'）</h3>'+
-            '<div class="seg" id="metricSeg">'+
-              seg('views','再生数')+seg('clicks','クリック')+seg('cv','CV')+
-            '</div></div>'+
-          '<div class="cd-chart">'+
-            s.map(function(x){
-              var h = Math.round(x[state.metric]/maxV*100);
-              return '<div class="cd-bar" title="'+esc(x.label)+'：'+nf(x[state.metric])+'"><div class="stack" style="height:'+h+'%"></div><span class="xl">'+esc(x.label)+'</span></div>';
-            }).join('')+
-          '</div>'+
-          '<div class="cd-legend"><span><i style="background:linear-gradient(90deg,#FF7A18,#FFC93C)"></i>'+metricName+'</span>'+
-            '<span style="margin-left:auto">合計 '+nf(s.reduce(function(t,x){return t+x[state.metric];},0))+'</span></div>'+
-        '</div>'+
+ '<div class="cd-grid">'+
+ // left column: chart + platform table
+ '<div>'+
+ '<div class="card" style="margin-bottom:18px">'+
+ '<div class="card-h"><h3>推移（'+({day:'日次',week:'週次',month:'月次'}[state.g])+'）</h3>'+
+ '<div class="seg" id="metricSeg">'+
+ seg('views','再生数')+seg('clicks','クリック')+seg('cv','CV')+
+ '</div></div>'+
+ '<div class="cd-chart">'+
+ s.map(function(x){
+ var h = Math.round(x[state.metric]/maxV*100);
+ return '<div class="cd-bar" title="'+esc(x.label)+'：'+nf(x[state.metric])+'"><div class="stack" style="height:'+h+'%"></div><span class="xl">'+esc(x.label)+'</span></div>';
+ }).join('')+
+ '</div>'+
+ '<div class="cd-legend"><span><i style="background:linear-gradient(90deg,#FA6216,#FA6216)"></i>'+metricName+'</span>'+
+ '<span style="margin-left:auto">合計 '+nf(s.reduce(function(t,x){return t+x[state.metric];},0))+'</span></div>'+
+ '</div>'+
 
-        '<div class="card">'+
-          '<div class="card-h"><h3>媒体別パフォーマンス</h3><span class="s">再生・ENG・クリック・CTR・CV・CVR</span></div>'+
-          '<div class="metric-wrap"><table class="metric-table">'+
-            '<thead><tr><th>媒体</th><th>再生数</th><th>ENG</th><th>クリック</th><th>CTR</th><th>CV</th><th>CVR</th></tr></thead>'+
-            '<tbody>'+
-              a.platforms.map(function(p){
-                return '<tr>'+
-                  '<td><span class="plat"><span class="pic">'+p.icon+'</span>'+esc(p.platform)+'</span></td>'+
-                  '<td>'+nf(p.views)+'</td>'+
-                  '<td>'+nf(p.eng)+'</td>'+
-                  '<td>'+nf(p.clicks)+'</td>'+
-                  '<td>'+pf(p.ctr)+'</td>'+
-                  '<td>'+nf(p.cv)+'</td>'+
-                  '<td>'+pf(p.cvr)+'</td>'+
-                '</tr>';
-              }).join('')+
-            '</tbody>'+
-            '<tfoot><tr><td>合計</td><td>'+nf(T.views)+'</td><td>'+nf(T.eng)+'</td><td>'+nf(T.clicks)+'</td><td>'+pf(T.ctr)+'</td><td>'+nf(T.cv)+'</td><td>'+pf(T.cvr)+'</td></tr></tfoot>'+
-          '</table></div>'+
-        '</div>'+
-      '</div>'+
+ '<div class="card">'+
+ '<div class="card-h"><h3>媒体別パフォーマンス</h3><span class="s">再生・ENG・クリック・CTR・CV・CVR</span></div>'+
+ '<div class="metric-wrap"><table class="metric-table">'+
+ '<thead><tr><th>媒体</th><th>再生数</th><th>ENG</th><th>クリック</th><th>CTR</th><th>CV</th><th>CVR</th></tr></thead>'+
+ '<tbody>'+
+ a.platforms.map(function(p){
+ return '<tr>'+
+ '<td><span class="plat"><span class="pic">'+p.icon+'</span>'+esc(p.platform)+'</span></td>'+
+ '<td>'+nf(p.views)+'</td>'+
+ '<td>'+nf(p.eng)+'</td>'+
+ '<td>'+nf(p.clicks)+'</td>'+
+ '<td>'+pf(p.ctr)+'</td>'+
+ '<td>'+nf(p.cv)+'</td>'+
+ '<td>'+pf(p.cvr)+'</td>'+
+ '</tr>';
+ }).join('')+
+ '</tbody>'+
+ '<tfoot><tr><td>合計</td><td>'+nf(T.views)+'</td><td>'+nf(T.eng)+'</td><td>'+nf(T.clicks)+'</td><td>'+pf(T.ctr)+'</td><td>'+nf(T.cv)+'</td><td>'+pf(T.cvr)+'</td></tr></tfoot>'+
+ '</table></div>'+
+ '</div>'+
+ '</div>'+
 
-      // right column: clipper ranking
-      '<div class="card">'+
-        '<div class="card-h"><h3>クリッパー別 再生数ランキング</h3><span class="s">'+nf(T.clippers)+'人</span></div>'+
-        a.clippers.map(function(c, i){
-          var w = Math.round(c.views/(a.clippers[0].views||1)*100);
-          return '<div class="rank-row">'+
-            '<span class="rk">'+(i+1)+'</span>'+
-            '<div class="who"><div class="nm">'+esc(c.name)+'</div><div class="hd">'+esc(c.handle)+'</div></div>'+
-            '<div class="barwrap"><div class="track"><i style="width:'+w+'%"></i></div></div>'+
-            '<div class="val">'+kf(c.views)+'<small>CV '+nf(c.cv)+'</small></div>'+
-          '</div>';
-        }).join('')+
-      '</div>'+
-    '</div>';
+ // right column: clipper ranking
+ '<div class="card">'+
+ '<div class="card-h"><h3>クリッパー別 再生数ランキング</h3><span class="s">'+nf(T.clippers)+'人</span></div>'+
+ a.clippers.map(function(c, i){
+ var w = Math.round(c.views/(a.clippers[0].views||1)*100);
+ return '<div class="rank-row">'+
+ '<span class="rk">'+(i+1)+'</span>'+
+ '<div class="who"><div class="nm">'+esc(c.name)+'</div><div class="hd">'+esc(c.handle)+'</div></div>'+
+ '<div class="barwrap"><div class="track"><i style="width:'+w+'%"></i></div></div>'+
+ '<div class="val">'+kf(c.views)+'<small>CV '+nf(c.cv)+'</small></div>'+
+ '</div>';
+ }).join('')+
+ '</div>'+
+ '</div>';
 
-    $('content').innerHTML = html;
+ $('content').innerHTML = html;
 
-    // wire metric segmented control
-    var ms = $('metricSeg');
-    if (ms){
-      ms.querySelectorAll('button').forEach(function(b){
-        b.classList.toggle('on', b.getAttribute('data-m')===state.metric);
-        b.addEventListener('click', function(){ state.metric = b.getAttribute('data-m'); render(); });
-      });
-    }
-  }
+ // wire metric segmented control
+ var ms = $('metricSeg');
+ if (ms){
+ ms.querySelectorAll('button').forEach(function(b){
+ b.classList.toggle('on', b.getAttribute('data-m')===state.metric);
+ b.addEventListener('click', function(){ state.metric = b.getAttribute('data-m'); render(); });
+ });
+ }
+ }
 
-  function kpi(lb, vl, dl, down){
-    return '<div class="cd-kpi"><div class="lb">'+lb+'</div><div class="vl">'+vl+'</div>'+
-      '<div class="dl'+(down?' down':'')+'">'+dl+'</div></div>';
-  }
-  function seg(m, label){ return '<button data-m="'+m+'" type="button">'+label+'</button>'; }
+ function kpi(lb, vl, dl, down){
+ return '<div class="cd-kpi"><div class="lb">'+lb+'</div><div class="vl">'+vl+'</div>'+
+ '<div class="dl'+(down?' down':'')+'">'+dl+'</div></div>';
+ }
+ function seg(m, label){ return '<button data-m="'+m+'" type="button">'+label+'</button>'; }
 
-  // ---- events ----
-  $('campaign').addEventListener('change', function(){ state.campaignId = this.value; render(); });
-  $('period').querySelectorAll('button').forEach(function(b){
-    b.addEventListener('click', function(){
-      state.g = b.getAttribute('data-g');
-      $('period').querySelectorAll('button').forEach(function(x){ x.classList.remove('on'); });
-      b.classList.add('on');
-      render();
-    });
-  });
+ // ---- events ----
+ $('campaign').addEventListener('change', function(){ state.campaignId = this.value; render(); });
+ $('period').querySelectorAll('button').forEach(function(b){
+ b.addEventListener('click', function(){
+ state.g = b.getAttribute('data-g');
+ $('period').querySelectorAll('button').forEach(function(x){ x.classList.remove('on'); });
+ b.classList.add('on');
+ render();
+ });
+ });
 
-  fillCampaigns();
-  render();
+ fillCampaigns();
+ render();
 })();
 </script>
 </body>
