@@ -21,6 +21,7 @@
       CLIPYIELD
     </a>
     <div class="nav-cta">
+      <span id="tier-badge" hidden></span>
       <div class="nav-user"><span class="av" id="av">Y</span><span id="whoami">@you</span></div>
       <button class="btn btn-ghost btn-sm" id="logout" type="button">ログアウト</button>
     </div>
@@ -33,23 +34,28 @@
     <div class="sub" id="subhi">今日の再生報酬とグッズ成果報酬をまとめて確認できます。</div>
     <div class="tabs">
       <button class="tab on" data-tab="overview" type="button">概要</button>
-      <button class="tab" data-tab="socials" type="button">SNS連携</button>
+      <button class="tab" data-tab="official" type="button">公式切り抜き師</button>
       <button class="tab" data-tab="board" type="button">案件ボード</button>
       <button class="tab" data-tab="posts" type="button">投稿</button>
-      <button class="tab" data-tab="payouts" type="button">本人確認・報酬</button>
+      <button class="tab" data-tab="payouts" type="button">報酬・出金</button>
     </div>
   </div>
 
   <!-- ===================== OVERVIEW ===================== -->
   <section class="panel on" id="p-overview">
     <div class="kpis">
-      <div class="kpi"><div class="lb">確定報酬（今月）</div><div class="vl" id="k-total">¥0</div><div class="dl" id="k-total-d">投稿を登録すると増えます</div></div>
-      <div class="kpi"><div class="lb">総再生数</div><div class="vl" id="k-views">0</div><div class="dl" id="k-views-d">&nbsp;</div></div>
+      <div class="kpi"><div class="lb">今月の見込み報酬</div><div class="vl" id="k-total">¥0</div><div class="dl" id="k-total-d">投稿を登録すると増えます</div></div>
+      <div class="kpi"><div class="lb">累計再生数（報酬対象）</div><div class="vl" id="k-views">0</div><div class="dl" id="k-views-d">&nbsp;</div></div>
       <div class="kpi"><div class="lb">リンク経由購入</div><div class="vl" id="k-orders">0件</div><div class="dl" id="k-orders-d">&nbsp;</div></div>
       <div class="kpi"><div class="lb">参加案件</div><div class="vl" id="k-joined">0</div><div class="dl" id="k-joined-d">&nbsp;</div></div>
     </div>
 
     <div class="grid-2">
+      <div class="card" id="tier-card"></div>
+      <div class="card" id="guarantee-card"></div>
+    </div>
+
+    <div class="grid-2" style="margin-top:20px">
       <div class="card">
         <div class="card-h"><h3>報酬の内訳</h3><span class="s">TIER1 再生報酬 ＋ TIER2 グッズ成果報酬</span></div>
         <div style="display:flex;gap:18px;align-items:baseline;margin-bottom:16px">
@@ -65,7 +71,7 @@
           <span><i class="live-dot" style="background:#F5A623;box-shadow:none;display:inline-block;margin-right:6px"></i>TIER2 グッズ成果報酬 <b id="brk-t2" style="font-variant-numeric:tabular-nums">¥0</b></span>
         </div>
         <div style="border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-top:20px;background:rgba(16,24,40,.02);font-size:12px;color:var(--ink-2);line-height:1.8">
-          同じ再生数でも、<b style="color:var(--ink)">グッズが売れた分だけ上振れる</b>のがCLIPYIELDの構造です。「案件ボード」から参加し、「投稿」タブで投稿URLと実績を登録すると、ここに反映されます。
+          再生単価（TIER1）は<b style="color:var(--ink)">ティアが上がるほど高い案件</b>を受けられます。「案件ボード」から参加し、「投稿」タブで実績を登録するとここに反映されます。
         </div>
       </div>
 
@@ -78,23 +84,26 @@
     </div>
   </section>
 
-  <!-- ===================== SNS LINKING ===================== -->
-  <section class="panel" id="p-socials">
+  <!-- ===================== 公式切り抜き師（審査） ===================== -->
+  <section class="panel" id="p-official">
+    <div class="card" id="application-card" style="margin-bottom:20px"></div>
+    <div class="card" id="identity-card" style="margin-bottom:20px"></div>
     <div class="card">
       <div class="card-h">
-        <div><h3>SNS連携</h3><span class="s">投稿先アカウントを連携すると、再生数と成果が自動で集計されます。案件ボードから素材を切り抜く前に連携しておきましょう。</span></div>
-        <span class="s" id="socials-count">未連携</span>
+        <div><h3>活動用アカウント</h3><span class="s">Clipyield用に新しいアカウントを作って登録します（複数可）。既存アカウントは「認定アカウント」として申請できます。</span></div>
+        <span class="s" id="accounts-count">未登録</span>
       </div>
-      <div id="socials-list"></div>
+      <div id="accounts-list"></div>
+      <div id="account-add" style="margin-top:14px"></div>
       <div class="empty" style="padding:16px 0 0;text-align:left;color:var(--ink-3);font-size:11.5px;line-height:1.8">
-        ※ このデモでは連携情報はブラウザ内にのみ保存されます。実際のSNS認証（OAuth）や再生数の自動取得は行いません。本番ではここから各SNSの公式連携に接続します。
+        ※ 原則はClipyield用の<b>新規アカウント</b>で活動します（最低保証の対象）。<b>認定アカウント</b>（既存アカウント）は実績に応じて上位ティアから開始でき、最低保証の対象外です。このデモではアカウント情報はブラウザ内にのみ保存されます。
       </div>
     </div>
   </section>
 
   <!-- ===================== CAMPAIGN BOARD ===================== -->
   <section class="panel" id="p-board">
-    <div class="card-h"><h3>案件ボード</h3><span class="s">映画・ドラマ・アニメ・音楽・漫画・YouTubeの公式ライセンス素材。参加すると専用の紹介リンクが発行されます。</span></div>
+    <div class="card-h"><h3>案件ボード</h3><span class="s">TV・映画・ドラマ・アニメ・漫画・ゲーム・音楽・YouTubeなどIP領域の公式ライセンス素材。案件を受けられるのは審査を通過した公式切り抜き師のみです。</span></div>
     <div id="board-banner"></div>
     <div class="filters" id="board-filters"></div>
     <div id="board-cards"></div>
@@ -105,37 +114,51 @@
   <section class="panel" id="p-posts">
     <div class="card">
       <div class="card-h">
-        <div><h3>登録した投稿</h3><span class="s">投稿URLと実績（再生数・売上）を登録すると、報酬が自動で試算されます。</span></div>
+        <div><h3>登録した投稿</h3><span class="s">投稿URL・クリップID・実績を登録すると、報酬が自動で試算されます。</span></div>
         <button class="btn btn-primary btn-sm" id="add-post" type="button">＋ 投稿を登録</button>
       </div>
       <div id="posts-table"></div>
     </div>
   </section>
 
-  <!-- ===================== IDENTITY + PAYOUTS ===================== -->
+  <!-- ===================== 報酬・出金 ===================== -->
   <section class="panel" id="p-payouts">
-    <div class="card" id="identity-card" style="margin-bottom:20px"></div>
     <div class="grid-2">
       <div class="card">
-        <div class="card-h"><h3>今月の見込み報酬</h3><span class="s">確定報酬は返品期間の経過後に確定します。</span></div>
+        <div class="card-h"><h3>今月の見込み報酬</h3><span class="s">再生報酬（1再生 ¥0.03〜¥0.5・ティアと案件による）</span></div>
         <div style="font-size:40px;font-weight:800;letter-spacing:-.04em;font-variant-numeric:tabular-nums;margin-bottom:6px" id="pay-total">¥0</div>
-        <div style="font-size:12.5px;color:var(--ink-3)">TIER1 <b id="pay-t1">¥0</b> ＋ TIER2 <b id="pay-t2">¥0</b></div>
+        <div style="font-size:12.5px;color:var(--ink-3)" id="pay-breakdown">TIER1 <b id="pay-t1">¥0</b> ＋ TIER2 <b id="pay-t2">¥0</b></div>
+        <div id="pay-guarantee" style="font-size:12px;color:#0B7A55;margin-top:6px" hidden></div>
         <div style="margin-top:22px">
           <div style="font-size:12.5px;font-weight:700;color:var(--ink-2);margin-bottom:10px">受取方法</div>
           <div id="pay-methods" style="display:flex;gap:8px;flex-wrap:wrap"></div>
         </div>
+        <div style="margin-top:22px">
+          <div style="font-size:12.5px;font-weight:700;color:var(--ink-2);margin-bottom:10px">出金スピード</div>
+          <div id="pay-speed" style="display:grid;gap:10px"></div>
+          <div id="pay-net" style="font-size:12px;color:var(--ink-3);margin-top:10px"></div>
+        </div>
       </div>
       <div class="card">
-        <div class="card-h"><h3>支払い履歴</h3><span class="s">サンプル</span></div>
-        <table class="table">
-          <thead><tr><th>対象月</th><th>種別</th><th>ステータス</th></tr></thead>
-          <tbody>
-            <tr><td>2026年7月</td><td>TIER1 + TIER2</td><td><span class="st st-pend">処理中</span></td></tr>
-            <tr><td>2026年6月</td><td>TIER1 + TIER2</td><td><span class="st st-paid">支払済</span></td></tr>
-            <tr><td>2026年5月</td><td>TIER1</td><td><span class="st st-paid">支払済</span></td></tr>
-          </tbody>
-        </table>
+        <div class="card-h"><div><h3>出金スケジュール</h3><span class="s">月末締め・翌月10日頃に確定・翌月末以降に標準出金（無料）。</span></div></div>
+        <div style="border:1px solid var(--line);border-radius:12px;padding:13px 15px;margin-bottom:16px;background:rgba(16,24,40,.02);font-size:12px;color:var(--ink-2);line-height:1.9">
+          <b style="color:var(--ink)">月末締め</b> →（<b style="color:var(--ink)">翌月10日頃</b>に報酬確定）→ <b style="color:var(--ink)">翌月末以降</b>に標準出金（無料）。早期出金を選ぶと、確定後〜翌月末の間に手数料<b style="color:var(--ink)">4%</b>で出金できます。
+        </div>
+        <div style="font-size:12.5px;font-weight:700;color:var(--ink-2);margin-bottom:10px">標準出金のタイミング</div>
+        <div id="pay-timings" style="display:grid;gap:10px"></div>
+        <div style="font-size:11px;color:var(--ink-3);margin-top:14px;line-height:1.8">次回出金予定：<b id="next-payout" style="color:var(--ink-2)">—</b></div>
       </div>
+    </div>
+    <div class="card" style="margin-top:20px">
+      <div class="card-h"><h3>支払い履歴</h3><span class="s">サンプル</span></div>
+      <table class="table">
+        <thead><tr><th>対象月（月末締め）</th><th>確定</th><th>出金可能</th><th>ステータス</th></tr></thead>
+        <tbody>
+          <tr><td>2026年8月</td><td>9月10日頃</td><td>2026年9月末〜</td><td><span class="st st-pend">集計中</span></td></tr>
+          <tr><td>2026年7月</td><td>確定済</td><td>2026年8月末〜</td><td><span class="st st-pend">出金待ち</span></td></tr>
+          <tr><td>2026年6月</td><td>確定済</td><td>2026年7月末〜</td><td><span class="st st-paid">出金済</span></td></tr>
+        </tbody>
+      </table>
     </div>
   </section>
 </div>
@@ -146,19 +169,35 @@
 <div class="modal-bg" id="modal">
   <div class="modal">
     <h3>投稿を登録</h3>
-    <div class="m-sub">参加中の案件を選び、投稿URLと実績を入力してください。</div>
+    <div class="m-sub">参加中の案件・投稿アカウント・投稿URL・クリップID・実績を入力してください。</div>
     <div class="form-err" id="m-err"></div>
     <div class="field">
       <label for="m-campaign">案件</label>
       <select id="m-campaign" style="width:100%;border:1px solid var(--line-strong);border-radius:12px;padding:13px 15px;font-size:14.5px;font-family:inherit;background:var(--surface);color:var(--ink)"></select>
     </div>
     <div class="field">
+      <label for="m-account">投稿したアカウント</label>
+      <select id="m-account" style="width:100%;border:1px solid var(--line-strong);border-radius:12px;padding:13px 15px;font-size:14.5px;font-family:inherit;background:var(--surface);color:var(--ink)"></select>
+    </div>
+    <div class="field">
       <label for="m-url">投稿URL</label>
       <input id="m-url" type="text" placeholder="https://www.tiktok.com/@you/video/..."/>
+    </div>
+    <div class="field">
+      <label for="m-clip">クリップID<span style="color:var(--ink-3);font-weight:500">（同じ動画には同じIDを。重複投稿の検知に使用）</span></label>
+      <input id="m-clip" type="text" placeholder="例: blade-ep12-scene3"/>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
       <div class="field"><label for="m-views">再生数</label><input id="m-views" type="text" inputmode="numeric" placeholder="例: 28000"/></div>
       <div class="field"><label for="m-sales">リンク経由の売上（¥）</label><input id="m-sales" type="text" inputmode="numeric" placeholder="例: 12000"/></div>
+    </div>
+    <div style="border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:rgba(16,24,40,.02);margin-bottom:14px">
+      <div style="font-size:11.5px;font-weight:700;color:var(--ink-2);margin-bottom:6px">この案件で必要なPR表記（コピーして投稿に含めてください）</div>
+      <div class="reflink"><input id="m-disclosure-text" readonly value=""/><button class="btn btn-ghost btn-sm" id="m-disclosure-copy" type="button">コピー</button></div>
+    </div>
+    <div class="field check" style="margin-bottom:6px">
+      <input id="m-disclosure" type="checkbox"/>
+      <label for="m-disclosure">上記のPR表記を投稿に含めました（景品表示法・ステマ規制対応・必須）</label>
     </div>
     <div class="modal-actions">
       <button class="btn btn-ghost btn-sm" id="m-cancel" type="button">キャンセル</button>
@@ -173,10 +212,8 @@
   var user = CY.requireAuth("login.html");
   if (!user) return;
 
-  /* ---- helpers ---- */
   var $ = function(id){ return document.getElementById(id); };
   function art(id){
-    // reuse the landing board artwork by id
     var defs = {
       a1:'<svg preserveAspectRatio="none" viewBox="0 0 400 112"><defs><linearGradient id="g_a1" x1="0" x2="400" y1="0" y2="112"><stop offset="0" stop-color="#FFE7CE"></stop><stop offset="1" stop-color="#fff"></stop></linearGradient></defs><rect fill="url(#g_a1)" height="112" width="400"></rect><g fill="none" opacity=".55" stroke="#F97316" stroke-width="1.4"><path d="M-20 96 L120 26 L200 66 L300 10 L420 52"></path></g><circle cx="318" cy="30" fill="#FF7A18" opacity=".26" r="26"></circle><circle cx="318" cy="30" fill="#F59E0B" opacity=".55" r="12"></circle></svg>',
       a2:'<svg preserveAspectRatio="none" viewBox="0 0 400 112"><defs><linearGradient id="g_a2" x1="0" x2="400" y1="0" y2="112"><stop offset="0" stop-color="#F0E4FB"></stop><stop offset="1" stop-color="#fff"></stop></linearGradient></defs><rect fill="url(#g_a2)" height="112" width="400"></rect><g fill="none" opacity=".55" stroke="#F59E0B" stroke-width="1.2"><ellipse cx="200" cy="56" rx="150" ry="40"></ellipse><ellipse cx="200" cy="56" rx="100" ry="28"></ellipse></g><circle cx="200" cy="56" fill="#FF7A18" opacity=".7" r="15"></circle></svg>',
@@ -186,23 +223,20 @@
     };
     return defs[id] || defs.a1;
   }
+  function tierColor(t){ return t==="gold" ? "linear-gradient(100deg,#F5A623,#FFC93C)" : (t==="silver" ? "linear-gradient(100deg,#9AA6B2,#C9D2DC)" : "linear-gradient(100deg,#C97B3C,#E0A56B)"); }
+  function tierChip(t){ return '<span style="display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.08em;padding:4px 10px;border-radius:999px;color:#fff;background:'+tierColor(t)+'">'+CY.tierName(t)+'</span>'; }
 
   /* ---- header ---- */
-  var initial = user.handle.replace("@","").charAt(0).toUpperCase() || "Y";
-  $("av").textContent = initial;
+  $("av").textContent = user.handle.replace("@","").charAt(0).toUpperCase() || "Y";
   $("whoami").textContent = user.handle;
   $("hi").textContent = "こんにちは、" + user.handle + " 👋";
   if (/[?&]welcome=1/.test(location.search)) {
-    $("subhi").textContent = "登録が完了しました。「SNS連携」で投稿先アカウントを審査申請し、「本人確認」で書類を提出すると、すべての案件に参加できます。";
+    $("subhi").textContent = "登録が完了しました。「公式切り抜き師」タブで本人確認と活動用アカウントを登録し、審査を申請してください。";
   }
   if (/[?&]kyc=submitted/.test(location.search)) {
-    setTimeout(function(){ CY.toast("本人確認を申請しました。審査中です。"); }, 300);
+    setTimeout(function(){ CY.toast("本人確認を提出しました。審査申請に進めます。"); }, 300);
   }
-
-  $("logout").addEventListener("click", function(){
-    CY.logout();
-    location.href = "index.html";
-  });
+  $("logout").addEventListener("click", function(){ CY.logout(); location.href = "index.html"; });
 
   /* ---- tabs ---- */
   var tabs = document.querySelectorAll(".tab");
@@ -214,32 +248,68 @@
       $("p-" + t.getAttribute("data-tab")).classList.add("on");
     });
   });
+  function goTab(name){ var b = document.querySelector('.tab[data-tab="'+name+'"]'); if (b) b.click(); }
 
-  /* ---- render: overview KPIs + breakdown ---- */
+  /* ================= OVERVIEW ================= */
   function renderOverview(){
     var u = CY.current();
     var e = CY.earnings(u);
     var joinedCount = Object.keys(u.joined || {}).length;
-
     $("k-total").textContent = CY.yen(e.total);
-    $("k-views").textContent = CY.num(e.views);
+    $("k-views").textContent = CY.num(e.eligibleViews);
     $("k-orders").textContent = e.orders + "件";
     $("k-joined").textContent = joinedCount;
     $("k-total-d").textContent = e.posts > 0 ? (e.posts + "件の投稿を集計") : "投稿を登録すると増えます";
     $("k-joined-d").textContent = joinedCount > 0 ? "参加中" : "未参加";
 
-    $("brk-total").textContent = CY.yen(e.total);
+    $("brk-total").textContent = CY.yen(e.base);
     $("brk-t1").textContent = CY.yen(e.tier1);
     $("brk-t2").textContent = CY.yen(e.tier2);
-    var pa = e.total > 0 ? (e.tier1 / e.total * 100) : 50;
+    var pa = e.base > 0 ? (e.tier1 / e.base * 100) : 50;
     $("brk-b1").style.width = pa + "%";
     $("brk-b2").style.width = (100 - pa) + "%";
 
-    // ranking with @you inserted by amount
-    var others = [
-      { nm:"@ne***fox", am:158900 }, { nm:"@sh***lab", am:137400 },
-      { nm:"@ka***77", am:93300 }, { nm:"@mi***cut", am:71200 }
-    ];
+    // tier card
+    var tp = CY.tierProgress();
+    var tcard = $("tier-card");
+    if (tp){
+      var nextTxt = tp.next
+        ? '<div style="font-size:12px;color:var(--ink-3);margin-top:12px">次のティア <b style="color:var(--ink-2)">'+CY.tierName(tp.next)+'</b> まで：累計 '+CY.num(tp.views)+' / '+CY.num(tp.need)+' 再生</div>'
+          + '<div class="track" style="margin-top:8px"><i style="width:'+tp.pct+'%"></i></div>'
+        : '<div style="font-size:12px;color:#0B7A55;font-weight:700;margin-top:12px">最上位ティアに到達しています。</div>';
+      var accessTxt = tp.tier==="gold" ? "全案件（〜¥0.5／再生）＋独占案件"
+                    : tp.tier==="silver" ? "〜¥0.3／再生の案件" : "¥0.03〜0.10／再生の案件";
+      tcard.innerHTML =
+        '<div class="card-h"><h3>あなたのティア</h3>'+tierChip(tp.tier)+'</div>' +
+        '<div style="font-size:12.5px;color:var(--ink-2);line-height:1.9">受けられる単価帯：<b style="color:var(--ink)">'+accessTxt+'</b></div>' +
+        nextTxt +
+        '<div style="font-size:11px;color:var(--ink-3);margin-top:12px;line-height:1.7">累計再生数を伸ばし違反ゼロを保つとティアが上がり、高単価・独占案件を受けられます。</div>';
+    }
+
+    // guarantee card
+    var g = u.guarantee || {};
+    var gcard = $("guarantee-card");
+    if (!CY.isApproved()){
+      gcard.innerHTML = '<div class="card-h"><h3>立ち上げ期の最低保証</h3><span class="s">審査通過後</span></div>' +
+        '<div style="font-size:12.5px;color:var(--ink-2);line-height:1.9">審査を通過し、<b>新規アカウント</b>で活動する方に、<b>3ヶ月間・月30,000円</b>の最低保証（差額補填）をご用意しています。</div>' +
+        '<div style="font-size:11px;color:var(--ink-3);margin-top:10px;line-height:1.7">達成条件：月20本以上の投稿／審査却下率が規定以下／規約違反ゼロ。認定アカウント（既存）利用者は対象外です。</div>';
+    } else if (g.eligible){
+      var need = (g.minPostsPerMonth||20);
+      var pct = Math.min(100, Math.round((e.monthPosts||0)/need*100));
+      gcard.innerHTML = '<div class="card-h"><h3>立ち上げ期の最低保証</h3><span class="badge badge-verified">対象</span></div>' +
+        '<div style="display:flex;gap:14px;align-items:baseline"><div style="font-size:28px;font-weight:800;letter-spacing:-.03em">¥'+CY.num(g.monthlyAmount||30000)+'</div><div style="font-size:12px;color:var(--ink-3)">／月・残り'+(g.monthsRemaining||0)+'ヶ月</div></div>' +
+        '<div style="font-size:12px;color:var(--ink-2);margin-top:12px">今月の投稿：<b>'+(e.monthPosts||0)+' / '+need+' 本</b>（保証発動の条件）</div>' +
+        '<div class="track" style="margin-top:8px"><i style="width:'+pct+'%"></i></div>' +
+        '<div style="font-size:12px;color:'+(e.guaranteeActive?"#0B7A55":"var(--ink-3)")+';font-weight:700;margin-top:12px">'+
+          (e.guaranteeActive ? ('今月の保証発動見込み：'+CY.yen(e.guarantee)) : ('条件未達（月'+need+'本・違反ゼロで発動）')) + '</div>' +
+        '<div style="font-size:11px;color:var(--ink-3);margin-top:8px;line-height:1.7">成果報酬が保証額を下回った場合のみ差額を補填します。</div>';
+    } else {
+      gcard.innerHTML = '<div class="card-h"><h3>立ち上げ期の最低保証</h3><span class="badge" style="background:rgba(16,24,40,.06);color:var(--ink-2)">対象外</span></div>' +
+        '<div style="font-size:12.5px;color:var(--ink-2);line-height:1.9">認定アカウント（既存アカウント）での活動のため、最低保証の対象外です。新規アカウントで活動する場合は対象になります。</div>';
+    }
+
+    // ranking + countries (sample)
+    var others = [{ nm:"@ne***fox", am:158900 },{ nm:"@sh***lab", am:137400 },{ nm:"@ka***77", am:93300 },{ nm:"@mi***cut", am:71200 }];
     var list = others.concat([{ nm:user.handle, am:e.total, me:true }]);
     list.sort(function(a,b){ return b.am - a.am; });
     $("ranking").innerHTML = list.slice(0,5).map(function(r,i){
@@ -249,60 +319,201 @@
         '<span style="color:' + (r.me?'var(--brand-ink);font-weight:800':'var(--ink-2)') + '">' + CY.esc(r.nm) + (r.me?'（あなた）':'') + '</span>' +
         '<span style="margin-left:auto;font-weight:700;font-variant-numeric:tabular-nums">' + CY.yen(r.am) + '</span></div>';
     }).join("");
-
     var countries = [["United States",38],["Indonesia",21],["Thailand",17],["Korea",13],["Others",11]];
     $("countries").innerHTML = countries.map(function(c){
       return '<div style="margin:11px 0"><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--ink-2);margin-bottom:6px"><span>' + c[0] + '</span><b>' + c[1] + '%</b></div><div class="track"><i style="width:' + c[1] + '%"></i></div></div>';
     }).join("");
+
+    // header tier badge (only when approved)
+    var tb = $("tier-badge");
+    if (CY.isApproved()){ tb.innerHTML = tierChip(CY.currentTier()); tb.hidden = false; } else { tb.hidden = true; }
   }
 
-  /* ---- render: campaign board ---- */
+  /* ================= 公式切り抜き師（審査） ================= */
+  function reqRow(done, pending, label, sub){
+    var mark = done ? '<span style="color:#0B7A55">✓</span>' : (pending ? '<span style="color:#B45309">⏳</span>' : '<span style="color:var(--ink-3)">○</span>');
+    return '<div style="display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-top:1px solid var(--line)">' +
+      '<div style="width:20px;text-align:center;font-weight:800">' + mark + '</div>' +
+      '<div><div style="font-weight:700;font-size:13.5px">' + label + '</div><div style="font-size:11.5px;color:var(--ink-3);margin-top:2px">' + sub + '</div></div></div>';
+  }
+  function renderApplication(){
+    var st = CY.applicationStatus();
+    var idv = CY.identityStatus();
+    var accN = CY.accounts().length;
+    var card = $("application-card");
+    var checklist = '<div style="margin-top:6px">' +
+      reqRow(idv==="verified", idv==="pending", '本人確認（KYC・全員必須）'+(idv==="verified"?"：完了":idv==="pending"?"：提出済み":""), idv==="verified"?'審査を通過しました':idv==="pending"?'提出済み。審査で確認します':'下の「本人確認」から書類とセルフィーを提出') +
+      reqRow(accN>=1, false, '活動用アカウントの登録'+(accN>=1?"：完了（"+accN+"件）":""), accN>=1?'登録済み。審査で確認します':'下の「活動用アカウント」から登録') +
+      '</div>';
+
+    if (st === "approved"){
+      card.innerHTML =
+        '<div class="card-h"><h3>Clipyield公式切り抜き師</h3><span class="badge badge-verified">承認済み</span></div>' +
+        '<div class="idbox"><div class="idava">✓</div><div><div style="font-weight:800;font-size:15px">審査を通過しました</div>' +
+        '<div style="font-size:12.5px;color:var(--ink-3);margin-top:3px">案件ボードで参加できます。あなたが担保するコンテンツ品質がCLIPYIELDの価値です。現在のティア：'+CY.tierName(CY.currentTier())+'</div></div>' +
+        '<button class="btn btn-ghost btn-sm" id="app-reset" type="button" style="margin-left:auto">審査をやり直す（デモ）</button></div>';
+    } else if (st === "pending"){
+      card.innerHTML =
+        '<div class="card-h"><h3>Clipyield公式切り抜き師</h3><span class="badge badge-pending">審査中</span></div>' +
+        '<div style="font-size:13px;color:var(--ink-2);line-height:1.9">申請を受け付けました。運営が編集の質・権利意識・過去の運用実績を確認します（通常2〜3営業日）。</div>' +
+        checklist +
+        '<div style="border:1px dashed var(--line-strong);border-radius:12px;padding:14px;margin-top:16px;background:rgba(16,24,40,.02)">' +
+          '<div style="font-size:11.5px;font-weight:800;color:var(--ink-3);letter-spacing:.06em;margin-bottom:8px">運営審査（デモ操作）</div>' +
+          '<div style="font-size:11.5px;color:var(--ink-3);line-height:1.7;margin-bottom:10px">本番は運営が審査します。デモでは以下で結果を切り替えられます。</div>' +
+          '<div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn btn-primary btn-sm" id="app-approve" type="button">承認する（デモ）</button>' +
+          '<button class="btn btn-ghost btn-sm" id="app-reject" type="button">却下する（デモ）</button></div></div>';
+    } else if (st === "rejected"){
+      card.innerHTML =
+        '<div class="card-h"><h3>Clipyield公式切り抜き師</h3><span class="badge" style="background:rgba(224,36,36,.1);color:#B42318">却下</span></div>' +
+        '<div style="font-size:13px;color:var(--ink-2);line-height:1.9">今回は審査を通過しませんでした。'+(CY.current().rejectReason?('理由：'+CY.esc(CY.current().rejectReason)):'')+'</div>' +
+        '<button class="btn btn-primary btn-sm" id="app-reset" type="button" style="margin-top:14px">要件を見直して再申請する</button>';
+    } else {
+      var can = CY.canSubmitApplication();
+      card.innerHTML =
+        '<div class="card-h"><div><h3>Clipyield公式切り抜き師</h3><span class="s">案件を受けられるのは、審査を通過した公式切り抜き師のみです。</span></div><span class="badge badge-pending">未申請</span></div>' +
+        '<div style="font-size:13px;color:var(--ink-2);line-height:1.9">下記の要件を満たしてから審査を申請してください。</div>' +
+        checklist +
+        '<button class="btn btn-primary btn-sm" id="app-submit" type="button" style="margin-top:16px" '+(can?"":"disabled")+'>審査を申請する</button>' +
+        (can?'':'<div style="font-size:11.5px;color:var(--ink-3);margin-top:8px">本人確認の提出と活動用アカウントの登録が必要です。</div>');
+    }
+
+    var b;
+    if ((b=$("app-submit"))) b.addEventListener("click", function(){ try{ CY.submitApplication(); CY.toast("審査を申請しました。審査中です。"); renderAll(); }catch(ex){ CY.toast(ex.message); } });
+    if ((b=$("app-approve"))) b.addEventListener("click", function(){ CY.approveApplication(); CY.toast("🎉 審査を承認しました（デモ）。案件に参加できます。"); renderAll(); goTab("board"); });
+    if ((b=$("app-reject"))) b.addEventListener("click", function(){ CY.rejectApplication("編集品質・権利意識の確認が必要"); CY.toast("審査を却下しました（デモ）。"); renderAll(); });
+    if ((b=$("app-reset"))) b.addEventListener("click", function(){ CY.resetApplication(); CY.toast("審査をリセットしました。"); renderAll(); });
+  }
+
+  /* ---- KYC card ---- */
+  function renderIdentity(){
+    var id = CY.current().identity || { status:"none" };
+    var status = CY.identityStatus();
+    var card = $("identity-card");
+    if (status === "verified"){
+      card.innerHTML =
+        '<div class="card-h"><h3>本人確認（KYC）</h3><span class="badge badge-verified">確認済み</span></div>' +
+        '<div class="idbox"><div class="idava">✓</div><div><div style="font-weight:700;font-size:14.5px">' + CY.esc(id.name || "本人確認済み") + '</div>' +
+        '<div style="font-size:12.5px;color:var(--ink-3);margin-top:3px">提出書類: ' + CY.esc(CY.docTypeName(id.docType) || "—") + '</div></div>' +
+        '<button class="btn btn-ghost btn-sm" id="id-clear" type="button" style="margin-left:auto">解除（デモ）</button></div>';
+      var clr=$("id-clear"); if(clr) clr.addEventListener("click", function(){ CY.clearIdentity(); CY.toast("本人確認を解除しました。"); renderAll(); });
+    } else if (status === "pending"){
+      card.innerHTML =
+        '<div class="card-h"><h3>本人確認（KYC）</h3><span class="badge badge-pending">提出済み</span></div>' +
+        '<div class="idbox"><div class="idava" style="background:rgba(217,119,6,.14);color:#B45309">⏳</div><div><div style="font-weight:700;font-size:14.5px">本人確認を提出しました</div>' +
+        '<div style="font-size:12.5px;color:var(--ink-3);margin-top:3px">提出書類: ' + CY.esc(CY.docTypeName(id.docType) || "—") + '</div></div></div>' +
+        '<div style="font-size:11.5px;color:var(--ink-3);margin-top:14px;line-height:1.8">審査申請後、運営審査の中で確認します。本人確認は全員必須です。</div>';
+    } else {
+      card.innerHTML =
+        '<div class="card-h"><div><h3>本人確認（KYC）</h3><span class="s">審査には本人確認が必要です（全員必須）。</span></div><span class="badge badge-pending">未完了</span></div>' +
+        '<div style="font-size:12.5px;color:var(--ink-2);line-height:1.9;margin-bottom:16px">専用ページで本人確認書類（パスポート・運転免許証・マイナンバーカード）とセルフィーを提出します。</div>' +
+        '<a class="btn btn-primary btn-sm" href="kyc.html">本人確認を始める</a>';
+    }
+  }
+
+  /* ---- 活動用アカウント（複数・種別） ---- */
+  function platformById(id){ for (var i=0;i<CY.SOCIAL_PLATFORMS.length;i++) if (CY.SOCIAL_PLATFORMS[i].id===id) return CY.SOCIAL_PLATFORMS[i]; return null; }
+  function renderAccounts(){
+    var accs = CY.accounts();
+    var approved = CY.isApproved();
+    if (!accs.length){
+      $("accounts-list").innerHTML = '<div class="empty" style="text-align:left;padding:8px 0 0;color:var(--ink-3);font-size:12.5px">まだ活動用アカウントが登録されていません。下のフォームから登録してください。</div>';
+    } else {
+      $("accounts-list").innerHTML = accs.map(function(a){
+        var p = platformById(a.platform);
+        var st = CY.accountStatus(a);
+        var typeChip = '<span class="badge" style="background:'+(a.accountType==="certified"?"rgba(139,92,246,.14);color:#6D28D9":"rgba(14,159,110,.12);color:#0B7A55")+'">'+CY.accountTypeName(a.accountType)+'</span>';
+        var stChip = st==="approved"
+          ? '<span class="badge badge-verified">承認済み</span>'
+          : (approved ? '<span class="badge badge-verified">承認済み</span>' : '<span class="badge badge-pending">審査中</span>');
+        var icon = '<div class="social-ic" style="background:' + (p?p.color:'#888') + '">' + (p?p.abbr:'?') + '</div>';
+        return '<div class="social-row">' + icon +
+          '<div class="social-meta"><div class="nm">' + CY.esc(p?p.name:a.platform) + '</div>' +
+            '<div class="st-line"><b>' + CY.esc(a.handle) + '</b>'+typeChip+stChip+'</div></div>' +
+          '<div class="social-action"><button class="btn btn-ghost btn-sm" data-rm="' + a.id + '" type="button">削除</button></div></div>';
+      }).join("");
+    }
+    var ap=0,pe=0; accs.forEach(function(a){ (CY.accountStatus(a)==="approved"||approved)?ap++:pe++; });
+    $("accounts-count").textContent = accs.length ? (ap+" 承認 / "+pe+" 審査中") : "未登録";
+
+    $("account-add").innerHTML =
+      '<div style="border-top:1px dashed var(--line-strong);padding-top:14px">' +
+        '<div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:10px">' +
+          '<select id="acc-plat" style="border:1px solid var(--line-strong);border-radius:10px;padding:10px;font-size:13px;font-family:inherit;background:var(--surface);color:var(--ink)">' +
+            CY.SOCIAL_PLATFORMS.map(function(p){ return '<option value="'+p.id+'">'+CY.esc(p.name)+'</option>'; }).join("") + '</select>' +
+          '<input type="text" id="acc-handle" placeholder="@ユーザー名（Clipyield用アカウント）" style="flex:1;min-width:180px;border:1px solid var(--line-strong);border-radius:10px;padding:10px 12px;font-size:13px;font-family:inherit"/>' +
+        '</div>' +
+        '<div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:10px;font-size:12.5px">' +
+          '<label style="display:flex;gap:6px;align-items:center;cursor:pointer"><input type="radio" name="acctype" value="new" checked style="accent-color:var(--brand-1)"/> 新規アカウント（推奨・最低保証の対象）</label>' +
+          '<label style="display:flex;gap:6px;align-items:center;cursor:pointer"><input type="radio" name="acctype" value="certified" style="accent-color:var(--brand-1)"/> 認定アカウント（既存）</label>' +
+        '</div>' +
+        '<div id="cert-criteria" hidden style="border:1px solid var(--line);border-radius:12px;padding:14px;background:rgba(16,24,40,.02);margin-bottom:10px">' +
+          '<div style="font-size:11.5px;font-weight:800;color:var(--ink-3);margin-bottom:8px">認定アカウントの基準に同意してください</div>' +
+          ['アカウントの主テーマがIP・エンタメ領域であること','権利侵害・アカウント停止の履歴がないこと','投稿ルール（PR表記・重複投稿禁止等）を遵守すること','案件と無関係な投稿を一定比率以下に保つこと'].map(function(t,i){
+            return '<label style="display:flex;gap:8px;align-items:flex-start;font-size:12px;color:var(--ink-2);padding:4px 0;cursor:pointer"><input type="checkbox" class="cert-chk" style="margin-top:2px;accent-color:var(--brand-1)"/> '+t+'</label>';
+          }).join("") +
+        '</div>' +
+        '<button class="btn btn-primary btn-sm" id="acc-add-btn" type="button">アカウントを追加</button>' +
+      '</div>';
+
+    $("accounts-list").querySelectorAll("[data-rm]").forEach(function(b){
+      b.addEventListener("click", function(){ CY.removeAccount(b.getAttribute("data-rm")); CY.toast("アカウントを削除しました。"); renderAll(); });
+    });
+    var certBox = $("cert-criteria");
+    document.querySelectorAll('input[name="acctype"]').forEach(function(r){
+      r.addEventListener("change", function(){ certBox.hidden = (document.querySelector('input[name="acctype"]:checked').value !== "certified"); });
+    });
+    function addAcc(){
+      var type = document.querySelector('input[name="acctype"]:checked').value;
+      if (type === "certified"){
+        var chks = document.querySelectorAll(".cert-chk");
+        var allChecked = Array.prototype.every.call(chks, function(c){ return c.checked; });
+        if (!allChecked){ CY.toast("認定アカウントの基準すべてに同意してください。"); return; }
+      }
+      try { var rec = CY.addAccount($("acc-plat").value, $("acc-handle").value, type); CY.toast(rec.handle + " を登録しました。"); renderAll(); }
+      catch (ex){ CY.toast(ex.message); }
+    }
+    $("acc-add-btn").addEventListener("click", addAcc);
+    $("acc-handle").addEventListener("keydown", function(e){ if (e.key==="Enter"){ e.preventDefault(); addAcc(); } });
+  }
+
+  /* ================= 案件ボード ================= */
   var boardFilter = "all";
   function renderBoard(){
     var u = CY.current();
-    var verified = CY.identityVerified();
-    var idStatus = CY.identityStatus();
+    var st = CY.applicationStatus();
+    var approved = CY.isApproved();
 
-    // Identity gate banner
-    if (verified){
+    if (approved){
       $("board-banner").innerHTML =
-        '<div class="cy-banner ok"><div><div class="bt">本人確認済み</div>' +
-        '<div class="bp">成果報酬（グッズ）案件を含む、すべての案件に参加できます。</div></div></div>';
-    } else if (idStatus === "pending"){
+        '<div class="cy-banner ok"><div><div class="bt">✓ Clipyield公式切り抜き師（'+CY.tierName(CY.currentTier())+'）</div>' +
+        '<div class="bp">審査に通過しています。ティア要件を満たす案件に参加できます。</div></div></div>';
+    } else if (st === "pending"){
       $("board-banner").innerHTML =
-        '<div class="cy-banner"><div><div class="bt">本人確認を審査中です</div>' +
-        '<div class="bp">承認されると成果報酬案件に参加できます。デモでは数秒で自動承認されます。</div></div></div>';
+        '<div class="cy-banner"><div><div class="bt">審査中です</div><div class="bp">承認されると案件に参加できます。</div></div>' +
+        '<button class="btn btn-ghost btn-sm" data-goapp="1" type="button">審査状況を見る</button></div>';
     } else {
       $("board-banner").innerHTML =
-        '<div class="cy-banner"><div><div class="bt">本人確認が未完了です</div>' +
-        '<div class="bp">「本人確認必須」の成果報酬案件に参加するには、本人確認（書類・セルフィーの提出）が必要です。再生報酬のみの案件は本人確認なしで参加できます。</div></div>' +
-        '<button class="btn btn-primary btn-sm" data-goverify="1" type="button">本人確認を始める</button></div>';
+        '<div class="cy-banner"><div><div class="bt">案件を受けるには審査が必要です</div>' +
+        '<div class="bp">本人確認と活動用アカウントを登録し、審査を申請してください。審査を通過すると公式切り抜き師として案件に参加できます。</div></div>' +
+        '<button class="btn btn-primary btn-sm" data-goapp="1" type="button">審査を受ける</button></div>';
     }
 
-    // category filter chips (with counts)
     $("board-filters").innerHTML = CY.CATEGORIES.map(function(cat){
       var _all = CY.allCampaigns();
-      var n = cat.id === "all" ? _all.length
-        : _all.filter(function(c){ return c.category === cat.id; }).length;
-      return '<button class="chip ' + (boardFilter===cat.id?"on":"") + '" data-cat="' + cat.id + '" type="button">' +
-        CY.esc(cat.name) + '<span class="cnt">' + n + '</span></button>';
+      var n = cat.id === "all" ? _all.length : _all.filter(function(c){ return c.category === cat.id; }).length;
+      return '<button class="chip ' + (boardFilter===cat.id?"on":"") + '" data-cat="' + cat.id + '" type="button">' + CY.esc(cat.name) + '<span class="cnt">' + n + '</span></button>';
     }).join("");
     $("board-filters").querySelectorAll("[data-cat]").forEach(function(b){
       b.addEventListener("click", function(){ boardFilter = b.getAttribute("data-cat"); renderBoard(); });
     });
 
-    var list = CY.allCampaigns().filter(function(c){ return boardFilter === "all" || c.category === boardFilter; });
-    if (!list.length){
-      $("board-cards").innerHTML = '<div class="empty">このカテゴリーの案件は現在ありません。</div>';
-      return;
-    }
+    var list = CY.allCampaigns().filter(function(c){ return boardFilter==="all" || c.category===boardFilter; });
+    if (!list.length){ $("board-cards").innerHTML = '<div class="empty">このカテゴリーの案件は現在ありません。</div>'; return; }
 
     $("board-cards").innerHTML = list.map(function(c){
       var joined = !!(u.joined && u.joined[c.id]);
-      var locked = c.requiresId && !verified;
-      var badge = c.status === "new"
-        ? '<span class="cc-badge"><i class="live-dot"></i>新着</span>'
-        : '<span class="cc-badge"><i class="live-dot"></i>募集中</span>';
+      var tierOk = CY.meetsTier(c);
+      var badge = c.status==="new" ? '<span class="cc-badge"><i class="live-dot"></i>新着</span>' : '<span class="cc-badge"><i class="live-dot"></i>募集中</span>';
       var action;
       if (joined){
         var linkLabel = c.affiliateBase
@@ -311,20 +522,16 @@
         action = linkLabel +
           '<div class="reflink"><input readonly value="' + CY.esc(u.joined[c.id].ref) + '"/><button class="btn btn-ghost btn-sm" data-copy="' + CY.esc(u.joined[c.id].ref) + '" type="button">コピー</button></div>' +
           '<button class="btn btn-primary btn-sm btn-block" data-post="' + c.id + '" type="button" style="margin-top:10px">この案件に投稿を登録</button>';
-      } else if (locked){
-        action = (idStatus === "pending")
-          ? '<button class="btn btn-ghost btn-sm btn-block" data-goverify="1" type="button">🔒 本人確認を審査中</button>'
-          : '<button class="btn btn-ghost btn-sm btn-block" data-goverify="1" type="button">🔒 本人確認して参加</button>';
+      } else if (!approved){
+        action = '<button class="btn btn-ghost btn-sm btn-block" data-goapp="1" type="button">🔒 公式切り抜き師のみ参加可能</button>';
+      } else if (!tierOk){
+        action = '<button class="btn btn-ghost btn-sm btn-block" disabled type="button">🔒 '+CY.tierName(c.minTier)+' 以上で参加可能</button>';
       } else {
         action = '<button class="btn btn-primary btn-sm btn-block" data-join="' + c.id + '" type="button">この案件に参加する</button>';
       }
       var hasT2 = c.tier2 > 0;
-      var tier2Cell = hasT2
-        ? '<div class="v">' + c.tier2 + '%<small> /グッズ売上</small></div>'
-        : '<div class="v" style="color:var(--ink-3)">—<small> なし</small></div>';
-      var typeTag = hasT2
-        ? '<span class="badge badge-open" style="background:rgba(255,160,40,.16);color:#C2410C">二階建て</span>'
-        : '<span class="badge" style="background:rgba(16,24,40,.06);color:var(--ink-2)">再生報酬のみ</span>';
+      var tier2Cell = hasT2 ? '<div class="v">' + c.tier2 + '%<small> /グッズ売上</small></div>' : '<div class="v" style="color:var(--ink-3)">—<small> なし</small></div>';
+      var typeTag = hasT2 ? '<span class="badge badge-open" style="background:rgba(255,160,40,.16);color:#C2410C">二階建て</span>' : '<span class="badge" style="background:rgba(16,24,40,.06);color:var(--ink-2)">再生報酬のみ</span>';
       return '<div class="cc">' +
         '<div class="cc-art">' + art(c.art) + badge +
           '<span class="cc-badge" style="left:auto;right:12px;background:rgba(255,255,255,.9)">残り ' + c.daysLeft + '日</span></div>' +
@@ -334,277 +541,151 @@
           '<div class="cc-meta">' + CY.esc(c.meta) + '</div>' +
           '<div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap">' +
             '<span class="cc-cat">' + CY.esc(CY.categoryName(c.category)) + '</span>' + typeTag +
+            (c.exclusive ? '<span class="badge" style="background:rgba(245,166,35,.16);color:#B45309">GOLD独占</span>' : '') +
+            (c.collab ? '<span class="badge" style="background:rgba(139,92,246,.16);color:#6D28D9">一般企業×IPコラボ</span>' : '') +
             (c.source === "client" ? '<span class="badge" style="background:rgba(59,130,246,.14);color:#1D4ED8">クライアント入稿</span>' : '') +
-            (c.requiresId ? '<span class="badge badge-lock">本人確認必須</span>' : '') + '</div>' +
+            '<span class="badge" style="background:'+tierColor(c.minTier)+';color:#fff">'+CY.tierName(c.minTier)+'以上</span>' + '</div>' +
           '<div class="cc-rates"><div class="cc-rate"><div class="k">TIER 1</div><div class="v">¥' + c.tier1 + '<small> /再生</small></div></div>' +
             '<div class="cc-rate"><div class="k">TIER 2</div>' + tier2Cell + '</div></div>' +
           '<div class="cc-countries"><div class="lbl">募集国</div><div class="flags">' +
-            (c.countries || []).map(function(cc){ var co = CY.country(cc); return '<span class="cflag">' + co.flag + ' ' + cc + '</span>'; }).join("") +
-            '</div></div>' +
+            (c.countries || []).map(function(cc){ var co = CY.country(cc); return '<span class="cflag">' + co.flag + ' ' + cc + '</span>'; }).join("") + '</div></div>' +
           '<div class="track" style="margin:12px 0 6px"><i style="width:' + c.budgetUsed + '%"></i></div>' +
           '<div style="display:flex;justify-content:space-between;font-size:11px;color:var(--ink-3);margin-bottom:12px"><span>予算消化 ' + c.budgetUsed + '%</span>' +
-            (c.requiresId ? '<span style="color:#B45309;font-weight:700">要本人確認</span>' : '<span style="color:#0B7A55;font-weight:700">参加条件なし</span>') + '</div>' +
+            '<span style="color:#0B7A55;font-weight:700">'+CY.tierName(c.minTier)+'以上</span></div>' +
           action +
         '</div></div>';
     }).join("");
 
-    // wire buttons
     $("board-cards").querySelectorAll("[data-join]").forEach(function(b){
-      b.addEventListener("click", function(){
-        try {
-          CY.joinCampaign(b.getAttribute("data-join"));
-          CY.toast("案件に参加しました。紹介リンクを発行しました。");
-          renderAll();
-        } catch (ex) { CY.toast(ex.message); }
-      });
+      b.addEventListener("click", function(){ try { CY.joinCampaign(b.getAttribute("data-join")); CY.toast("案件に参加しました。紹介リンクを発行しました。"); renderAll(); } catch (ex) { CY.toast(ex.message); } });
     });
-    // "本人確認して参加" / banner button → KYC page (unstarted) or 本人確認 tab (in review)
-    function goVerify(){
-      if (CY.identityStatus() === "none"){ location.href = "kyc.html"; return; }
-      document.querySelector('.tab[data-tab="payouts"]').click();
-      var card = $("identity-card");
-      if (card) card.scrollIntoView({ behavior:"smooth", block:"center" });
-    }
-    $("board-banner").querySelectorAll("[data-goverify]").forEach(function(b){ b.addEventListener("click", goVerify); });
-    $("board-cards").querySelectorAll("[data-goverify]").forEach(function(b){ b.addEventListener("click", goVerify); });
+    function goApp(){ goTab("official"); var c=$("application-card"); if (c) c.scrollIntoView({behavior:"smooth",block:"start"}); }
+    $("board-banner").querySelectorAll("[data-goapp]").forEach(function(b){ b.addEventListener("click", goApp); });
+    $("board-cards").querySelectorAll("[data-goapp]").forEach(function(b){ b.addEventListener("click", goApp); });
     $("board-cards").querySelectorAll("[data-copy]").forEach(function(b){
-      b.addEventListener("click", function(){
-        var v = b.getAttribute("data-copy");
-        if (navigator.clipboard) navigator.clipboard.writeText(v);
-        CY.toast("紹介リンクをコピーしました。");
-      });
+      b.addEventListener("click", function(){ var v=b.getAttribute("data-copy"); if (navigator.clipboard) navigator.clipboard.writeText(v); CY.toast("紹介リンクをコピーしました。"); });
     });
-    $("board-cards").querySelectorAll("[data-post]").forEach(function(b){
-      b.addEventListener("click", function(){ openModal(b.getAttribute("data-post")); });
-    });
+    $("board-cards").querySelectorAll("[data-post]").forEach(function(b){ b.addEventListener("click", function(){ openModal(b.getAttribute("data-post")); }); });
   }
 
-  /* ---- render: posts ---- */
+  /* ================= 投稿 ================= */
   function renderPosts(){
-    var u = CY.current();
-    var posts = u.posts || [];
-    if (!posts.length){
-      $("posts-table").innerHTML = '<div class="empty">まだ投稿が登録されていません。「＋ 投稿を登録」から追加すると、TIER1・TIER2の報酬が試算されます。</div>';
-      return;
-    }
+    var posts = CY.current().posts || [];
+    if (!posts.length){ $("posts-table").innerHTML = '<div class="empty">まだ投稿が登録されていません。「＋ 投稿を登録」から追加すると報酬が試算されます。</div>'; return; }
     var rows = posts.map(function(p){
-      var c = CY.campaignById(p.campaignId) || {title:p.campaignId,tier1:0.03,tier2:60};
-      var t1 = Math.round(p.views * c.tier1);
-      var t2 = Math.round(p.sales * (c.tier2/100));
-      var d = new Date(p.at);
-      var date = d.getFullYear() + "/" + (d.getMonth()+1) + "/" + d.getDate();
+      var c = CY.campaignById(p.campaignId) || {title:p.campaignId,tier1:0.03,tier2:0};
+      var elig = p.rewardEligible !== false;
+      var t1 = elig ? Math.round(p.views * c.tier1) : 0;
+      var t2 = elig ? Math.round(p.sales * (c.tier2/100)) : 0;
+      var d = new Date(p.at); var date = d.getFullYear() + "/" + (d.getMonth()+1) + "/" + d.getDate();
       return '<tr><td>' + date + '</td><td>' + CY.esc(c.title) + '</td>' +
-        '<td><a href="' + CY.esc(p.url) + '" target="_blank" rel="noopener" style="color:var(--brand-ink);word-break:break-all">' + CY.esc(p.url.slice(0,32)) + (p.url.length>32?'…':'') + '</a></td>' +
+        '<td>' + CY.esc(p.clipId||"—") + '</td>' +
         '<td class="num">' + CY.num(p.views) + '</td>' +
         '<td class="num">' + CY.yen(p.sales) + '</td>' +
         '<td class="num">' + CY.yen(t1) + '</td>' +
-        '<td class="num">' + CY.yen(t2) + '</td></tr>';
+        '<td class="num">' + CY.yen(t2) + '</td>' +
+        '<td>' + (elig ? '<span class="st st-paid">対象</span>' : '<span class="st st-pend">重複・対象外</span>') + '</td></tr>';
     }).join("");
     $("posts-table").innerHTML =
       '<div style="overflow-x:auto"><table class="table"><thead><tr>' +
-      '<th>登録日</th><th>案件</th><th>投稿URL</th><th>再生数</th><th>リンク売上</th><th>TIER1</th><th>TIER2</th>' +
+      '<th>登録日</th><th>案件</th><th>クリップID</th><th>再生数</th><th>リンク売上</th><th>TIER1</th><th>TIER2</th><th>報酬</th>' +
       '</tr></thead><tbody>' + rows + '</tbody></table></div>';
   }
 
-  /* ---- render: payouts ---- */
+  /* ================= 報酬・出金 ================= */
+  function nextPayoutLabel(timing){
+    var now = new Date();
+    var nextEnd = new Date(now.getFullYear(), now.getMonth() + 2, 0);
+    var s = nextEnd.getFullYear() + "年" + (nextEnd.getMonth() + 1) + "月末";
+    if (timing === "quarterly") return "次の四半期末（" + s + "以降にまとめて）";
+    if (timing === "half_year") return "次の半期末（" + s + "以降にまとめて）";
+    if (timing === "manual") return s + "以降、任意のタイミングで出金可能";
+    return s + "（自動出金）";
+  }
   function renderPayouts(){
-    var u = CY.current();
-    var e = CY.earnings(u);
-    $("pay-total").textContent = CY.yen(e.total);
+    var u = CY.current(); var e = CY.earnings(u);
+    $("pay-total").textContent = CY.yen(e.net);
     $("pay-t1").textContent = CY.yen(e.tier1);
     $("pay-t2").textContent = CY.yen(e.tier2);
+    var g = $("pay-guarantee");
+    if (e.guarantee > 0){ g.hidden=false; g.textContent = "＋ 最低保証の差額補填 " + CY.yen(e.guarantee); } else { g.hidden=true; }
+
     var methods = ["銀行振込","PayPal","USDC"];
-    $("pay-methods").innerHTML = methods.map(function(m){
-      var on = (u.payoutMethod === m);
-      return '<button class="btn ' + (on?'btn-primary':'btn-ghost') + ' btn-sm" data-method="' + m + '" type="button">' + m + (on?' ✓':'') + '</button>';
-    }).join("");
+    $("pay-methods").innerHTML = methods.map(function(m){ var on=(u.payoutMethod===m); return '<button class="btn '+(on?'btn-primary':'btn-ghost')+' btn-sm" data-method="'+m+'" type="button">'+m+(on?' ✓':'')+'</button>'; }).join("");
     $("pay-methods").querySelectorAll("[data-method]").forEach(function(b){
-      b.addEventListener("click", function(){
-        var u2 = CY.current();
-        u2.payoutMethod = b.getAttribute("data-method");
-        CY.persist(u2);
-        CY.toast("受取方法を「" + u2.payoutMethod + "」に設定しました。");
-        renderPayouts();
-      });
+      b.addEventListener("click", function(){ var u2=CY.current(); u2.payoutMethod=b.getAttribute("data-method"); CY.persist(u2); CY.toast("受取方法を「"+u2.payoutMethod+"」に設定しました。"); renderPayouts(); });
     });
+
+    // 出金スピード（標準/早期4%）
+    var sp = CY.payoutSpeed();
+    var speeds = [
+      { id:"standard", name:"標準出金（無料）", note:"翌月末以降に出金。手数料はかかりません。" },
+      { id:"early",    name:"早期出金（手数料4%）", note:"報酬確定後〜翌月末の間に前倒しで出金できます。" }
+    ];
+    $("pay-speed").innerHTML = speeds.map(function(t){ var on=(t.id===sp);
+      return '<button class="chip '+(on?'on':'')+'" data-speed="'+t.id+'" type="button" style="display:block;text-align:left;padding:11px 15px;border-radius:12px;width:100%">'+
+        '<div style="font-weight:800;font-size:13px">'+t.name+(on?' ✓':'')+'</div><div style="font-size:11px;opacity:.82;font-weight:600;margin-top:2px">'+t.note+'</div></button>'; }).join("");
+    $("pay-speed").querySelectorAll("[data-speed]").forEach(function(b){
+      b.addEventListener("click", function(){ CY.setPayoutSpeed(b.getAttribute("data-speed")); CY.toast("出金スピードを設定しました。"); renderPayouts(); });
+    });
+    if (e.early && e.fee>0){ $("pay-net").innerHTML = '早期出金手数料（4%）<b>−'+CY.yen(e.fee)+'</b>　→　受取額 <b style="color:var(--ink)">'+CY.yen(e.net)+'</b>'; }
+    else { $("pay-net").textContent = "標準出金のため手数料はかかりません。"; }
+
+    var cur = CY.payoutTiming();
+    $("pay-timings").innerHTML = CY.PAYOUT_TIMINGS.map(function(t){ var on=(t.id===cur);
+      return '<button class="chip '+(on?'on':'')+'" data-timing="'+t.id+'" type="button" style="display:block;text-align:left;padding:11px 15px;border-radius:12px;width:100%">'+
+        '<div style="font-weight:800;font-size:13px">'+CY.esc(t.name)+(on?' ✓':'')+'</div><div style="font-size:11px;opacity:.82;font-weight:600;margin-top:2px">'+CY.esc(t.note)+'</div></button>'; }).join("");
+    $("pay-timings").querySelectorAll("[data-timing]").forEach(function(b){
+      b.addEventListener("click", function(){ CY.setPayoutTiming(b.getAttribute("data-timing")); CY.toast("出金タイミングを設定しました。"); renderPayouts(); });
+    });
+    $("next-payout").textContent = nextPayoutLabel(cur);
   }
 
-  /* ---- SNS review auto-approval timer (single shared timer) ---- */
-  var reviewTimer = null;
-  function scheduleReviews(){
-    var u = CY.current(); if (!u) return;
-    var now = Date.now();
-    var waits = [];
-    (u.socials || []).forEach(function(s){
-      if ((s.status || "approved") === "pending") waits.push(Math.max(0, CY.REVIEW_MS - (now - (s.connectedAt || 0))));
-    });
-    if (u.identity && u.identity.status === "pending"){
-      waits.push(Math.max(0, CY.KYC_REVIEW_MS - (now - (u.identity.submittedAt || 0))));
-    }
-    if (!waits.length) return;
-    var next = Math.min.apply(null, waits) + 150;
-    clearTimeout(reviewTimer);
-    reviewTimer = setTimeout(function(){
-      var sns = CY.refreshSocialReviews();
-      var kyc = CY.refreshKycReview();
-      if (sns) CY.toast("SNSアカウントの審査が完了しました。");
-      if (kyc) CY.toast("本人確認が完了しました。全案件に参加できます。");
-      renderAll();
-    }, next);
-  }
+  function renderAll(){ renderOverview(); renderApplication(); renderIdentity(); renderAccounts(); renderBoard(); renderPosts(); renderPayouts(); }
 
-  /* ---- render: SNS linking (with review status) ---- */
-  function renderSocials(){
-    CY.refreshSocialReviews();
-    var approved = 0, pending = 0;
-    $("socials-list").innerHTML = CY.SOCIAL_PLATFORMS.map(function(p){
-      var s = CY.socialFor(p.id);
-      var st = CY.socialStatus(s);
-      if (st === "approved") approved++;
-      if (st === "pending") pending++;
-      var icon = '<div class="social-ic" style="background:' + p.color + '">' + p.abbr + '</div>';
-      var meta, action;
-      if (s && st === "approved"){
-        meta = '<div class="social-meta"><div class="nm">' + CY.esc(p.name) + '</div>' +
-               '<div class="st-line"><i class="rev-dot approved"></i><b>' + CY.esc(s.handle) + '</b>' +
-               '<span class="badge badge-verified">審査承認済み</span></div></div>';
-        action = '<div class="social-action"><button class="btn btn-ghost btn-sm" data-unlink="' + p.id + '" type="button">連携を解除</button></div>';
-      } else if (s && st === "pending"){
-        meta = '<div class="social-meta"><div class="nm">' + CY.esc(p.name) + '</div>' +
-               '<div class="st-line"><i class="rev-dot pending"></i><b>' + CY.esc(s.handle) + '</b>' +
-               '<span class="badge badge-pending">審査中</span></div></div>';
-        action = '<div class="social-action"><button class="btn btn-ghost btn-sm" data-unlink="' + p.id + '" type="button">申請を取消</button></div>';
-      } else {
-        meta = '<div class="social-meta"><div class="nm">' + CY.esc(p.name) + '</div>' +
-               '<div class="st-line">未連携</div></div>';
-        action = '<div class="social-action">' +
-                 '<input type="text" data-input="' + p.id + '" placeholder="@' + CY.esc(p.hint) + '"/>' +
-                 '<button class="btn btn-primary btn-sm" data-link="' + p.id + '" type="button">連携を申請</button></div>';
-      }
-      return '<div class="social-row">' + icon + meta + action + '</div>';
-    }).join("");
-
-    var parts = [];
-    if (approved) parts.push(approved + " 承認済み");
-    if (pending) parts.push(pending + " 審査中");
-    $("socials-count").textContent = parts.length ? parts.join(" ・ ") : "未連携";
-
-    $("socials-list").querySelectorAll("[data-link]").forEach(function(b){
-      b.addEventListener("click", function(){
-        var id = b.getAttribute("data-link");
-        var input = $("socials-list").querySelector('[data-input="' + id + '"]');
-        try {
-          var rec = CY.connectSocial(id, input ? input.value : "");
-          CY.toast(rec.handle + " の連携を申請しました。審査中です。");
-          renderAll();
-        } catch (ex) { CY.toast(ex.message); }
-      });
-    });
-    $("socials-list").querySelectorAll("[data-input]").forEach(function(inp){
-      inp.addEventListener("keydown", function(e){
-        if (e.key === "Enter"){ e.preventDefault();
-          var btn = $("socials-list").querySelector('[data-link="' + inp.getAttribute("data-input") + '"]');
-          if (btn) btn.click();
-        }
-      });
-    });
-    $("socials-list").querySelectorAll("[data-unlink]").forEach(function(b){
-      b.addEventListener("click", function(){
-        CY.disconnectSocial(b.getAttribute("data-unlink"));
-        CY.toast("連携を解除しました。");
-        renderAll();
-      });
-    });
-
-    scheduleReviews();
-  }
-
-  /* ---- render: 本人確認（KYC） ---- */
-  function renderIdentity(){
-    CY.refreshKycReview();
-    var u = CY.current();
-    var id = u.identity || { status:"none" };
-    var status = CY.identityStatus();
-
-    if (status === "verified"){
-      $("identity-card").innerHTML =
-        '<div class="card-h"><h3>本人確認（KYC）</h3><span class="badge badge-verified">確認済み</span></div>' +
-        '<div class="idbox"><div class="idava">✓</div>' +
-          '<div><div style="font-weight:700;font-size:14.5px">' + CY.esc(id.name || "本人確認済み") + '</div>' +
-          '<div style="font-size:12.5px;color:var(--ink-3);margin-top:3px">提出書類: ' + CY.esc(CY.docTypeName(id.docType) || "—") + '</div></div>' +
-          '<button class="btn btn-ghost btn-sm" id="id-clear" type="button" style="margin-left:auto">解除（デモ）</button></div>' +
-        '<div style="font-size:11.5px;color:var(--ink-3);margin-top:14px;line-height:1.8">本人確認が完了しているため、成果報酬（グッズ）案件を含むすべての案件に参加できます。</div>';
-      var clr = $("id-clear");
-      if (clr) clr.addEventListener("click", function(){ CY.clearIdentity(); CY.toast("本人確認を解除しました。"); renderAll(); });
-    } else if (status === "pending"){
-      $("identity-card").innerHTML =
-        '<div class="card-h"><h3>本人確認（KYC）</h3><span class="badge badge-pending">審査中</span></div>' +
-        '<div class="idbox"><div class="idava" style="background:rgba(217,119,6,.14);color:#B45309">⏳</div>' +
-          '<div><div style="font-weight:700;font-size:14.5px">本人確認を審査中です</div>' +
-          '<div style="font-size:12.5px;color:var(--ink-3);margin-top:3px">提出書類: ' + CY.esc(CY.docTypeName(id.docType) || "—") + '</div></div></div>' +
-        '<div style="font-size:11.5px;color:var(--ink-3);margin-top:14px;line-height:1.8">審査には通常1〜2営業日かかります（このデモでは数秒で自動承認されます）。承認されると成果報酬案件に参加できます。</div>';
-    } else {
-      $("identity-card").innerHTML =
-        '<div class="card-h"><div><h3>本人確認（KYC）</h3><span class="s">成果報酬（グッズ）案件に参加するには本人確認が必要です。再生報酬のみの案件は本人確認なしでも参加できます。</span></div><span class="badge badge-pending">未完了</span></div>' +
-        '<div style="font-size:12.5px;color:var(--ink-2);line-height:1.9;margin-bottom:16px">専用ページで本人確認書類（パスポート・運転免許証・マイナンバーカード）とセルフィーを提出し、審査を受けます。</div>' +
-        '<a class="btn btn-primary btn-sm" href="kyc.html">本人確認を始める</a>';
-    }
-  }
-
-  function renderAll(){ renderOverview(); renderSocials(); renderIdentity(); renderBoard(); renderPosts(); renderPayouts(); }
-
-  /* ---- modal (register post) ---- */
+  /* ================= 投稿モーダル ================= */
   var modal = $("modal");
-  function joinedCampaignOptions(){
-    var u = CY.current();
-    return CY.allCampaigns().filter(function(c){ return u.joined && u.joined[c.id]; });
-  }
-  // Disable the merch-sales field when the chosen campaign has no TIER2.
-  function updateModalSalesState(){
+  function joinedCampaignOptions(){ var u=CY.current(); return CY.allCampaigns().filter(function(c){ return u.joined && u.joined[c.id]; }); }
+  function updateModalForCampaign(){
     var c = CY.campaignById($("m-campaign").value);
-    var sales = $("m-sales");
-    var field = sales.closest(".field");
-    if (c && !(c.tier2 > 0)){
-      sales.value = ""; sales.disabled = true;
-      sales.placeholder = "この案件は再生報酬のみ";
-      if (field){ field.style.opacity = ".45"; field.title = "この案件はグッズ成果報酬（TIER2）がありません"; }
-    } else {
-      sales.disabled = false;
-      sales.placeholder = "例: 12000";
-      if (field){ field.style.opacity = "1"; field.title = ""; }
-    }
+    var sales = $("m-sales"); var field = sales.closest(".field");
+    if (c && !(c.tier2 > 0)){ sales.value=""; sales.disabled=true; sales.placeholder="この案件は再生報酬のみ"; if(field){field.style.opacity=".45";} }
+    else { sales.disabled=false; sales.placeholder="例: 12000"; if(field){field.style.opacity="1";} }
+    $("m-disclosure-text").value = (c && c.disclosureText) ? c.disclosureText : "#PR #提供CLIPYIELD";
   }
   function openModal(preselect){
     var opts = joinedCampaignOptions();
-    if (!opts.length){
-      CY.toast("先に案件ボードから案件へ参加してください。");
-      document.querySelector('.tab[data-tab="board"]').click();
-      return;
-    }
-    $("m-campaign").innerHTML = opts.map(function(c){
-      return '<option value="' + c.id + '"' + (c.id===preselect?' selected':'') + '>' + CY.esc(c.title) + '</option>';
-    }).join("");
-    $("m-url").value = ""; $("m-views").value = ""; $("m-sales").value = "";
+    if (!opts.length){ CY.toast("先に案件ボードから案件へ参加してください。"); goTab("board"); return; }
+    var accs = CY.accounts();
+    if (!accs.length){ CY.toast("先に活動用アカウントを登録してください。"); goTab("official"); return; }
+    $("m-campaign").innerHTML = opts.map(function(c){ return '<option value="'+c.id+'"'+(c.id===preselect?' selected':'')+'>'+CY.esc(c.title)+'</option>'; }).join("");
+    $("m-account").innerHTML = accs.map(function(a){ var p=platformById(a.platform); return '<option value="'+a.id+'">'+CY.esc((p?p.name:a.platform)+" "+a.handle)+'</option>'; }).join("");
+    $("m-url").value=""; $("m-clip").value=""; $("m-views").value=""; $("m-sales").value=""; $("m-disclosure").checked=false;
     $("m-err").classList.remove("on");
-    updateModalSalesState();
+    updateModalForCampaign();
     modal.classList.add("on");
   }
-  $("m-campaign").addEventListener("change", updateModalSalesState);
+  $("m-campaign").addEventListener("change", updateModalForCampaign);
+  $("m-disclosure-copy").addEventListener("click", function(){ var v=$("m-disclosure-text").value; if(navigator.clipboard) navigator.clipboard.writeText(v); CY.toast("PR表記をコピーしました。"); });
   function closeModal(){ modal.classList.remove("on"); }
   $("add-post").addEventListener("click", function(){ openModal(); });
   $("m-cancel").addEventListener("click", closeModal);
   modal.addEventListener("click", function(e){ if (e.target === modal) closeModal(); });
   $("m-save").addEventListener("click", function(){
-    var cid = $("m-campaign").value;
-    var url = $("m-url").value.trim();
-    var views = $("m-views").value.replace(/[^0-9]/g,"");
-    var sales = $("m-sales").value.replace(/[^0-9]/g,"");
-    if (!/^https?:\/\//.test(url)){ $("m-err").textContent = "投稿URLは http(s):// から入力してください。"; $("m-err").classList.add("on"); return; }
-    CY.addPost(cid, url, views, sales);
-    closeModal();
-    CY.toast("投稿を登録しました。報酬に反映しました。");
-    renderAll();
-    document.querySelector('.tab[data-tab="posts"]').click();
+    var err=$("m-err"); err.classList.remove("on");
+    try {
+      var post = CY.addPost($("m-campaign").value, {
+        url: $("m-url").value.trim(),
+        clipId: $("m-clip").value.trim(),
+        socialAccount: $("m-account").value,
+        views: $("m-views").value.replace(/[^0-9]/g,""),
+        sales: $("m-sales").value.replace(/[^0-9]/g,""),
+        disclosureConfirmed: $("m-disclosure").checked
+      });
+      closeModal();
+      CY.toast(post.rewardEligible === false ? "登録しました（同一クリップIDのため報酬対象外）。" : "投稿を登録しました。報酬に反映しました。");
+      renderAll(); goTab("posts");
+    } catch (ex) { err.textContent = ex.message; err.classList.add("on"); }
   });
 
   renderAll();

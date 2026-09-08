@@ -91,13 +91,29 @@
     <div class="sub-grid">
       <div class="field">
         <label for="cpv">TIER1 再生単価（1再生あたり）</label>
-        <div class="in-affix"><span class="pre">¥</span><input id="cpv" type="number" min="0" step="0.01" value="0.03"/></div>
-        <div class="hint">社内標準は ¥0.03（全案件共通の推奨値）。</div>
+        <div class="in-affix"><span class="pre">¥</span><input id="cpv" type="number" min="0.03" max="0.5" step="0.01" value="0.10"/></div>
+        <div class="hint">¥0.03〜¥0.50 の範囲で設定します。高単価ほど上位ティアの切り抜き師が参加します。</div>
       </div>
       <div class="field">
         <label for="rate">TIER2 グッズ成果報酬の料率</label>
-        <div class="in-affix suffix"><input id="rate" type="number" min="30" max="60" step="1" value="60"/><span class="suf">%</span></div>
-        <div class="hint">30〜60% の範囲で設定してください。</div>
+        <div class="in-affix suffix"><input id="rate" type="number" min="30" max="60" step="1" value="45"/><span class="suf">%</span></div>
+        <div class="hint">30〜60%（案件により変動）。グッズ連動がない場合は0でも可。</div>
+      </div>
+    </div>
+    <div class="sub-grid" style="margin-top:18px">
+      <div class="field">
+        <label for="minTier">参加できる最低ティア</label>
+        <select id="minTier" style="width:100%;border:1px solid var(--line-strong);border-radius:12px;padding:12px 14px;font-size:14px;font-family:inherit;background:var(--surface);color:var(--ink)">
+          <option value="bronze">BRONZE以上（審査通過者全員）</option>
+          <option value="silver">SILVER以上（累計100万再生・実績あり）</option>
+          <option value="gold">GOLD限定（累計1,000万再生・独占案件）</option>
+        </select>
+        <div class="hint">審査を通過した公式切り抜き師のうち、指定ティア以上のみが参加できます。</div>
+      </div>
+      <div class="field">
+        <label for="disclosureText">必要なPR表記（景表法・ステマ規制）</label>
+        <input id="disclosureText" type="text" value="#PR #提供CLIPYIELD" placeholder="#PR #提供CLIPYIELD"/>
+        <div class="hint">クリッパーが投稿に含める表記です。対象国の規制（日本＝景表法／米国＝FTC等）に合わせて設定します。</div>
       </div>
     </div>
 
@@ -293,6 +309,8 @@
       license: $('license').value.trim(),
       cpv: parseFloat($('cpv').value)||0,
       rate: parseInt($('rate').value,10)||0,
+      minTier: $('minTier').value,
+      disclosureText: $('disclosureText').value.trim() || '#PR #提供CLIPYIELD',
       productUrl: productUrl.value.trim(),
       affiliateBase: affLink.value.trim(),
       deadline: $('deadline').value,
@@ -315,6 +333,7 @@
       '<b>タイトル</b>：'+ (d.title||'（未入力）') +'<br>'+
       '<b>素材</b>：'+ d.files.length +' 件<br>'+
       '<b>TIER1 単価</b>：'+ yen(d.cpv).replace('¥','¥') +' / 再生　　<b>TIER2 料率</b>：'+ d.rate +'%<br>'+
+      '<b>参加できる最低ティア</b>：'+ (d.minTier||'bronze').toUpperCase() +' 以上　　<b>PR表記</b>：'+ (d.disclosureText||'—') +'<br>'+
       '<b>グッズアフィリンク</b>：'+ (d.affiliateBase ? '<span style="word-break:break-all">'+d.affiliateBase+'</span>' : '（未生成）') +'<br>'+
       '<b>募集期限</b>：'+ (d.deadline||'（未設定）') +'<br>'+
       '<b>上限予算</b>：'+ (d.budget? yen(d.budget) : '（未設定）') +'<br>'+

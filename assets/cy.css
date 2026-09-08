@@ -2,28 +2,31 @@
    CLIPYIELD — shared design system (app pages)
    Landing page keeps its own inline styles; this file powers signup / login /
    dashboard so they match the same visual language.
+   モノクロ基調＋オレンジ差し色（clipping.net 参考）。
    ========================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 :root{
   --bg:#FFFFFF;
-  --bg-2:#F7F8FB;
+  --bg-2:#F7F8FA;
   --surface:#FFFFFF;
   --surface-2:#F7F9FC;
-  --line:rgba(16,24,40,.10);
-  --line-strong:rgba(16,24,40,.18);
-  --ink:#0E1420;
-  --ink-2:#4B5565;
-  --ink-3:#6E7787;
-  --brand-1:#FF7A18;
-  --brand-2:#FFC93C;
-  --brand-ink:#D9480F;
+  --line:rgba(10,10,12,.09);
+  --line-strong:rgba(10,10,12,.16);
+  --ink:#0A0A0B;
+  --ink-2:#41474F;
+  --ink-3:#767C86;
+  --brand-1:#FF6A00;
+  --brand-2:#FF8A1E;
+  --brand-ink:#E85D00;
   --ok:#0E9F6E;
   --danger:#E02424;
-  --grad:linear-gradient(100deg,#FF7A18 0%,#FFA62B 45%,#FFC93C 100%);
-  --grad-ink:linear-gradient(100deg,#D9480F 0%,#F59E0B 100%);
-  --radius:18px;
+  /* オレンジは差し色（アクセント）。土台はモノクロ。 */
+  --grad:linear-gradient(100deg,#FF6A00 0%,#FF8A1E 100%);
+  --grad-ink:linear-gradient(100deg,#E85D00 0%,#FF8A1E 100%);
+  --radius:16px;
   --maxw:1180px;
   --jp:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP","Yu Gothic",sans-serif;
-  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,var(--jp);
+  --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,var(--jp);
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
@@ -39,16 +42,19 @@ a{color:inherit;text-decoration:none}
 /* ---------- buttons ---------- */
 .btn{
   display:inline-flex;align-items:center;justify-content:center;gap:8px;
-  border-radius:999px;font-weight:700;font-size:14px;letter-spacing:.01em;
-  padding:12px 22px;border:1px solid transparent;white-space:nowrap;cursor:pointer;
+  border-radius:12px;font-weight:800;font-size:14px;letter-spacing:-.01em;
+  padding:13px 22px;border:1px solid transparent;white-space:nowrap;cursor:pointer;
   font-family:inherit;
-  transition:transform .18s ease,box-shadow .18s ease,background .18s ease,border-color .18s ease;
+  transition:transform .16s ease,box-shadow .16s ease,background .16s ease,border-color .16s ease,color .16s ease;
 }
-.btn-primary{background:var(--grad);color:#150B02;box-shadow:0 8px 30px -10px rgba(255,140,30,.75)}
-.btn-primary:hover{transform:translateY(-1px);box-shadow:0 14px 40px -12px rgba(255,160,40,.9)}
-.btn-ghost{border-color:var(--line-strong);color:var(--ink);background:rgba(16,24,40,.02)}
-.btn-ghost:hover{border-color:rgba(16,24,40,.32);background:rgba(16,24,40,.06)}
-.btn-sm{padding:9px 18px;font-size:13px}
+/* 主ボタン＝黒。差し色オレンジは .btn-accent。 */
+.btn-primary{background:var(--ink);color:#fff;box-shadow:0 10px 24px -12px rgba(10,10,11,.5)}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 16px 34px -14px rgba(10,10,11,.55)}
+.btn-accent{background:var(--grad);color:#1A0E00;box-shadow:0 10px 26px -12px rgba(255,106,0,.6)}
+.btn-accent:hover{transform:translateY(-1px);box-shadow:0 16px 38px -14px rgba(255,106,0,.7)}
+.btn-ghost{border-color:var(--line-strong);color:var(--ink);background:transparent}
+.btn-ghost:hover{border-color:var(--ink);background:rgba(10,10,11,.03)}
+.btn-sm{padding:9px 16px;font-size:13px;border-radius:10px}
 .btn-block{width:100%}
 .btn:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
 
@@ -657,3 +663,9 @@ mark.todo{background:rgba(255,203,60,.32);color:var(--brand-ink);font-weight:700
 .cover-drop.filled{border-style:solid;border-color:var(--ok)}
 .cover-prev{width:100%;aspect-ratio:16/9;border-radius:10px;background-size:cover;background-position:center;margin-top:10px;display:none}
 .cover-prev.on{display:block}
+
+/* ---------- bold display overrides (monochrome, clipping.net-inspired) ---------- */
+.dash-head .hi,.auth-card h1,.auth-aside h2,.kyc-main h1,.legal-hero h1,.col-hero h1,
+.sub-head .hi,.art-cta h3,.modal h3,.card-h h3{font-weight:900}
+.kpi .vl,.cd-kpi .vl{font-weight:900;letter-spacing:-.04em}
+.eyebrow{font-weight:800}
