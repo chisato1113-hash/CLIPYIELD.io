@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title data-i18n="t250">CLIPYIELD — Clip once. Earn twice.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#FFFFFF;
+  --bg-2:#F7F8FB;
+  --surface:#FFFFFF;
+  --surface-2:#F7F9FC;
+  --line:rgba(10,10,12,.09);
+  --line-strong:rgba(10,10,12,.16);
+  --ink:#0A0A0B;
+  --ink-2:#41474F;
+  --ink-3:#767C86;
+  --brand-1:#FF6A00;
+  --brand-2:#FF8A1E;
+  --brand-ink:#E85D00;
+  --ok:#0E9F6E;
+  /* オレンジは差し色（アクセント）として保持。土台はモノクロ。 */
+  --grad:linear-gradient(100deg,#FF6A00 0%,#FF8A1E 100%);
+  --grad-ink:linear-gradient(100deg,#E85D00 0%,#FF8A1E 100%);
+  --ink-grad:linear-gradient(120deg,#0A0A0B 0%,#3A3A3E 100%);
+  --radius:16px;
+  --maxw:1160px;
+  --jp:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP","Yu Gothic",sans-serif;
+  --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,var(--jp);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--ink);font-family:var(--sans);
+  -webkit-font-smoothing:antialiased;line-height:1.6;letter-spacing:.01em;
+  overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+.eyebrow{
+  font-size:11px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--ink-3);font-weight:700;
+}
+.grad-text{background:var(--grad-ink);-webkit-background-clip:text;background-clip:text;color:transparent}
+h2.sec-title{
+  font-size:clamp(30px,4.4vw,50px);line-height:1.1;letter-spacing:-.045em;font-weight:900;
+  margin:14px 0 14px;
+}
+.sec-lead{color:var(--ink-2);font-size:15px;max-width:620px;line-height:1.85}
+
+/* ---------- nav ---------- */
+.nav{
+  position:sticky;top:0;z-index:60;
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  background:rgba(255,255,255,.85);border-bottom:1px solid var(--line);
+}
+.nav-in{display:flex;align-items:center;gap:32px;height:66px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.02em;font-size:17px}
+.logo svg{display:block}
+.nav-links{display:flex;gap:26px;font-size:13.5px;color:var(--ink-2);margin-left:8px}
+.nav-links a:hover{color:var(--ink)}
+.nav-cta{margin-left:auto;display:flex;align-items:center;gap:12px}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  border-radius:12px;font-weight:800;font-size:14px;letter-spacing:-.01em;
+  padding:13px 22px;border:1px solid transparent;white-space:nowrap;cursor:pointer;
+  transition:transform .16s ease,box-shadow .16s ease,background .16s ease,border-color .16s ease,color .16s ease;
+}
+/* 主ボタン＝黒（clipping.net 風）。差し色オレンジは下線バー/アイコンで差す。 */
+.btn-primary{background:var(--ink);color:#fff;box-shadow:0 10px 24px -12px rgba(10,10,11,.5)}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 16px 34px -14px rgba(10,10,11,.55)}
+/* オレンジ差し色ボタン（アクセント用） */
+.btn-accent{background:var(--grad);color:#1A0E00;box-shadow:0 10px 26px -12px rgba(255,106,0,.6)}
+.btn-accent:hover{transform:translateY(-1px);box-shadow:0 16px 38px -14px rgba(255,106,0,.7)}
+.btn-ghost{border-color:var(--line-strong);color:var(--ink);background:transparent}
+.btn-ghost:hover{border-color:var(--ink);background:rgba(10,10,11,.03)}
+.btn-sm{padding:9px 16px;font-size:13px;border-radius:10px}
+
+/* ---------- hero ---------- */
+.hero{position:relative;overflow:hidden;padding:52px 0 0}
+.hero-bg{position:absolute;inset:0;pointer-events:none}
+.hero-bg .glow-a{
+  position:absolute;left:50%;top:-340px;width:1100px;height:680px;transform:translateX(-50%);
+  background:radial-gradient(ellipse at center,rgba(10,10,11,.05) 0%,transparent 68%);
+  filter:blur(8px);
+}
+.hero-bg .glow-b{
+  position:absolute;right:-160px;top:200px;width:560px;height:560px;
+  background:radial-gradient(circle at center,rgba(255,106,0,.08) 0%,transparent 62%);
+}
+.hero-bg .grid{
+  position:absolute;inset:0;
+  background-image:linear-gradient(rgba(16,24,40,.045) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(16,24,40,.045) 1px,transparent 1px);
+  background-size:64px 64px;
+  mask-image:radial-gradient(ellipse 80% 60% at 50% 20%,#000 30%,transparent 78%);
+  -webkit-mask-image:radial-gradient(ellipse 80% 60% at 50% 20%,#000 30%,transparent 78%);
+}
+.hero-in{position:relative;z-index:2;text-align:center}
+.pill{
+  display:inline-flex;align-items:center;gap:9px;padding:6px 14px 6px 6px;border-radius:999px;
+  border:1px solid var(--line);background:#fff;box-shadow:0 1px 2px rgba(10,10,11,.05);
+  font-size:12.5px;color:var(--ink-2);margin-bottom:26px;font-weight:500;
+}
+.pill b{
+  background:var(--grad);color:#1A0E00;border-radius:999px;padding:3px 10px;font-size:10.5px;
+  letter-spacing:.08em;font-weight:800;
+}
+h1{
+  font-size:clamp(42px,7.6vw,88px);line-height:.98;letter-spacing:-.055em;font-weight:900;
+}
+.hero-sub{
+  margin:24px auto 0;max-width:600px;color:var(--ink-2);font-size:16.5px;line-height:1.9;
+}
+.hero-btns{display:flex;gap:12px;justify-content:center;margin:26px 0 12px;flex-wrap:wrap}
+.hero-note{font-size:12.5px;color:var(--ink-3);display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.hero-note span{display:inline-flex;align-items:center;gap:6px}
+.dot{width:5px;height:5px;border-radius:50%;background:var(--brand-1);display:inline-block}
+
+/* hero product composition */
+.stage{position:relative;margin-top:30px;padding-bottom:110px}
+.stage-fade{
+  position:absolute;left:0;right:0;bottom:0;height:260px;z-index:5;pointer-events:none;
+  background:linear-gradient(to bottom,transparent,var(--bg) 88%);
+}
+.app{
+  position:relative;z-index:2;border-radius:22px;overflow:hidden;
+  border:1px solid var(--line-strong);
+  background:linear-gradient(180deg,#FFFFFF 0%,#F8FAFD 100%);
+  box-shadow:0 40px 90px -46px rgba(16,24,40,.30),0 2px 8px -3px rgba(16,24,40,.06);
+}
+.app-bar{
+  display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid var(--line);
+  background:rgba(16,24,40,.02);
+}
+.tl{display:flex;gap:6px}
+.tl i{width:10px;height:10px;border-radius:50%;background:#DCE1EA;display:block}
+.app-title{font-size:12px;color:var(--ink-3);margin-left:8px;letter-spacing:.04em}
+.app-tag{margin-left:auto;font-size:10.5px;letter-spacing:.16em;color:var(--ink-3);border:1px solid var(--line);padding:4px 9px;border-radius:6px}
+.app-body{display:grid;grid-template-columns:1.55fr 1fr;gap:1px;background:var(--line)}
+.pane{background:#FFFFFF;padding:22px}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:22px}
+.kpi{border:1px solid var(--line);border-radius:12px;padding:13px 14px;background:rgba(16,24,40,.015)}
+.kpi .lb{font-size:10.5px;color:var(--ink-3);letter-spacing:.08em;margin-bottom:7px}
+.kpi .vl{font-size:20px;font-weight:800;letter-spacing:-.03em}
+.kpi .dl{font-size:10.5px;color:var(--ok);margin-top:4px;font-weight:700}
+.chart-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:10px}
+.chart-head .t{font-size:12.5px;color:var(--ink-2);font-weight:700}
+.chart-head .s{font-size:11px;color:var(--ink-3)}
+.legend{display:flex;gap:14px;margin-top:14px;font-size:11px;color:var(--ink-3)}
+.legend i{width:9px;height:9px;border-radius:3px;display:inline-block;margin-right:6px;vertical-align:-1px}
+.side-title{font-size:11px;letter-spacing:.14em;color:var(--ink-3);font-weight:700;margin-bottom:14px}
+.rowbar{margin-bottom:13px}
+.rowbar .rl{display:flex;justify-content:space-between;font-size:11.5px;color:var(--ink-2);margin-bottom:6px}
+.rowbar .rl b{color:var(--ink);font-weight:700}
+.track{height:6px;border-radius:999px;background:rgba(16,24,40,.07);overflow:hidden}
+.track i{display:block;height:100%;border-radius:999px;background:var(--grad)}
+.mini-list{margin-top:24px;border-top:1px solid var(--line);padding-top:18px}
+.mini-row{display:flex;align-items:center;gap:10px;padding:8px 0;font-size:12px}
+.rank{width:20px;height:20px;border-radius:6px;background:rgba(16,24,40,.06);display:grid;place-items:center;font-size:10.5px;color:var(--ink-2);font-weight:800}
+.rank.top{background:var(--grad);color:#170C02}
+.mini-row .nm{color:var(--ink-2)}
+.mini-row .am{margin-left:auto;font-weight:700;font-variant-numeric:tabular-nums}
+
+/* floating cards */
+.float{position:absolute;z-index:4;border-radius:14px;border:1px solid var(--line-strong);
+  background:rgba(255,255,255,.94);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  box-shadow:0 22px 46px -24px rgba(16,24,40,.28);padding:14px 16px;}
+.float-l{left:-46px;top:262px;width:236px}
+.inpane{margin-top:20px;border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:rgba(16,24,40,.015)}
+.float .ft,.inpane .ft{font-size:10.5px;letter-spacing:.12em;color:var(--ink-3);margin-bottom:9px;font-weight:700}
+.pay-row{display:flex;align-items:center;gap:9px;font-size:12px;padding:6px 0}
+.pay-row .st{margin-left:auto;font-size:10px;padding:2px 7px;border-radius:999px;font-weight:700}
+.st-paid{background:rgba(14,159,110,.12);color:#0B7A55}
+.st-pend{background:rgba(217,119,6,.12);color:#B45309}
+.tier-mini{display:flex;align-items:center;gap:10px;padding:9px 0}
+.tier-mini .bx{width:26px;height:26px;border-radius:8px;display:grid;place-items:center;font-size:10px;font-weight:800}
+.bx1{background:var(--grad);color:#170C02}
+.bx2{background:rgba(16,24,40,.08);color:var(--ink)}
+.tier-mini .tx{font-size:11.5px;color:var(--ink-2)}
+.tier-mini .vv{margin-left:auto;font-weight:800;font-size:13px;font-variant-numeric:tabular-nums}
+
+/* ---------- stat strip ---------- */
+.strip{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--bg-2)}
+.strip-in{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line)}
+.strip-cell{background:var(--bg-2);padding:38px 30px}
+.strip-cell .n{font-size:clamp(32px,4.6vw,50px);font-weight:900;letter-spacing:-.05em;line-height:1}
+.strip-cell .l{font-size:12.5px;color:var(--ink-2);margin-top:11px;font-weight:600}
+.strip-cell .d{font-size:11.5px;color:var(--ink-3);margin-top:5px;line-height:1.7}
+
+/* ---------- sections ---------- */
+section{padding:110px 0}
+.sec-head{margin-bottom:52px}
+
+/* tier / simulator */
+.tier-wrap{display:grid;grid-template-columns:1fr 1fr;gap:26px;align-items:stretch}
+.card{
+  border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);
+  padding:30px;position:relative;overflow:hidden;
+  transition:border-color .2s ease,transform .2s ease;
+}
+.card:hover{border-color:var(--line-strong);transform:translateY(-2px)}
+.tier-card{display:flex;flex-direction:column}
+.tier-badge{display:inline-flex;align-items:center;gap:8px;font-size:10.5px;letter-spacing:.16em;font-weight:800;
+  padding:5px 11px;border-radius:999px;align-self:flex-start;margin-bottom:20px}
+.tb1{background:var(--grad);color:#170C02}
+.tb2{background:rgba(16,24,40,.07);color:var(--ink);border:1px solid var(--line-strong)}
+.tier-num{font-size:44px;font-weight:800;letter-spacing:-.045em;line-height:1;display:flex;align-items:baseline;gap:8px}
+.tier-num small{font-size:15px;font-weight:600;color:var(--ink-3);letter-spacing:0}
+.tier-desc{color:var(--ink-2);font-size:13.5px;line-height:1.9;margin-top:16px}
+.tier-visual{margin-top:auto;padding-top:26px}
+
+.sim{
+  border:1px solid var(--line);border-radius:var(--radius);background:
+    radial-gradient(120% 100% at 100% 0%,rgba(255,140,30,.10),transparent 60%),var(--surface);
+  padding:30px;
+}
+.sim-out{
+  border:1px solid var(--line-strong);border-radius:14px;padding:20px 22px;margin-bottom:24px;
+  background:rgba(16,24,40,.02);
+}
+.sim-out .lb{font-size:11px;letter-spacing:.14em;color:var(--ink-3);font-weight:700}
+.sim-total{font-size:clamp(34px,5vw,52px);font-weight:800;letter-spacing:-.045em;line-height:1.1;margin:8px 0 4px;font-variant-numeric:tabular-nums}
+.sim-break{display:flex;gap:18px;font-size:12px;color:var(--ink-2);flex-wrap:wrap}
+.sim-break span{display:inline-flex;align-items:center;gap:7px}
+.sim-field{margin-bottom:22px}
+.sim-field .fl{display:flex;justify-content:space-between;align-items:baseline;font-size:12.5px;color:var(--ink-2);margin-bottom:12px}
+.sim-field .fl b{font-size:15px;color:var(--ink);font-weight:800;font-variant-numeric:tabular-nums}
+input[type=range]{
+  -webkit-appearance:none;appearance:none;width:100%;height:5px;border-radius:999px;
+  background:rgba(16,24,40,.1);outline:none;
+}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;appearance:none;width:20px;height:20px;border-radius:50%;
+  background:#fff;cursor:pointer;border:4px solid #FF8C1E;box-shadow:0 4px 14px rgba(16,24,40,.22);
+}
+input[type=range]::-moz-range-thumb{
+  width:20px;height:20px;border-radius:50%;background:#fff;cursor:pointer;
+  border:4px solid #FF8C1E;box-shadow:0 4px 14px rgba(16,24,40,.22);
+}
+.sim-note{font-size:11px;color:var(--ink-3);line-height:1.8;margin-top:18px;border-top:1px solid var(--line);padding-top:16px}
+
+/* campaign board */
+.board-head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:34px}
+.filters{display:flex;gap:8px;flex-wrap:wrap}
+.chip{font-size:12px;padding:7px 14px;border-radius:999px;border:1px solid var(--line);color:var(--ink-3);background:rgba(16,24,40,.02)}
+.chip.on{border-color:transparent;background:var(--grad);color:#170C02;font-weight:700}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.cc{
+  border:1px solid var(--line);border-radius:16px;background:var(--surface);overflow:hidden;
+  transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease;
+}
+.cc:hover{transform:translateY(-4px);border-color:var(--line-strong);box-shadow:0 26px 50px -28px rgba(16,24,40,.30)}
+.cc-art{height:132px;position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+.cc-art svg{position:absolute;inset:0;width:100%;height:100%}
+.cc-badge{position:absolute;left:14px;top:14px;z-index:2;font-size:10px;font-weight:800;letter-spacing:.1em;
+  padding:5px 10px;border-radius:999px;background:rgba(255,255,255,.88);border:1px solid var(--line-strong);
+  backdrop-filter:blur(8px);display:inline-flex;align-items:center;gap:6px}
+.live-dot{width:6px;height:6px;border-radius:50%;background:#0E9F6E;box-shadow:0 0 0 3px rgba(14,159,110,.18)}
+.cc-days{position:absolute;right:14px;top:14px;z-index:2;font-size:10.5px;color:var(--ink-2);
+  background:rgba(255,255,255,.88);border:1px solid var(--line);padding:5px 9px;border-radius:8px;backdrop-filter:blur(8px)}
+.cc-body{padding:18px}
+.cc-title{font-size:15.5px;font-weight:700;letter-spacing:-.02em;line-height:1.4}
+.cc-meta{font-size:11.5px;color:var(--ink-3);margin-top:5px}
+.cc-rates{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);
+  border-radius:11px;overflow:hidden;margin:16px 0 14px}
+.cc-rate{background:#FAFBFD;padding:11px 13px}
+.cc-rate .k{font-size:9.5px;letter-spacing:.12em;color:var(--ink-3);font-weight:800}
+.cc-rate .v{font-size:16px;font-weight:800;letter-spacing:-.03em;margin-top:4px}
+.cc-rate .v small{font-size:10.5px;color:var(--ink-3);font-weight:600;letter-spacing:0}
+.plats{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.cc-geo{margin:2px 0 14px}
+.cc-geo .gl{font-size:9.5px;letter-spacing:.1em;color:var(--ink-3);font-weight:800;margin-bottom:7px}
+.cc-geo .gf{display:flex;gap:5px;flex-wrap:wrap}
+.cc-geo .gf span{border:1px solid var(--line);border-radius:7px;padding:3px 8px;font-size:11px;color:var(--ink-2);font-weight:700}
+.cc-cat{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.06em;padding:4px 9px;border-radius:6px;background:rgba(255,160,40,.16);color:#C2410C;margin-top:6px}
+.plat{font-size:10.5px;padding:4px 9px;border-radius:6px;border:1px solid var(--line);color:var(--ink-2);background:rgba(16,24,40,.02)}
+.cc-foot{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--ink-3);margin-top:12px}
+.cc-qual{color:#0B7A55;font-weight:700}
+.sample-note{margin-top:24px;font-size:11.5px;color:var(--ink-3);display:flex;align-items:flex-start;gap:9px;line-height:1.8}
+
+/* comparison */
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.vs-col{border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.vs-col.win{border-color:rgba(249,115,22,.40);box-shadow:0 0 0 1px rgba(249,115,22,.12),0 30px 70px -48px rgba(249,115,22,.55)}
+.vs-top{padding:22px 26px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px}
+.vs-col.win .vs-top{background:linear-gradient(100deg,rgba(255,122,24,.14),rgba(255,201,60,.05))}
+.vs-name{font-weight:800;letter-spacing:-.02em;font-size:17px}
+.vs-sub{font-size:11px;color:var(--ink-3);margin-top:2px}
+.vs-list{padding:8px 26px 26px}
+.vs-item{display:flex;gap:14px;padding:18px 0;border-bottom:1px solid var(--line)}
+.vs-item:last-child{border-bottom:0}
+.ic{width:26px;height:26px;border-radius:8px;flex:0 0 26px;display:grid;place-items:center;margin-top:2px}
+.ic-y{background:rgba(255,160,40,.16)}
+.ic-n{background:rgba(16,24,40,.05)}
+.vs-item .h{font-size:13.5px;font-weight:700;letter-spacing:-.01em}
+.vs-item .p{font-size:12px;color:var(--ink-3);line-height:1.75;margin-top:4px}
+.vs-col:not(.win) .vs-item .h{color:var(--ink-2);font-weight:600}
+
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);
+  border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.step{background:var(--surface);padding:26px 24px 28px;position:relative}
+.step-n{font-size:11px;font-weight:800;letter-spacing:.14em;color:var(--ink-3);margin-bottom:18px}
+.step-n b{background:var(--grad-ink);-webkit-background-clip:text;background-clip:text;color:transparent;font-size:13px}
+.step h3{font-size:15.5px;font-weight:700;letter-spacing:-.02em;margin-bottom:8px}
+.step p{font-size:12.5px;color:var(--ink-3);line-height:1.85}
+.step-vis{margin-top:20px;border:1px solid var(--line);border-radius:11px;background:var(--bg-2);padding:13px;min-height:104px}
+.sv-row{display:flex;align-items:center;gap:9px;font-size:11.5px;padding:6px 0;color:var(--ink-2)}
+.sv-row .chkbox{width:15px;height:15px;border-radius:5px;border:1px solid var(--line-strong);flex:0 0 15px}
+.sv-row .chkbox.on{background:var(--grad);border-color:transparent}
+.sv-pill{font-size:10.5px;border:1px solid var(--line);border-radius:7px;padding:5px 8px;color:var(--ink-2)}
+.sv-pill.on{border-color:rgba(217,72,15,.32);background:rgba(255,160,40,.13);color:#C2410C}
+.sv-grid{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
+
+/* faq */
+.faq{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.qa{background:var(--surface);padding:26px 28px}
+.qa h4{font-size:14px;font-weight:700;letter-spacing:-.015em;margin-bottom:9px;display:flex;gap:9px}
+.qa h4 span{color:var(--brand-ink);font-weight:800}
+.qa p{font-size:12.5px;color:var(--ink-3);line-height:1.9}
+
+/* cta */
+.cta{
+  position:relative;border-radius:26px;overflow:hidden;border:1px solid var(--line-strong);
+  background:linear-gradient(160deg,#FFF6EE 0%,#F5F8FC 68%);padding:74px 40px;text-align:center;
+}
+.cta::before{
+  content:"";position:absolute;left:50%;top:-160px;width:820px;height:460px;transform:translateX(-50%);
+  background:radial-gradient(ellipse at center,rgba(255,140,30,.22),transparent 68%);
+}
+.cta > *{position:relative}
+.cta h2{font-size:clamp(30px,4.6vw,52px);font-weight:800;letter-spacing:-.045em;line-height:1.1}
+.cta p{color:var(--ink-2);margin:18px auto 30px;max-width:480px;font-size:15px;line-height:1.9}
+
+/* footer */
+footer{border-top:1px solid var(--line);padding:64px 0 44px;background:var(--bg-2)}
+.foot{display:grid;grid-template-columns:1.6fr repeat(3,1fr);gap:40px}
+.foot-brand p{font-size:12.5px;color:var(--ink-3);line-height:1.9;margin-top:16px;max-width:290px}
+.fcol h5{font-size:11px;letter-spacing:.16em;color:var(--ink-3);font-weight:800;margin-bottom:16px}
+.fcol a{display:block;font-size:12.5px;color:var(--ink-2);padding:6px 0}
+.fcol a:hover{color:var(--ink)}
+.foot-btm{border-top:1px solid var(--line);margin-top:48px;padding-top:24px;display:flex;justify-content:space-between;
+  gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--ink-3)}
+
+/* internal note banner */
+.note-bar{background:#F4F6FA;border-bottom:1px solid var(--line);padding:9px 0;font-size:11.5px;color:var(--ink-3);text-align:center}
+.note-bar b{color:var(--ink-2);font-weight:700}
+
+/* ---------- partner logo marquee (sample wordmarks) ---------- */
+.marquee{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:#fff;padding:26px 0}
+.marquee-lab{text-align:center;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-3);font-weight:700;margin-bottom:18px}
+.marquee-lab span{color:var(--ink-3);opacity:.7;text-transform:none;letter-spacing:.02em;font-weight:500}
+.marquee-mask{position:relative;overflow:hidden;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.marquee-track{display:flex;width:max-content;gap:0;animation:marq 42s linear infinite}
+.marquee:hover .marquee-track{animation-play-state:paused}
+.logo-name{flex:0 0 auto;padding:0 34px;font-weight:800;font-size:17px;letter-spacing:.02em;color:#0A0A0B;opacity:.62;
+  white-space:nowrap;transition:opacity .2s ease;text-transform:uppercase;font-family:var(--sans)}
+.logo-name:hover{opacity:1}
+.logo-name small{font-size:9.5px;letter-spacing:.14em;color:var(--ink-3);font-weight:700;display:block;text-transform:uppercase;margin-top:1px;opacity:.7}
+@keyframes marq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media(prefers-reduced-motion:reduce){.marquee-track{animation:none;flex-wrap:wrap;justify-content:center;width:auto}}
+
+/* ---------- example clips showcase ---------- */
+.clip-row{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+.clip{position:relative;border-radius:16px;overflow:hidden;border:1px solid var(--line);background:#000;aspect-ratio:9/16;
+  box-shadow:0 20px 44px -30px rgba(10,10,11,.5);transition:transform .22s ease,box-shadow .22s ease}
+.clip:hover{transform:translateY(-4px);box-shadow:0 30px 60px -34px rgba(10,10,11,.55)}
+.clip-vid{position:absolute;inset:0;background-size:200% 200%;animation:clipMove 9s ease-in-out infinite}
+@keyframes clipMove{0%{background-position:0% 0%}50%{background-position:100% 100%}100%{background-position:0% 0%}}
+.clip-scrim{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.12) 0%,transparent 34%,transparent 52%,rgba(0,0,0,.72) 100%)}
+.clip-top{position:absolute;left:10px;right:10px;top:10px;display:flex;justify-content:space-between;align-items:center;z-index:2}
+.clip-cat{font-size:9.5px;font-weight:800;letter-spacing:.08em;color:#fff;background:rgba(255,255,255,.16);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.28);padding:4px 8px;border-radius:6px}
+.clip-plat{font-size:9.5px;font-weight:700;color:#fff;background:rgba(0,0,0,.35);padding:4px 8px;border-radius:6px;backdrop-filter:blur(6px)}
+.clip-play{position:absolute;left:50%;top:46%;transform:translate(-50%,-50%);width:52px;height:52px;border-radius:50%;
+  background:rgba(255,255,255,.92);display:grid;place-items:center;z-index:2;box-shadow:0 8px 20px rgba(0,0,0,.35);transition:transform .2s ease}
+.clip:hover .clip-play{transform:translate(-50%,-50%) scale(1.08)}
+.clip-bot{position:absolute;left:12px;right:12px;bottom:12px;z-index:2;color:#fff}
+.clip-title{font-size:13px;font-weight:800;letter-spacing:-.01em;line-height:1.25;text-shadow:0 1px 6px rgba(0,0,0,.5)}
+.clip-meta{display:flex;justify-content:space-between;align-items:center;margin-top:8px;font-size:10.5px}
+.clip-rate{font-weight:800;color:var(--brand-2)}
+.clip-views{color:rgba(255,255,255,.82);font-weight:600}
+.clip-sound{position:absolute;right:10px;bottom:64px;z-index:2;font-size:9.5px;color:#fff;background:rgba(0,0,0,.4);padding:4px 8px;border-radius:999px;backdrop-filter:blur(6px);display:inline-flex;align-items:center;gap:5px}
+
+/* ---------- hero smartphone mockup ---------- */
+.phone{position:absolute;z-index:6;width:232px;aspect-ratio:9/19.2;right:5%;top:22px;
+  border-radius:36px;background:#0A0A0B;padding:8px;
+  box-shadow:0 50px 100px -34px rgba(10,10,11,.62),0 2px 10px -2px rgba(10,10,11,.3);
+  border:1px solid #17171a}
+.phone-screen{position:relative;width:100%;height:100%;border-radius:28px;overflow:hidden;background:#111}
+.phone-island{position:absolute;left:50%;top:8px;transform:translateX(-50%);width:74px;height:20px;background:#000;border-radius:999px;z-index:8}
+.phone .pv{position:absolute;inset:0;background-size:200% 200%;animation:clipMove 9s ease-in-out infinite}
+.phone .pscrim{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.28) 0%,transparent 26%,transparent 46%,rgba(0,0,0,.78) 100%)}
+.ph-live{position:absolute;left:12px;top:14px;z-index:6;font-size:9px;font-weight:800;letter-spacing:.06em;color:#fff;background:rgba(255,106,0,.92);padding:3px 8px;border-radius:6px}
+.ph-rail{position:absolute;right:9px;bottom:78px;z-index:6;display:flex;flex-direction:column;gap:16px;align-items:center;color:#fff}
+.ph-rail .ic{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:9px;font-weight:700}
+.ph-rail svg{filter:drop-shadow(0 1px 3px rgba(0,0,0,.5))}
+.ph-cap{position:absolute;left:12px;right:52px;bottom:34px;z-index:6;color:#fff}
+.ph-cap .u{font-size:11.5px;font-weight:800}
+.ph-cap .c{font-size:10px;line-height:1.5;margin-top:4px;color:rgba(255,255,255,.9);text-shadow:0 1px 4px rgba(0,0,0,.5)}
+.ph-audio{position:absolute;left:12px;bottom:16px;z-index:6;display:inline-flex;align-items:center;gap:6px;font-size:9px;color:rgba(255,255,255,.9)}
+.ph-prog{position:absolute;left:0;right:0;bottom:0;height:3px;background:rgba(255,255,255,.24);z-index:7}
+.ph-prog i{display:block;height:100%;width:62%;background:#fff}
+.ph-badge{position:absolute;z-index:7;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.96);
+  backdrop-filter:blur(10px);box-shadow:0 18px 40px -22px rgba(10,10,11,.5);padding:10px 13px;font-family:var(--sans)}
+.ph-badge.b1{left:-38px;bottom:96px}
+.ph-badge.b2{right:-30px;top:150px}
+.ph-badge .k{font-size:9px;letter-spacing:.12em;color:var(--ink-3);font-weight:800;text-transform:uppercase}
+.ph-badge .v{font-size:16px;font-weight:900;letter-spacing:-.03em;margin-top:2px;font-variant-numeric:tabular-nums}
+.ph-badge .v small{font-size:10px;color:var(--ok);font-weight:800;margin-left:4px}
+@media(max-width:1080px){ .phone{display:none} }
+
+@media(max-width:1080px){
+  .float{display:none}
+  .app-body{grid-template-columns:1fr}
+  .cards{grid-template-columns:repeat(2,1fr)}
+  .steps{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:820px){
+  .nav-links{display:none}
+  .nav-cta .btn-ghost{display:none}
+  section{padding:76px 0}
+  .tier-wrap,.vs,.faq{grid-template-columns:1fr}
+  .strip-in{grid-template-columns:1fr}
+  .cards{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr}
+  .foot{grid-template-columns:1fr 1fr;gap:32px}
+  .hero{padding-top:56px}
+  .stage{margin-top:44px;padding-bottom:70px}
+  .cta{padding:54px 24px}
+}
+@media(max-width:560px){
+  .kpis{grid-template-columns:1fr;gap:10px}
+  .kpi{display:flex;align-items:baseline;justify-content:space-between;gap:10px;padding:11px 13px}
+  .kpi .lb{margin-bottom:0}
+  .kpi .vl{font-size:18px}
+  .kpi .dl{margin-top:0}
+  .nav-cta .btn-ghost{display:none}
+  .nav-cta .btn-sm{padding:0 14px;font-size:12.5px}
+  .pill{font-size:11.5px;padding:7px 14px 7px 8px;line-height:1.5}
+  .pill b{font-size:9.5px;padding:3px 8px}
+  .hero-bg .glow-a,.hero-bg .glow-b{opacity:.55}
+}
+/* ===== mobile hamburger menu ===== */
+.nav-burger{display:flex;flex-direction:column;justify-content:center;gap:5px;width:42px;height:38px;
+  border:1px solid var(--line-strong);border-radius:11px;background:var(--surface);cursor:pointer;padding:0 10px;flex:0 0 auto}
+.nav-burger span{display:block;height:2px;width:100%;background:var(--ink);border-radius:2px;
+  transition:transform .26s ease,opacity .2s ease}
+.nav-burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-burger.open span:nth-child(2){opacity:0}
+.nav-burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.nav-mobile{position:absolute;top:100%;left:0;right:0;background:var(--bg);border-bottom:1px solid var(--line);
+  box-shadow:0 24px 46px -22px rgba(16,24,40,.4);display:flex;flex-direction:column;max-height:calc(100vh - 66px);overflow-y:auto;
+  opacity:0;visibility:hidden;transform:translateY(-8px);pointer-events:none;
+  transition:opacity .2s ease,transform .22s ease,visibility .2s}
+.nav-mobile.open{opacity:1;visibility:visible;transform:translateY(0);pointer-events:auto}
+.nav-mobile a[href]{padding:15px 24px;font-size:15.5px;font-weight:600;color:var(--ink);border-bottom:1px solid var(--line)}
+.nav-mobile a[href]:active{background:var(--surface-2)}
+.nav-mobile .nav-mobile-cta{display:flex;flex-direction:column;gap:10px;padding:16px 20px 20px}
+.nav-mobile .nav-mobile-cta .btn{width:100%;height:48px;font-size:14.5px}
+.nav-scrim{position:fixed;inset:0;background:rgba(16,24,40,.4);z-index:55;opacity:0;visibility:hidden;
+  transition:opacity .2s ease,visibility .2s}
+.nav-scrim.open{opacity:1;visibility:visible}
+@media(min-width:821px){ .nav-burger,.nav-mobile,.nav-scrim{display:none} }
+
+/* ===== language switcher ===== */
+.lang{display:flex;align-items:center;gap:2px;padding:3px;border:1px solid var(--line-strong);border-radius:999px;background:var(--surface-2)}
+.lang-b{appearance:none;-webkit-appearance:none;border:0;background:transparent;color:var(--ink-3);font-family:inherit;font-size:12px;font-weight:700;letter-spacing:.02em;padding:5px 10px;border-radius:999px;cursor:pointer;line-height:1;white-space:nowrap;transition:color .15s ease,background .15s ease,box-shadow .15s ease}
+.lang-b:hover{color:var(--ink)}
+.lang-b.is-on{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(16,24,40,.12)}
+.lang-b .l-abbr{display:none}
+@media(max-width:640px){
+  .lang{padding:2px;gap:0}
+  .lang-b{padding:5px 8px;font-size:11.5px}
+  .lang-b .l-full{display:none}
+  .lang-b .l-abbr{display:inline}
+  .nav-in{gap:12px}
+  .nav-cta{gap:8px}
+}
+@media(max-width:400px){
+  .wrap.nav-in{padding-left:16px;padding-right:16px;gap:6px}
+  .logo{font-size:14px;gap:7px}
+  .logo svg{width:22px;height:22px}
+  .lang-b{padding:5px 5px;font-size:11px}
+  .nav-cta{gap:6px}
+  .nav-cta .btn-sm{padding:0 10px;font-size:11.5px}
+}
+html[lang="zh"] body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif}
+html[lang="en"] body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
+</style>
+</head>
+<body>
+<div class="note-bar">
+<div class="wrap" data-i18n-html="t001"><b>社内デザイン確認用プロトタイプ</b>｜掲載している案件名・数値・ランキング等はレイアウト確認のためのサンプル表示です（実績値ではありません）</div>
+</div>
+<!-- ============ NAV ============ -->
+<nav class="nav">
+<div class="wrap nav-in">
+<a class="logo" href="#top">
+<svg fill="none" height="26" viewBox="0 0 32 32" width="26">
+<defs><linearGradient id="lg" x1="0" x2="32" y1="0" y2="32">
+<stop offset="0" stop-color="#FF7A18"></stop><stop offset="1" stop-color="#FFC93C"></stop></linearGradient></defs>
+<rect height="30" rx="9" stroke="url(#lg)" stroke-width="2" width="30" x="1" y="1"></rect>
+<path d="M12 9.5 L22.5 16 L12 22.5 Z" fill="url(#lg)"></path>
+<path d="M8 12.5 L8 19.5" stroke="url(#lg)" stroke-linecap="round" stroke-width="2.4"></path>
+</svg>
+      CLIPYIELD
+    </a>
+<div class="nav-links">
+<a data-i18n="t003" href="#rewards">報酬モデル</a>
+<a data-i18n="t004" href="#board">案件ボード</a>
+<a data-i18n="t005" href="#why">CLIPYIELDの違い</a>
+<a data-i18n="t006" href="#how">はじめ方</a>
+<a data-i18n="t007" href="#faq">FAQ</a>
+<a data-i18n="t306" href="for-clients.html">権利者の方へ</a>
+<a data-i18n="t280" href="column.html">コラム</a>
+</div>
+<div class="nav-cta">
+<div aria-label="Language" class="lang" role="group"><button class="lang-b is-on" data-lang="ja" type="button"><span class="l-full">日本語</span><span class="l-abbr">JA</span></button><button class="lang-b" data-lang="en" type="button"><span class="l-full">EN</span><span class="l-abbr">EN</span></button><button class="lang-b" data-lang="zh" type="button"><span class="l-full">中文</span><span class="l-abbr">中</span></button></div>
+<a class="btn btn-ghost btn-sm" data-i18n="t008" href="login.html">ログイン</a>
+<a class="btn btn-primary btn-sm" data-i18n="t009" href="signup.html">無料ではじめる</a>
+<button class="nav-burger" id="navBurger" type="button" aria-label="メニュー" aria-controls="navMobile" aria-expanded="false">
+<span></span><span></span><span></span>
+</button>
+</div>
+<div class="nav-mobile" id="navMobile">
+<a data-i18n="t003" href="#rewards">報酬モデル</a>
+<a data-i18n="t004" href="#board">案件ボード</a>
+<a data-i18n="t005" href="#why">CLIPYIELDの違い</a>
+<a data-i18n="t006" href="#how">はじめ方</a>
+<a data-i18n="t007" href="#faq">FAQ</a>
+<a data-i18n="t306" href="for-clients.html">権利者の方へ</a>
+<a data-i18n="t280" href="column.html">コラム</a>
+<div class="nav-mobile-cta">
+<a class="btn btn-ghost" data-i18n="t008" href="login.html">ログイン</a>
+<a class="btn btn-primary" data-i18n="t009" href="signup.html">無料ではじめる</a>
+</div>
+</div>
+</div>
+<div class="nav-scrim" id="navScrim"></div>
+</nav>
+<script>
+(function(){
+  var burger=document.getElementById('navBurger'), panel=document.getElementById('navMobile'), scrim=document.getElementById('navScrim');
+  if(!burger||!panel) return;
+  function set(open){
+    burger.classList.toggle('open',open);
+    panel.classList.toggle('open',open);
+    scrim.classList.toggle('open',open);
+    burger.setAttribute('aria-expanded',open?'true':'false');
+    document.body.style.overflow=open?'hidden':'';
+  }
+  burger.addEventListener('click',function(){ set(!panel.classList.contains('open')); });
+  scrim.addEventListener('click',function(){ set(false); });
+  panel.querySelectorAll('a[href]').forEach(function(a){ a.addEventListener('click',function(){ set(false); }); });
+  window.addEventListener('keydown',function(e){ if(e.key==='Escape') set(false); });
+  window.addEventListener('resize',function(){ if(window.innerWidth>820) set(false); });
+})();
+</script>
+<!-- ============ HERO ============ -->
+<header class="hero" id="top">
+<div class="hero-bg">
+<div class="glow-a"></div><div class="glow-b"></div><div class="grid"></div>
+</div>
+<div class="wrap hero-in">
+<div class="pill" data-i18n-html="t010"><b>TWO-TIER</b> 再生でもらう。売れたらもう一度もらう。</div>
+<h1 data-i18n-html="t011">Clip once.<br/><span class="grad-text">Earn twice.</span></h1>
+<p class="hero-sub" data-i18n-html="t012">
+      権利者から公式に許諾された素材だけを配信し、投稿前の審査で品質を担保。<b>著作権を理由とした申立てのリスクを構造的に下げています</b>。<br/>
+      再生数の報酬に加えて、あなたのリンク経由で売れたグッズ売上の<b>30〜60%（案件により変動）</b>が積み上がります。
+    </p>
+<div class="hero-btns">
+<a class="btn btn-accent" data-i18n="t013" href="signup.html">クリッパー登録（無料）</a>
+<a class="btn btn-ghost" data-i18n="t014" href="#rewards">報酬モデルを見る</a>
+</div>
+<div class="hero-note">
+<span data-i18n-html="t015"><i class="dot"></i>審査を通過した公式切り抜き師のみ</span>
+<span data-i18n-html="t016"><i class="dot"></i>フォロワー数は不問（品質と実績で審査）</span>
+<span data-i18n-html="t017"><i class="dot"></i>1再生 ¥0.03〜0.5（ティア・案件による）</span>
+<span data-i18n-html="t266"><i class="dot"></i>著作権を理由とした申立てリスクを構造的に低減</span>
+</div>
+</div>
+<!-- product stage -->
+<div class="wrap stage">
+<div class="phone" aria-label="切り抜きクリップのイメージ">
+<div class="phone-screen">
+<div class="pv" style="background:linear-gradient(160deg,#2a1240 0%,#5a2a86 42%,#0c0b14 100%)"></div>
+<div class="pscrim"></div>
+<div class="phone-island"></div>
+<div class="ph-live">LIVE ・ 案件参加中</div>
+<div class="ph-rail">
+<div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="#fff"><path d="M12 21s-7.5-4.6-10-9.2C.6 8.9 2 6 5 6c1.8 0 3 1 4 2 1-1 2.2-2 4-2 3 0 4.4 2.9 3 5.8C19.5 16.4 12 21 12 21z"/></svg>128K</div>
+<div class="ic"><svg width="25" height="25" viewBox="0 0 24 24" fill="#fff"><path d="M21 11.5a8.5 8.5 0 0 1-12.3 7.6L3 21l1.9-5.7A8.5 8.5 0 1 1 21 11.5z"/></svg>3.4K</div>
+<div class="ic"><svg width="25" height="25" viewBox="0 0 24 24" fill="#fff"><path d="M3 12l18-8-4 18-5-6-6-1 9-6-11 5z"/></svg>共有</div>
+</div>
+<div class="ph-cap"><div class="u">@your_handle</div><div class="c">切り抜き #BLADE_OF_THE_LAST_SUN 第12話の名シーン #PR #提供CLIPYIELD</div></div>
+<div class="ph-audio"><svg width="12" height="12" viewBox="0 0 24 24" fill="#fff"><path d="M12 3v10.6A4 4 0 1 0 14 17V7h4V3z"/></svg>オリジナル音源 — CLIPYIELD 公式素材</div>
+<div class="ph-prog"><i></i></div>
+</div>
+<div class="ph-badge b1"><div class="k">今月の報酬</div><div class="v">¥107,664<small>▲34%</small></div></div>
+<div class="ph-badge b2"><div class="k">再生数</div><div class="v">1.2M<small>▲12%</small></div></div>
+</div>
+<div class="float float-l">
+<div class="ft" data-i18n="t018">PAYOUTS</div>
+<div class="pay-row" data-i18n-html="t019">7月 ・ TIER1+TIER2 <span class="st st-pend">処理中</span></div>
+<div class="pay-row" data-i18n-html="t020">6月 ・ TIER1+TIER2 <span class="st st-paid">支払済</span></div>
+<div class="pay-row" data-i18n-html="t021">5月 ・ TIER1 <span class="st st-paid">支払済</span></div>
+</div>
+<div class="app">
+<div class="app-bar">
+<div class="tl"><i></i><i></i><i></i></div>
+<div class="app-title" data-i18n="t022">clipyield.com / dashboard</div>
+<div class="app-tag" data-i18n="t023">CREATOR VIEW</div>
+</div>
+<div class="app-body">
+<div class="pane">
+<div class="kpis">
+<div class="kpi"><div class="lb" data-i18n="t024">確定報酬（今月）</div><div class="vl" data-i18n="t025">¥107,664</div><div class="dl" data-i18n="t026">▲ 34.2%</div></div>
+<div class="kpi"><div class="lb" data-i18n="t027">総再生数</div><div class="vl" data-i18n="t028">364,800</div><div class="dl" data-i18n="t029">▲ 12.8%</div></div>
+<div class="kpi"><div class="lb" data-i18n="t030">リンク経由購入</div><div class="vl" data-i18n="t031">142件</div><div class="dl" data-i18n="t032">▲ 51.0%</div></div>
+</div>
+<div class="chart-head">
+<div class="t" data-i18n="t033">再生数と成果の推移</div>
+<div class="s" data-i18n="t034">直近30日</div>
+</div>
+<svg preserveAspectRatio="none" style="width:100%;height:auto;display:block" viewBox="0 0 620 190">
+<defs>
+<linearGradient id="fill1" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0" stop-color="#FF9A2B" stop-opacity=".38"></stop>
+<stop offset="1" stop-color="#FF9A2B" stop-opacity="0"></stop>
+</linearGradient>
+<linearGradient id="ln1" x1="0" x2="620" y1="0" y2="0">
+<stop offset="0" stop-color="#FF7A18"></stop><stop offset="1" stop-color="#FFC93C"></stop>
+</linearGradient>
+</defs>
+<g stroke="rgba(16,24,40,.10)" stroke-width="1">
+<line x1="0" x2="620" y1="40" y2="40"></line><line x1="0" x2="620" y1="82" y2="82"></line>
+<line x1="0" x2="620" y1="124" y2="124"></line><line x1="0" x2="620" y1="166" y2="166"></line>
+</g>
+<path d="M0,158 C40,150 70,140 100,132 C140,121 165,133 200,120 C240,105 260,96 300,102
+                     C340,108 360,78 400,66 C440,54 460,72 500,54 C540,36 570,30 620,18 L620,190 L0,190 Z" fill="url(#fill1)"></path>
+<path d="M0,158 C40,150 70,140 100,132 C140,121 165,133 200,120 C240,105 260,96 300,102
+                     C340,108 360,78 400,66 C440,54 460,72 500,54 C540,36 570,30 620,18" fill="none" stroke="url(#ln1)" stroke-linecap="round" stroke-width="2.4"></path>
+<g>
+<line stroke="rgba(16,24,40,.22)" stroke-dasharray="3 4" x1="500" x2="500" y1="54" y2="190"></line>
+<circle cx="500" cy="54" fill="#FFFFFF" r="5.5" stroke="#F59E0B" stroke-width="2.6"></circle>
+</g>
+<g transform="translate(413,10)">
+<rect fill="#FFFFFF" height="34" rx="8" stroke="rgba(16,24,40,.16)" width="118"></rect>
+<text fill="#8A94A6" font-family="sans-serif" font-size="9.5" x="11" y="15">7/22</text>
+<text fill="#0E1420" font-family="sans-serif" font-size="11.5" font-weight="700" x="11" y="27">28,400 views</text>
+</g>
+</svg>
+<div class="legend">
+<span data-i18n-html="t035"><i style="background:linear-gradient(90deg,#FF7A18,#F5A623)"></i>再生数</span>
+<span data-i18n-html="t036"><i style="background:rgba(16,24,40,.18)"></i>成果発生ポイント</span>
+</div>
+<div class="inpane">
+<div class="ft" data-i18n="t037">THIS MONTH ／ 内訳</div>
+<div class="tier-mini"><div class="bx bx1" data-i18n="t038">T1</div><div class="tx" data-i18n="t039">再生報酬</div><div class="vv" data-i18n="t040">¥10,944</div></div>
+<div class="tier-mini"><div class="bx bx2" data-i18n="t041">T2</div><div class="tx" data-i18n="t042">グッズ成果報酬</div><div class="vv" data-i18n="t043">¥96,720</div></div>
+</div>
+</div>
+<div class="pane">
+<div class="side-title" data-i18n="t044">国別の再生シェア</div>
+<div class="rowbar"><div class="rl"><span data-i18n="t045">United States</span><b data-i18n="t046">38%</b></div><div class="track"><i style="width:38%"></i></div></div>
+<div class="rowbar"><div class="rl"><span data-i18n="t047">Indonesia</span><b data-i18n="t048">21%</b></div><div class="track"><i style="width:21%"></i></div></div>
+<div class="rowbar"><div class="rl"><span data-i18n="t049">Thailand</span><b data-i18n="t050">17%</b></div><div class="track"><i style="width:17%"></i></div></div>
+<div class="rowbar"><div class="rl"><span data-i18n="t051">Korea</span><b data-i18n="t052">13%</b></div><div class="track"><i style="width:13%"></i></div></div>
+<div class="rowbar"><div class="rl"><span data-i18n="t053">Others</span><b data-i18n="t054">11%</b></div><div class="track"><i style="width:11%"></i></div></div>
+<div class="mini-list">
+<div class="side-title" data-i18n="t055" style="margin-bottom:10px">今月のクリッパーランキング</div>
+<div class="mini-row"><span class="rank top" data-i18n="t056">1</span><span class="nm" data-i18n="t057">@ne***fox</span><span class="am" data-i18n="t058">¥158,900</span></div>
+<div class="mini-row"><span class="rank" data-i18n="t059">2</span><span class="nm" data-i18n="t060">@sh***lab</span><span class="am" data-i18n="t061">¥137,400</span></div>
+<div class="mini-row"><span class="rank" data-i18n="t062">3</span><span class="nm" data-i18n="t063">@you</span><span class="am" data-i18n="t064">¥107,664</span></div>
+<div class="mini-row"><span class="rank" data-i18n="t065">4</span><span class="nm" data-i18n="t066">@ka***77</span><span class="am" data-i18n="t067">¥93,300</span></div>
+</div>
+</div>
+</div>
+</div>
+<div class="stage-fade"></div>
+</div>
+</header>
+<!-- ============ PARTNER LOGOS (sample wordmarks) ============ -->
+<section class="marquee" aria-label="想定する権利者パートナー（イメージ・サンプル）">
+<div class="marquee-lab" data-i18n-html="t301">想定する権利者パートナー <span>（イメージ・サンプル／実在の取引を示すものではありません）</span></div>
+<div class="marquee-mask">
+<div class="marquee-track" id="logoTrack">
+<span class="logo-name">SHUEISHA<small>Publisher</small></span>
+<span class="logo-name">KODANSHA<small>Publisher</small></span>
+<span class="logo-name">SHOGAKUKAN<small>Publisher</small></span>
+<span class="logo-name">KADOKAWA<small>Publisher</small></span>
+<span class="logo-name">SONY MUSIC<small>Label</small></span>
+<span class="logo-name">AVEX<small>Label</small></span>
+<span class="logo-name">NINTENDO<small>Games</small></span>
+<span class="logo-name">BANDAI NAMCO<small>Games</small></span>
+<span class="logo-name">CAPCOM<small>Games</small></span>
+<span class="logo-name">SEGA<small>Games</small></span>
+<span class="logo-name">SQUARE ENIX<small>Games</small></span>
+<span class="logo-name">HYBE<small>Label · KR</small></span>
+<span class="logo-name">SM ENTERTAINMENT<small>Agency · KR</small></span>
+<span class="logo-name">JYP<small>Agency · KR</small></span>
+<span class="logo-name">YG ENTERTAINMENT<small>Agency · KR</small></span>
+<span class="logo-name">WARNER BROS.<small>Film</small></span>
+<span class="logo-name">UNIVERSAL<small>Film</small></span>
+<span class="logo-name">PARAMOUNT<small>Film</small></span>
+<span class="logo-name">SONY PICTURES<small>Film</small></span>
+<span class="logo-name">NETFLIX<small>Streaming</small></span>
+<span class="logo-name">PRIME VIDEO<small>Streaming</small></span>
+<span class="logo-name">TENCENT<small>Games · CN</small></span>
+<span class="logo-name">HOYOVERSE<small>Games · CN</small></span>
+<span class="logo-name">NETEASE<small>Games · CN</small></span>
+</div>
+</div>
+</section>
+<script>(function(){var t=document.getElementById("logoTrack");if(t)t.innerHTML+=t.innerHTML;})();</script>
+<!-- ============ STRIP ============ -->
+<div class="strip">
+<div class="wrap">
+<div class="strip-in">
+<div class="strip-cell">
+<div class="n grad-text" data-i18n-html="t068">¥0.03〜0.5<span style="font-size:.42em;letter-spacing:0;color:var(--ink-3)"> / 再生</span></div>
+<div class="l" data-i18n="t069">TIER 1・再生報酬</div>
+<div class="d" data-i18n="t070">投稿が伸びた分だけ、その日のうちに積み上がる基礎報酬。</div>
+</div>
+<div class="strip-cell">
+<div class="n grad-text" data-i18n-html="t071">60<span style="font-size:.42em;letter-spacing:0;color:var(--ink-3)">%</span></div>
+<div class="l" data-i18n="t072">TIER 2・グッズ成果報酬</div>
+<div class="d" data-i18n="t073">あなたのリンク経由で売れたグッズ売上の30〜60%（案件により変動）。料率はティアではなく案件ごとに決まります。</div>
+</div>
+<div class="strip-cell">
+<div class="n grad-text" data-i18n-html="t074">¥30,000<span style="font-size:.42em;letter-spacing:0;color:var(--ink-3)"> / 月</span></div>
+<div class="l" data-i18n="t075">立ち上げ期の最低保証</div>
+<div class="d" data-i18n="t076">審査を通過し新規アカウントで活動する方に、3ヶ月間・月30,000円を保証（成果報酬が下回った分を差額補填・達成条件あり）。</div>
+</div>
+</div>
+</div>
+</div>
+<!-- ============ EXAMPLE CLIPS ============ -->
+<section id="clips">
+<div class="wrap">
+<div class="sec-head" style="text-align:center;max-width:660px;margin:0 auto 46px">
+<div class="eyebrow" data-i18n="t302">Example clips</div>
+<h2 class="sec-title" data-i18n="t303">案件例の切り抜きクリップ。</h2>
+<p class="sec-lead" data-i18n="t304" style="margin:0 auto">公式ライセンス素材から公式切り抜き師が制作する短尺クリップのイメージです（サンプル）。</p>
+</div>
+<div class="clip-row">
+<div class="clip">
+<div class="clip-vid" style="background:linear-gradient(160deg,#2a1240,#5a2a86 45%,#0b0b12)"></div>
+<div class="clip-scrim"></div>
+<div class="clip-sound"><svg width="10" height="10" viewBox="0 0 24 24" fill="#fff"><path d="M4 9v6h4l5 5V4L8 9z"/></svg>Tap for sound</div>
+<div class="clip-top"><span class="clip-cat">アニメ</span><span class="clip-plat">TikTok</span></div>
+<div class="clip-play"><svg width="18" height="18" viewBox="0 0 24 24" fill="#0A0A0B"><path d="M8 5v14l11-7z"/></svg></div>
+<div class="clip-bot"><div class="clip-title">BLADE OF THE LAST SUN</div><div class="clip-meta"><span class="clip-rate">¥0.05／再生</span><span class="clip-views">▶ 1.2M</span></div></div>
+</div>
+<div class="clip">
+<div class="clip-vid" style="background:linear-gradient(160deg,#0c2230,#164b63 46%,#08131a)"></div>
+<div class="clip-scrim"></div>
+<div class="clip-top"><span class="clip-cat">映画</span><span class="clip-plat">Reels</span></div>
+<div class="clip-play"><svg width="18" height="18" viewBox="0 0 24 24" fill="#0A0A0B"><path d="M8 5v14l11-7z"/></svg></div>
+<div class="clip-bot"><div class="clip-title">MIDNIGHT IN SHIBUYA</div><div class="clip-meta"><span class="clip-rate">¥0.40／再生</span><span class="clip-views">▶ 860K</span></div></div>
+</div>
+<div class="clip">
+<div class="clip-vid" style="background:linear-gradient(160deg,#3a1408,#e85d00 48%,#140a05)"></div>
+<div class="clip-scrim"></div>
+<div class="clip-top"><span class="clip-cat">ゲーム</span><span class="clip-plat">Shorts</span></div>
+<div class="clip-play"><svg width="18" height="18" viewBox="0 0 24 24" fill="#0A0A0B"><path d="M8 5v14l11-7z"/></svg></div>
+<div class="clip-bot"><div class="clip-title">NEO FPS LEAGUE</div><div class="clip-meta"><span class="clip-rate">¥0.50／再生</span><span class="clip-views">▶ 2.1M</span></div></div>
+</div>
+<div class="clip">
+<div class="clip-vid" style="background:linear-gradient(160deg,#2a0a2a,#a01c6e 46%,#100610)"></div>
+<div class="clip-scrim"></div>
+<div class="clip-top"><span class="clip-cat">音楽</span><span class="clip-plat">TikTok</span></div>
+<div class="clip-play"><svg width="18" height="18" viewBox="0 0 24 24" fill="#0A0A0B"><path d="M8 5v14l11-7z"/></svg></div>
+<div class="clip-bot"><div class="clip-title">AURORA SOUND</div><div class="clip-meta"><span class="clip-rate">¥0.30／再生</span><span class="clip-views">▶ 1.7M</span></div></div>
+</div>
+<div class="clip">
+<div class="clip-vid" style="background:linear-gradient(160deg,#0b2418,#1c6b3f 47%,#07130d)"></div>
+<div class="clip-scrim"></div>
+<div class="clip-top"><span class="clip-cat">ドラマ</span><span class="clip-plat">X</span></div>
+<div class="clip-play"><svg width="18" height="18" viewBox="0 0 24 24" fill="#0A0A0B"><path d="M8 5v14l11-7z"/></svg></div>
+<div class="clip-bot"><div class="clip-title">OFFICE 2049</div><div class="clip-meta"><span class="clip-rate">¥0.12／再生</span><span class="clip-views">▶ 540K</span></div></div>
+</div>
+</div>
+<div class="sample-note" style="justify-content:center;margin-top:28px"><span style="color:var(--brand-ink)">※</span><span data-i18n="t305">掲載しているクリップ・作品名・数値はデザイン確認用のサンプルです。</span></div>
+</div>
+</section>
+<!-- ============ OFFICIAL WHITELIST ============ -->
+<section id="whitelist" style="border-bottom:1px solid var(--line)">
+<div class="wrap">
+<div class="sec-head">
+<div class="eyebrow" data-i18n="t251">Official whitelist</div>
+<h2 class="sec-title" data-i18n-html="t252">グレーゾーンで、<br/><span class="grad-text">切り抜かなくていい。</span></h2>
+<p class="sec-lead" data-i18n="t253">CLIPYIELDに掲載するのは、権利者と契約したうえで公式に配布する素材だけです。Z-IPの自社レーベル作品も、他社の権利者からお預かりした作品も、扱いは同じ。あなたから見た許諾の範囲は、どちらでも変わりません。</p>
+</div>
+<div class="tier-wrap">
+<div class="card tier-card">
+<span class="tier-badge tb1" data-i18n="t254">OFFICIAL WHITELIST</span>
+<div class="vs-name" data-i18n="t255">著作権を理由とした申立てリスクを構造的に低減</div>
+<p class="tier-desc" data-i18n="t256">クリッパーにとって一番怖いのは、単価の安さではなく、育ててきたアカウントが著作権の申立てで止まることです。CLIPYIELDは権利者から二次利用の許諾と再許諾の権利を受け取り、その範囲をあなたへ公式に許諾します。どこまで使ってよいかの判断を、あなたが一人で背負う必要はありません。</p>
+</div>
+<div class="card tier-card">
+<span class="tier-badge tb2" data-i18n="t257">DAY 0 FANDOM</span>
+<div class="vs-name" data-i18n="t258">下請けではなく、ファンダムの共同創業者として。</div>
+<p class="tier-desc" data-i18n="t259">作品が世界のどこで火がつくかは、最初に切り抜いた人たちが決めます。だからCLIPYIELDの報酬は、再生数の精算だけで終わりません。グッズ売上の30〜60%という二階部分は、作品を一緒に育てた人に取り分が戻るための設計です。</p>
+</div>
+</div>
+<div class="sample-note">
+<span data-i18n="t260" style="color:var(--brand-ink)">※</span>
+<span data-i18n="t261">公式に許諾された素材であることによって解消されるのは、著作権を理由とした申立て・削除・アカウント停止です。AI生成コンテンツの表示義務や、各SNSが独自に定める品質・真正性に関するポリシーはこれとは別の基準であり、それらに関する各社の判断まで保証するものではありません。許諾の範囲と、投稿時に必要な表記は案件ごとにご案内します。</span>
+</div>
+</div>
+</section>
+<!-- ============ REWARDS + SIMULATOR ============ -->
+<section id="rewards">
+<div class="wrap">
+<div class="sec-head">
+<div class="eyebrow" data-i18n="t077">Reward model</div>
+<h2 class="sec-title" data-i18n-html="t078">バズって終わり、ではない。<br/><span class="grad-text">二階建て</span>だから積み上がる。</h2>
+<p class="sec-lead" data-i18n="t079">一般的なクリッピング案件は、再生数に応じた単発の支払いで終わります。CLIPYIELDは再生報酬に加えて、あなたの投稿から実際にグッズが売れたときの成果報酬が重なります。</p>
+</div>
+<div class="tier-wrap">
+<div class="card tier-card">
+<span class="tier-badge tb1" data-i18n="t080">TIER 1 — VIEWS</span>
+<div class="tier-num" data-i18n-html="t081">¥0.03〜0.50<small>／再生（ティア・案件による）</small></div>
+<p class="tier-desc" data-i18n="t082">投稿した切り抜きの再生数がそのまま報酬になります。単価は案件ごとに ¥0.03〜¥0.50 の範囲で設定され、あなたのティアが上がるほど高単価の案件を受けられます。ダッシュボードで日次に集計されます。</p>
+<div class="tier-visual">
+<svg style="width:100%;height:auto;display:block" viewBox="0 0 460 96">
+<defs><linearGradient id="bar1" x1="0" x2="460" y1="0" y2="0">
+<stop offset="0" stop-color="#FF7A18"></stop><stop offset="1" stop-color="#FFC93C"></stop></linearGradient></defs>
+<g>
+<rect fill="url(#bar1)" height="26" opacity=".45" rx="5" width="34" x="0" y="66"></rect>
+<rect fill="url(#bar1)" height="38" opacity=".52" rx="5" width="34" x="44" y="54"></rect>
+<rect fill="url(#bar1)" height="34" opacity=".5" rx="5" width="34" x="88" y="58"></rect>
+<rect fill="url(#bar1)" height="50" opacity=".6" rx="5" width="34" x="132" y="42"></rect>
+<rect fill="url(#bar1)" height="62" opacity=".68" rx="5" width="34" x="176" y="30"></rect>
+<rect fill="url(#bar1)" height="56" opacity=".64" rx="5" width="34" x="220" y="36"></rect>
+<rect fill="url(#bar1)" height="72" opacity=".78" rx="5" width="34" x="264" y="20"></rect>
+<rect fill="url(#bar1)" height="80" opacity=".88" rx="5" width="34" x="308" y="12"></rect>
+<rect fill="url(#bar1)" height="68" opacity=".8" rx="5" width="34" x="352" y="24"></rect>
+<rect fill="url(#bar1)" height="88" rx="5" width="34" x="396" y="4"></rect>
+</g>
+</svg>
+</div>
+</div>
+<div class="card tier-card">
+<span class="tier-badge tb2" data-i18n="t083">TIER 2 — SALES</span>
+<div class="tier-num" data-i18n-html="t084">30〜60%<small>／リンク経由のグッズ売上</small></div>
+<p class="tier-desc" data-i18n="t085">あなた専用の紹介リンクを経由してグッズが購入されると、その売上の30〜60%が支払われます。料率はキャンペーンごとに設定され、各キャンペーンカードに表示されます。購入の追跡はプラットフォーム側で自動化されており、申請作業は不要です。再生が伸びなくても、刺さる人に届けば大きくなる報酬です。</p>
+<div class="tier-visual">
+<svg style="width:100%;height:auto;display:block" viewBox="0 0 460 96">
+<defs><linearGradient id="fl2" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0" stop-color="#FFA62B" stop-opacity=".38"></stop><stop offset="1" stop-color="#FFC93C" stop-opacity="0"></stop></linearGradient></defs>
+<path d="M0,88 C60,86 90,74 140,70 C190,66 210,50 260,42 C320,32 350,22 400,12 C425,7 440,5 460,3 L460,96 L0,96 Z" fill="url(#fl2)"></path>
+<path d="M0,88 C60,86 90,74 140,70 C190,66 210,50 260,42 C320,32 350,22 400,12 C425,7 440,5 460,3" fill="none" stroke="#F59E0B" stroke-linecap="round" stroke-width="2.4"></path>
+<circle cx="140" cy="70" fill="#FFFFFF" r="4" stroke="#F59E0B" stroke-width="2"></circle>
+<circle cx="260" cy="42" fill="#FFFFFF" r="4" stroke="#F59E0B" stroke-width="2"></circle>
+<circle cx="400" cy="12" fill="#FFFFFF" r="4" stroke="#F59E0B" stroke-width="2"></circle>
+</svg>
+</div>
+</div>
+</div>
+<!-- simulator -->
+<div class="sim" style="margin-top:26px">
+<div class="eyebrow" data-i18n="t086" style="margin-bottom:22px">Earnings simulator ／ 収益シミュレーター</div>
+<div class="sim-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:34px">
+<div>
+<div class="sim-field">
+<div class="fl"><span data-i18n="t087">月間の合計再生数</span><b data-i18n="t088" id="v1">300,000</b></div>
+<input id="r1" max="2000000" min="0" step="10000" type="range" value="300000"/>
+</div>
+<div class="sim-field" style="margin-bottom:0">
+<div class="fl"><span data-i18n="t089">あなたのリンク経由のグッズ売上</span><b data-i18n="t090" id="v2">¥160,000</b></div>
+<input id="r2" max="1000000" min="0" step="10000" type="range" value="160000"/>
+</div>
+<p class="sim-note" data-i18n="t091">TIER1単価は1再生 ¥0.03〜¥0.5で案件ごとに変動します（本シミュレーターは ¥0.03 で試算）。TIER2はグッズ売上の30〜60%（上限の60%で計算）。実際の料率はキャンペーンごとに設定されます。本シミュレーターは報酬設計を説明するための試算であり、収益を保証するものではありません。</p>
+</div>
+<div>
+<div class="sim-out">
+<div class="lb" data-i18n="t092">MONTHLY TOTAL</div>
+<div class="sim-total" data-i18n="t093" id="total">¥105,000</div>
+<div class="sim-break">
+<span><i class="dot" style="background:#FF7A18"></i>TIER 1 <b id="t1">¥9,000</b></span>
+<span><i class="dot" style="background:#F5A623"></i>TIER 2 <b id="t2">¥96,000</b></span>
+</div>
+</div>
+<div data-i18n="t096" style="font-size:12px;color:var(--ink-3);margin-bottom:9px">報酬の内訳</div>
+<div style="display:flex;height:16px;border-radius:8px;overflow:hidden;background:rgba(16,24,40,.06)">
+<div id="bar1s" style="width:8.6%;background:linear-gradient(90deg,#FF7A18,#FF9A2B)"></div>
+<div id="bar2s" style="width:91.4%;background:#F5A623"></div>
+</div>
+<div style="display:flex;justify-content:space-between;font-size:11px;color:var(--ink-3);margin-top:9px">
+<span data-i18n="t097">再生報酬</span><span data-i18n="t098">グッズ成果報酬</span>
+</div>
+<div style="border:1px solid var(--line);border-radius:12px;padding:15px 17px;margin-top:22px;background:rgba(16,24,40,.02)">
+<div data-i18n-html="t099" style="font-size:11.5px;color:var(--ink-2);line-height:1.85">
+              同じ再生数でも、<b style="color:var(--ink)">グッズが売れた分だけ上振れる</b>のがCLIPYIELDの構造です。単発のビュー単価だけの案件では、この上の階は存在しません。
+            </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ============ STARTER GUARANTEE ============ -->
+<section id="guarantee" style="border-top:1px solid var(--line)">
+<div class="wrap">
+<div class="sec-head">
+<div class="eyebrow" data-i18n="t310">Starter minimum guarantee</div>
+<h2 class="sec-title" data-i18n-html="t311">立ち上げ期3ヶ月、<span class="grad-text">月30,000円</span>を保証。</h2>
+<p class="sec-lead" data-i18n="t312">審査を通過し新規アカウントで活動する方に、成果報酬が保証額を下回った月はその差額を補填します。審査制の見返りとして、フォロワーが少ない方でも安心して始められます。</p>
+</div>
+<div class="tier-wrap">
+<div class="card tier-card">
+<div class="tier-num" data-i18n-html="t313">¥30,000<small>／月・最長3ヶ月</small></div>
+<p class="tier-desc" data-i18n="t314">成果報酬（TIER1＋TIER2）が月30,000円を下回った場合、その差額を補填します。上回った月は通常どおり成果報酬をお支払いします。</p>
+</div>
+<div class="card tier-card">
+<div style="font-size:12px;font-weight:800;letter-spacing:.08em;color:var(--brand-1)" data-i18n="t315">達成条件</div>
+<ul style="list-style:none;display:grid;gap:12px;margin-top:14px">
+<li style="display:flex;gap:10px;font-size:13.5px;color:var(--ink-2);line-height:1.7"><span style="color:var(--brand-1);font-weight:800">・</span><span data-i18n="t316">月間の投稿本数が20本以上であること</span></li>
+<li style="display:flex;gap:10px;font-size:13.5px;color:var(--ink-2);line-height:1.7"><span style="color:var(--brand-1);font-weight:800">・</span><span data-i18n="t317">審査却下率が規定の基準以下であること</span></li>
+<li style="display:flex;gap:10px;font-size:13.5px;color:var(--ink-2);line-height:1.7"><span style="color:var(--brand-1);font-weight:800">・</span><span data-i18n="t318">規約違反がゼロであること</span></li>
+<li style="display:flex;gap:10px;font-size:13.5px;color:var(--ink-3);line-height:1.7"><span style="color:var(--ink-3);font-weight:800">※</span><span data-i18n="t319">認定アカウント（既存アカウント）で活動する方は対象外です。</span></li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<!-- ============ CAMPAIGN BOARD ============ -->
+<section id="board" style="background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+<div class="wrap">
+<div class="board-head">
+<div>
+<div class="eyebrow" data-i18n="t100">Campaign board</div>
+<h2 class="sec-title" data-i18n="t101" style="margin-bottom:8px">切り抜く作品を選ぶ。</h2>
+<p class="sec-lead" data-i18n="t102">映画・ドラマ・アニメ・音楽・漫画・YouTubeの公式ライセンス素材に、誰よりも早くアクセスできます。</p>
+</div>
+<div class="filters">
+<span class="chip on" data-i18n="t103">すべて</span><span class="chip" data-i18n="t277">テレビ</span><span class="chip" data-i18n="t104">映画</span><span class="chip" data-i18n="t105">ドラマ</span>
+<span class="chip" data-i18n="t106">アニメ</span><span class="chip" data-i18n="t271">漫画</span><span class="chip" data-i18n="t278">ゲーム</span><span class="chip" data-i18n="t107">音楽</span><span class="chip" data-i18n="t272">YouTube</span>
+</div>
+</div>
+<div class="cards">
+<!-- card 1 -->
+<div class="cc">
+<div class="cc-art">
+<svg preserveAspectRatio="none" viewBox="0 0 400 132">
+<defs><linearGradient id="a1" x1="0" x2="400" y1="0" y2="132">
+<stop offset="0" stop-color="#FFE7CE"></stop><stop offset="1" stop-color="#FFFFFF"></stop></linearGradient></defs>
+<rect fill="url(#a1)" height="132" width="400"></rect>
+<g fill="none" opacity=".55" stroke="#F97316" stroke-width="1.4">
+<path d="M-20 110 L120 30 L200 78 L300 12 L420 60"></path>
+<path d="M-20 132 L110 60 L210 102 L310 40 L420 88" opacity=".5"></path>
+</g>
+<circle cx="318" cy="34" fill="#FF7A18" opacity=".26" r="30"></circle>
+<circle cx="318" cy="34" fill="#F59E0B" opacity=".55" r="14"></circle>
+</svg>
+<span class="cc-badge" data-i18n-html="t108"><i class="live-dot"></i>募集中</span>
+<span class="cc-days" data-i18n="t109">残り 42日</span>
+</div>
+<div class="cc-body">
+<div class="cc-title" data-i18n="t110">BLADE OF THE LAST SUN</div>
+<div class="cc-meta" data-i18n="t111">アニメ・全24話／独占一次配信</div>
+<div class="cc-rates">
+<div class="cc-rate"><div class="k" data-i18n="t112">TIER 1</div><div class="v" data-i18n-html="t113">¥0.05<small> /再生</small></div></div>
+<div class="cc-rate"><div class="k" data-i18n="t114">TIER 2</div><div class="v" data-i18n-html="t115">60%<small> /グッズ売上</small></div></div>
+</div>
+<div class="cc-geo"><div class="gl" data-i18n="t273">募集国</div><div class="gf"><span>🇺🇸 US</span><span>🇪🇸 ES</span><span>🇹🇭 TH</span><span>🇮🇩 ID</span><span>🇰🇷 KR</span></div></div>
+<div class="plats"><span class="plat" data-i18n="t116">TikTok</span><span class="plat" data-i18n="t117">Reels</span><span class="plat" data-i18n="t118">Shorts</span><span class="plat" data-i18n="t119">X</span></div>
+<div class="track"><i style="width:34%"></i></div>
+<div class="cc-foot"><span data-i18n="t120">予算消化 34%</span><span class="cc-qual" data-i18n="t121">BRONZE以上</span></div>
+</div>
+</div>
+<!-- card 2 -->
+<div class="cc">
+<div class="cc-art">
+<svg preserveAspectRatio="none" viewBox="0 0 400 132">
+<defs><linearGradient id="a2" x1="0" x2="400" y1="0" y2="132">
+<stop offset="0" stop-color="#F0E4FB"></stop><stop offset="1" stop-color="#FFFFFF"></stop></linearGradient></defs>
+<rect fill="url(#a2)" height="132" width="400"></rect>
+<g fill="none" opacity=".55" stroke="#F59E0B" stroke-width="1.2">
+<ellipse cx="200" cy="66" rx="150" ry="46"></ellipse><ellipse cx="200" cy="66" rx="110" ry="34"></ellipse>
+<ellipse cx="200" cy="66" rx="70" ry="22"></ellipse>
+</g>
+<circle cx="200" cy="66" fill="#FF7A18" opacity=".7" r="17"></circle>
+</svg>
+<span class="cc-badge" data-i18n-html="t122"><i class="live-dot"></i>募集中</span>
+<span class="cc-days" data-i18n="t123">残り 28日</span>
+</div>
+<div class="cc-body">
+<div class="cc-title" data-i18n="t124">SILENT ORBIT</div>
+<div class="cc-meta" data-i18n="t125">映画・本編118分／公式予告＆名シーン</div>
+<div class="cc-rates">
+<div class="cc-rate"><div class="k" data-i18n="t126">TIER 1</div><div class="v" data-i18n-html="t127">¥0.15<small> /再生</small></div></div>
+<div class="cc-rate"><div class="k" data-i18n="t128">TIER 2</div><div class="v" data-i18n-html="t129">45%<small> /グッズ売上</small></div></div>
+</div>
+<div class="cc-geo"><div class="gl" data-i18n="t273">募集国</div><div class="gf"><span>🇯🇵 JP</span><span>🇺🇸 US</span><span>🇹🇼 TW</span><span>🇹🇭 TH</span></div></div>
+<div class="plats"><span class="plat" data-i18n="t130">TikTok</span><span class="plat" data-i18n="t131">Shorts</span><span class="plat" data-i18n="t132">Reels</span></div>
+<div class="track"><i style="width:62%"></i></div>
+<div class="cc-foot"><span data-i18n="t133">予算消化 62%</span><span class="cc-qual" data-i18n="t134">SILVER以上</span></div>
+</div>
+</div>
+<!-- card 3 -->
+<div class="cc">
+<div class="cc-art">
+<svg preserveAspectRatio="none" viewBox="0 0 400 132">
+<defs><linearGradient id="a3" x1="0" x2="400" y1="0" y2="132">
+<stop offset="0" stop-color="#DDF2EF"></stop><stop offset="1" stop-color="#FFFFFF"></stop></linearGradient></defs>
+<rect fill="url(#a3)" height="132" width="400"></rect>
+<g opacity=".55">
+<rect fill="#F59E0B" height="46" opacity=".45" width="26" x="30" y="86"></rect>
+<rect fill="#F59E0B" height="70" opacity=".55" width="26" x="72" y="62"></rect>
+<rect fill="#F59E0B" height="60" opacity=".5" width="26" x="114" y="72"></rect>
+<rect fill="#FF9A2B" height="92" opacity=".55" width="26" x="156" y="40"></rect>
+<rect fill="#FF9A2B" height="78" opacity=".5" width="26" x="198" y="54"></rect>
+<rect fill="#FF7A18" height="108" opacity=".6" width="26" x="240" y="24"></rect>
+<rect fill="#FF7A18" height="84" opacity=".5" width="26" x="282" y="48"></rect>
+<rect fill="#FF7A18" height="116" opacity=".7" width="26" x="324" y="16"></rect>
+</g>
+</svg>
+<span class="cc-badge" data-i18n-html="t135"><i class="live-dot"></i>新着</span>
+<span class="cc-days" data-i18n="t136">残り 60日</span>
+</div>
+<div class="cc-body">
+<div class="cc-title" data-i18n="t137">NEON HANABI</div>
+<div class="cc-meta" data-i18n="t138">音楽・公式MV／アーティスト公認</div>
+<div class="cc-rates">
+<div class="cc-rate"><div class="k" data-i18n="t139">TIER 1</div><div class="v" data-i18n-html="t140">¥0.50<small> /再生</small></div></div>
+<div class="cc-rate"><div class="k" data-i18n="t141">TIER 2</div><div class="v" data-i18n-html="t142">40%<small> /グッズ売上</small></div></div>
+</div>
+<div class="cc-geo"><div class="gl" data-i18n="t273">募集国</div><div class="gf"><span>🇺🇸 US</span><span>🇰🇷 KR</span><span>🇯🇵 JP</span><span>🇮🇩 ID</span></div></div>
+<div class="plats"><span class="plat" data-i18n="t143">TikTok</span><span class="plat" data-i18n="t144">Reels</span><span class="plat" data-i18n="t145">Shorts</span><span class="plat" data-i18n="t146">X</span></div>
+<div class="track"><i style="width:11%"></i></div>
+<div class="cc-foot"><span data-i18n="t147">予算消化 11%</span><span class="cc-qual" data-i18n="t148">GOLD限定</span></div>
+</div>
+</div>
+</div>
+<div class="sample-note">
+<span data-i18n="t149" style="color:var(--brand-ink)">※</span>
+<span data-i18n="t150">掲載している作品名・単価・進捗はデザイン確認用のサンプルです。実際の案件は、契約済み作品の配信開始にあわせて掲載されます。</span>
+</div>
+</div>
+</section>
+<!-- ============ WHY ============ -->
+<section id="why">
+<div class="wrap">
+<div class="sec-head">
+<div class="eyebrow" data-i18n="t151">Why CLIPYIELD</div>
+<h2 class="sec-title" data-i18n-html="t152">同じ切り抜きでも、<br/>戻ってくるものが違う。</h2>
+<p class="sec-lead" data-i18n="t153">違いは、素材が誰のものかではありません。権利者から公式に許諾された素材かどうかです。CLIPYIELDに載るのは、Z-IPの自社レーベル作品も、他社の権利者からお預かりした作品も、すべて権利者の許諾を得たうえで公式に配布される素材です。</p>
+</div>
+<div class="vs">
+<div class="vs-col win">
+<div class="vs-top">
+<svg fill="none" height="26" viewBox="0 0 32 32" width="26">
+<defs><linearGradient id="lg2" x1="0" x2="32" y1="0" y2="32">
+<stop offset="0" stop-color="#FF7A18"></stop><stop offset="1" stop-color="#FFC93C"></stop></linearGradient></defs>
+<rect height="30" rx="9" stroke="url(#lg2)" stroke-width="2" width="30" x="1" y="1"></rect>
+<path d="M12 9.5 L22.5 16 L12 22.5 Z" fill="url(#lg2)"></path>
+</svg>
+<div><div class="vs-name" data-i18n="t154">CLIPYIELD</div><div class="vs-sub" data-i18n="t155">権利者の公式許諾を受けた素材だけを配るクリッパー経済圏</div></div>
+</div>
+<div class="vs-list">
+<div class="vs-item">
+<span class="ic ic-y"><svg fill="none" height="13" viewBox="0 0 16 16" width="13"><path d="M3 8.5l3.2 3.2L13 5" stroke="#D9480F" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"></path></svg></span>
+<div><div class="h" data-i18n="t156">二階建て報酬（再生＋グッズ売上30〜60%）</div><div class="p" data-i18n="t157">バズが売上に変わったとき、上の階の報酬が発生します。</div></div>
+</div>
+<div class="vs-item">
+<span class="ic ic-y"><svg fill="none" height="13" viewBox="0 0 16 16" width="13"><path d="M3 8.5l3.2 3.2L13 5" stroke="#D9480F" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"></path></svg></span>
+<div><div class="h" data-i18n="t158">独占・一次配信コンテンツへの先行アクセス</div><div class="p" data-i18n="t159">まだ誰も切り抜いていない素材を、最初に扱えます。</div></div>
+</div>
+<div class="vs-item">
+<span class="ic ic-y"><svg fill="none" height="13" viewBox="0 0 16 16" width="13"><path d="M3 8.5l3.2 3.2L13 5" stroke="#D9480F" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"></path></svg></span>
+<div><div class="h" data-i18n="t160">公式ホワイトリスト｜著作権を理由とした申立てリスクを構造的に低減</div><div class="p" data-i18n="t161">配るのは権利者から許諾を受けた素材だけ。その範囲をZ-IPからあなたへ公式に再許諾するため、権利の判断をクリッパーに背負わせません。</div></div>
+</div>
+<div class="vs-item">
+<span class="ic ic-y"><svg fill="none" height="13" viewBox="0 0 16 16" width="13"><path d="M3 8.5l3.2 3.2L13 5" stroke="#D9480F" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"></path></svg></span>
+<div><div class="h" data-i18n="t267">自社作品も、お預かりした他社作品も同じ条件</div><div class="p" data-i18n="t268">作品がZ-IPのものでも、他社の権利者からお預かりしたものでも、同じルールの公式許諾素材としてあなたに届きます。</div></div>
+</div>
+<div class="vs-item">
+<span class="ic ic-y"><svg fill="none" height="13" viewBox="0 0 16 16" width="13"><path d="M3 8.5l3.2 3.2L13 5" stroke="#D9480F" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"></path></svg></span>
+<div><div class="h" data-i18n="t162">購入まで自動トラッキング</div><div class="p" data-i18n="t163">あなた専用リンク経由の購入を自動で追跡。申請作業は不要です。</div></div>
+</div>
+<div class="vs-item">
+<span class="ic ic-y"><svg fill="none" height="13" viewBox="0 0 16 16" width="13"><path d="M3 8.5l3.2 3.2L13 5" stroke="#D9480F" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"></path></svg></span>
+<div><div class="h" data-i18n="t164">投稿してもブランドを毀損しない</div><div class="p" data-i18n="t165">扱うのは公認のモーションコミック。企業広告そのものを流す案件と違い、あなたのアカウントの世界観を壊しません。</div></div>
+</div>
+<div class="vs-item">
+<span class="ic ic-y"><svg fill="none" height="13" viewBox="0 0 16 16" width="13"><path d="M3 8.5l3.2 3.2L13 5" stroke="#D9480F" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"></path></svg></span>
+<div><div class="h" data-i18n="t166">審査制・公式切り抜き師のみ</div><div class="p" data-i18n="t167">審査を通過した切り抜き師だけが参加します。だから権利者は独占素材と高単価案件を安心して出せます。</div></div>
+</div>
+</div>
+</div>
+<div class="vs-col">
+<div class="vs-top">
+<span data-i18n="t168" style="width:26px;height:26px;border-radius:8px;border:1px solid var(--line-strong);display:grid;place-items:center;color:var(--ink-3);font-size:12px;font-weight:800">?</span>
+<div><div class="vs-name" data-i18n="t169" style="color:var(--ink-2)">一般的なクリッピング案件</div><div class="vs-sub" data-i18n="t170">汎用マーケットプレイス型</div></div>
+</div>
+<div class="vs-list">
+<div class="vs-item">
+<span class="ic ic-n"><svg height="12" viewBox="0 0 16 16" width="12"><path d="M3.5 8h9" stroke="#98A2B3" stroke-linecap="round" stroke-width="2.2"></path></svg></span>
+<div><div class="h" data-i18n="t171">ビュー単価のみの単発精算</div><div class="p" data-i18n="t172">再生が止まれば、そこで報酬も止まります。</div></div>
+</div>
+<div class="vs-item">
+<span class="ic ic-n"><svg height="12" viewBox="0 0 16 16" width="12"><path d="M3.5 8h9" stroke="#98A2B3" stroke-linecap="round" stroke-width="2.2"></path></svg></span>
+<div><div class="h" data-i18n="t173">既に出回っている一般素材が対象</div><div class="p" data-i18n="t174">同じ素材を大勢が同時に切り抜きます。</div></div>
+</div>
+<div class="vs-item">
+<span class="ic ic-n"><svg height="12" viewBox="0 0 16 16" width="12"><path d="M3.5 8h9" stroke="#98A2B3" stroke-linecap="round" stroke-width="2.2"></path></svg></span>
+<div><div class="h" data-i18n="t175">許諾範囲が案件ごとに曖昧</div><div class="p" data-i18n="t176">権利の判断がプラットフォーム外にあります。</div></div>
+</div>
+<div class="vs-item">
+<span class="ic ic-n"><svg height="12" viewBox="0 0 16 16" width="12"><path d="M3.5 8h9" stroke="#98A2B3" stroke-linecap="round" stroke-width="2.2"></path></svg></span>
+<div><div class="h" data-i18n="t269">素材の許諾元が確認できない</div><div class="p" data-i18n="t270">その素材が権利者の許諾を得たものかどうかを、クリッパー側から確かめる手段がありません。</div></div>
+</div>
+<div class="vs-item">
+<span class="ic ic-n"><svg height="12" viewBox="0 0 16 16" width="12"><path d="M3.5 8h9" stroke="#98A2B3" stroke-linecap="round" stroke-width="2.2"></path></svg></span>
+<div><div class="h" data-i18n="t177">購入起点のトラッキングなし</div><div class="p" data-i18n="t178">ビュー数以外の貢献は報酬に反映されません。</div></div>
+</div>
+<div class="vs-item">
+<span class="ic ic-n"><svg height="12" viewBox="0 0 16 16" width="12"><path d="M3.5 8h9" stroke="#98A2B3" stroke-linecap="round" stroke-width="2.2"></path></svg></span>
+<div><div class="h" data-i18n="t179">企業の公式広告を扱う場合がある</div><div class="p" data-i18n="t180">投稿内容次第で、クリッパー自身の評判に影響し得ます。</div></div>
+</div>
+<div class="vs-item">
+<span class="ic ic-n"><svg height="12" viewBox="0 0 16 16" width="12"><path d="M3.5 8h9" stroke="#98A2B3" stroke-linecap="round" stroke-width="2.2"></path></svg></span>
+<div><div class="h" data-i18n="t181">案件ごとの最低視聴数のしきい値</div><div class="p" data-i18n="t182">一定の再生数に届かないと精算対象にならない設計が一般的です。</div></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ============ HOW ============ -->
+<section id="how" style="background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+<div class="wrap">
+<div class="sec-head">
+<div class="eyebrow" data-i18n="t183">Getting started</div>
+<h2 class="sec-title" data-i18n="t184">登録から初回報酬まで、4ステップ。</h2>
+<p class="sec-lead" data-i18n="t185">案件を受けられるのは審査を通過した公式切り抜き師のみ。登録後、本人確認と活動用アカウントを登録して審査を申請します。</p>
+</div>
+<div class="steps">
+<div class="step">
+<div class="step-n" data-i18n-html="t186"><b>01</b> ／ JOIN</div>
+<h3 data-i18n="t187">登録する</h3>
+<p data-i18n="t188">メールアドレスだけで数分。登録後に本人確認と活動用アカウントを登録し、審査を申請します。</p>
+<div class="step-vis">
+<div class="sv-row" data-i18n-html="t189"><span class="chkbox on"></span>メールアドレス</div>
+<div class="sv-row" data-i18n-html="t190"><span class="chkbox on"></span>利用規約に同意</div>
+<div class="sv-row" data-i18n-html="t191"><span class="chkbox on"></span>審査<span style="margin-left:auto;color:#B45309;font-size:10.5px;font-weight:700">あり（2〜3営業日）</span></div>
+</div>
+</div>
+<div class="step">
+<div class="step-n" data-i18n-html="t192"><b>02</b> ／ CONNECT</div>
+<h3 data-i18n="t193">活動用アカウントを登録</h3>
+<p data-i18n="t194">Clipyield用の新規アカウント（最低保証の対象）、または実績のある既存アカウント（認定アカウント）を登録して審査を受けます。</p>
+<div class="step-vis">
+<div class="sv-grid">
+<span class="sv-pill on" data-i18n="t195">TikTok ✓</span><span class="sv-pill on" data-i18n="t196">Reels ✓</span>
+<span class="sv-pill" data-i18n="t197">Shorts</span><span class="sv-pill" data-i18n="t198">X</span>
+</div>
+<div class="sv-row" data-i18n-html="t199" style="margin-top:10px"><span class="chkbox on"></span>@your_handle<span style="margin-left:auto"><span class="st st-paid" style="font-size:9.5px">Verified</span></span></div>
+</div>
+</div>
+<div class="step">
+<div class="step-n" data-i18n-html="t200"><b>03</b> ／ CLIP &amp; POST</div>
+<h3 data-i18n="t201">切り抜いて投稿</h3>
+<p data-i18n="t202">案件ボードから素材をダウンロードし、自由に編集して投稿します。</p>
+<div class="step-vis">
+<div class="sv-row" data-i18n-html="t203"><span class="chkbox on"></span>素材をダウンロード</div>
+<div class="sv-row" data-i18n-html="t204"><span class="chkbox on"></span>紹介リンクを取得</div>
+<div class="sv-row" data-i18n-html="t205"><span class="chkbox on"></span>投稿URLを登録</div>
+</div>
+</div>
+<div class="step">
+<div class="step-n" data-i18n-html="t206"><b>04</b> ／ GET PAID</div>
+<h3 data-i18n="t207">報酬を受け取る</h3>
+<p data-i18n="t208">月末締めで集計し、翌月末以降、指定したタイミングで出金できます。受取方法も選べます。</p>
+<div class="step-vis">
+<div class="sv-grid">
+<span class="sv-pill on" data-i18n="t209">銀行振込</span><span class="sv-pill" data-i18n="t210">PayPal</span><span class="sv-pill" data-i18n="t211">USDC</span>
+</div>
+<div class="sv-row" data-i18n-html="t212" style="margin-top:10px">7月分<span class="st st-pend" style="margin-left:auto">処理中</span></div>
+<div class="sv-row" data-i18n-html="t213">6月分<span class="st st-paid" style="margin-left:auto">支払済</span></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ============ FAQ ============ -->
+<section id="faq">
+<div class="wrap">
+<div class="sec-head">
+<div class="eyebrow" data-i18n="t214">FAQ</div>
+<h2 class="sec-title" data-i18n="t215">よくある質問</h2>
+</div>
+<div class="faq">
+<div class="qa"><h4 data-i18n-html="t216"><span>Q</span>フォロワーが少なくても参加できますか？</h4><p data-i18n="t217">できます。審査ではフォロワー数ではなく、編集の質・権利意識・過去の運用実績を見ています。フォロワーが少ない方には、立ち上げ期3ヶ月の最低保証（月30,000円）をご用意しています。</p></div>
+<div class="qa"><h4 data-i18n-html="t218"><span>Q</span>切り抜いた動画の権利はどうなりますか？</h4><p data-i18n="t219">素材は原作者と正式に契約したうえでCLIPYIELDが提供しています。許諾範囲は案件ごとに明示され、権利の判断はすべて運営側で完結します。</p></div>
+<div class="qa"><h4 data-i18n-html="t220"><span>Q</span>グッズ成果報酬は、いつ確定しますか？</h4><p data-i18n="t221">あなた専用リンク経由の購入が確定した時点で計上され、返品期間の経過後に確定します。ダッシュボードで随時確認できます。</p></div>
+<div class="qa"><h4 data-i18n-html="t222"><span>Q</span>報酬を得ていることを投稿に書く必要はありますか？</h4><p data-i18n="t223">はい。国・地域によっては成果報酬を得ている旨の開示が求められます。投稿時に必要な表記は、オンボーディング時にご案内します。</p></div>
+<div class="qa"><h4 data-i18n-html="t262"><span>Q</span>著作権を理由としたBANのリスクはどうなりますか？</h4><p data-i18n="t263">CLIPYIELDが配るのは権利者から公式に許諾された素材のみで、投稿前の審査で品質を担保します。これにより著作権を理由とした申立て・削除のリスクを構造的に下げています。ただし、各SNSが独自に定める品質・真正性ポリシーやAI生成コンテンツの表示義務は著作権とは別の基準であり、個別アカウントのBANを完全に保証するものではありません。案件ごとに必要な表記と注意点をご案内します。</p></div>
+<div class="qa"><h4 data-i18n-html="t264"><span>Q</span>Z-IP以外の権利者の作品も切り抜けますか？</h4><p data-i18n="t265">はい。CLIPYIELDには、Z-IPの自社レーベル作品だけでなく、他社の権利者からお預かりした作品も掲載されます。いずれの場合も権利者との契約にもとづく公式許諾素材であり、あなたに適用される許諾範囲・報酬の仕組み・必要な表記は同じ基準で案内されます。</p></div>
+</div>
+</div>
+</section>
+<!-- ============ CTA ============ -->
+<section id="cta" style="padding-top:0">
+<div class="wrap">
+<div class="cta">
+<h2 data-i18n-html="t224">Clip once.<br/><span class="grad-text">Earn twice.</span></h2>
+<p data-i18n-html="t225">登録は無料。審査を通過すると、公式切り抜き師として案件を受けられます。<br/>まずは登録して、本人確認と審査に進みましょう。</p>
+<div class="hero-btns" style="margin-bottom:14px">
+<a class="btn btn-accent" data-i18n="t226" href="signup.html">クリッパー登録（無料）</a>
+<a class="btn btn-ghost" data-i18n="t227" href="#board">案件を見る</a>
+</div>
+<div class="hero-note"><span data-i18n-html="t228"><i class="dot"></i>審査制・公式切り抜き師のみ</span><span data-i18n-html="t229"><i class="dot"></i>立ち上げ期3ヶ月の最低保証</span><span data-i18n-html="t230"><i class="dot"></i>1再生 ¥0.03〜0.5</span></div>
+<div style="margin-top:22px;font-size:13px"><a data-i18n="t307" href="for-clients.html" style="color:var(--ink-3);border-bottom:1px solid var(--line-strong);padding-bottom:2px">IPをお持ちの権利者の方はこちら →</a></div>
+</div>
+</div>
+</section>
+<!-- ============ FOOTER ============ -->
+<footer>
+<div class="wrap">
+<div class="foot">
+<div class="foot-brand">
+<a class="logo" href="#top">
+<svg fill="none" height="24" viewBox="0 0 32 32" width="24">
+<defs><linearGradient id="lg3" x1="0" x2="32" y1="0" y2="32">
+<stop offset="0" stop-color="#FF7A18"></stop><stop offset="1" stop-color="#FFC93C"></stop></linearGradient></defs>
+<rect height="30" rx="9" stroke="url(#lg3)" stroke-width="2" width="30" x="1" y="1"></rect>
+<path d="M12 9.5 L22.5 16 L12 22.5 Z" fill="url(#lg3)"></path>
+</svg>
+          CLIPYIELD
+        </a>
+<p data-i18n="t232">公式ライセンスのモーションコミックを切り抜いて、再生とグッズ売上の二階建てで稼ぐクリッパー向けプラットフォーム。</p>
+</div>
+<div class="fcol"><h5 data-i18n="t233">PLATFORM</h5>
+<a data-i18n="t234" href="#rewards">報酬モデル</a><a data-i18n="t235" href="#board">案件ボード</a><a data-i18n="t236" href="#how">はじめ方</a><a data-i18n="t237" href="#faq">FAQ</a><a data-i18n="t306" href="for-clients.html">権利者の方へ</a></div>
+<div class="fcol"><h5 data-i18n="t238">CREATORS</h5>
+<a href="column.html">コラム</a><a data-i18n="t239" href="column.html">クリッパーガイド</a><a data-i18n="t241" href="#">報酬の受け取り</a><a data-i18n="t242" href="#">開示表記について</a></div>
+<div class="fcol"><h5 data-i18n="t243">LEGAL</h5>
+<a data-i18n="t244" href="terms.html">利用規約</a><a data-i18n="t245" href="clipper-terms.html">クリッパー規約</a><a data-i18n="t246" href="privacy.html">プライバシーポリシー</a><a href="tokushoho.html">特定商取引法に基づく表記</a><a href="client.html">クライアント入稿</a></div>
+</div>
+<div class="foot-btm">
+<span data-i18n="t248">© 2026 CLIPYIELD</span>
+<span data-i18n="t249">社内デザイン確認用プロトタイプ／掲載数値はサンプルです</span>
+</div>
+</div>
+</footer>
+<script>
+(function(){
+  var r1=document.getElementById('r1'),r2=document.getElementById('r2');
+  var v1=document.getElementById('v1'),v2=document.getElementById('v2');
+  var t1=document.getElementById('t1'),t2=document.getElementById('t2'),tt=document.getElementById('total');
+  var b1=document.getElementById('bar1s'),b2=document.getElementById('bar2s');
+  function yen(n){return '¥'+Math.round(n).toLocaleString('ja-JP');}
+  function calc(){
+    var views=+r1.value, sales=+r2.value;
+    var a=views*0.03, b=sales*0.6, s=a+b;
+    v1.textContent=views.toLocaleString('ja-JP');
+    v2.textContent=yen(sales);
+    t1.textContent=yen(a); t2.textContent=yen(b); tt.textContent=yen(s);
+    var pa=s>0?(a/s*100):50;
+    b1.style.width=pa+'%'; b2.style.width=(100-pa)+'%';
+  }
+  r1.addEventListener('input',calc); r2.addEventListener('input',calc); calc();
+})();
+</script>
+<style>
+@media(max-width:820px){ .sim-grid{grid-template-columns:1fr !important;gap:26px !important} }
+</style>
+<script>
+(function(){
+  var DICT = {"en":{"t280":"Column","t301":"Trusted rights-holder partners <span>(illustrative sample — not actual deals)</span>","t302":"Example clips","t303":"Example clips from real campaigns.","t304":"How official clippers turn licensed material into short-form clips (samples).","t305":"Clips, titles and figures shown are samples for design review.","t228":"<i class=\"dot\"></i>Vetted official clippers only","t229":"<i class=\"dot\"></i>3-month starter guarantee","t230":"<i class=\"dot\"></i>¥0.03–0.5 per view","t306":"For rights holders","t307":"Are you an IP rights holder? →","t310":"Starter minimum guarantee","t311":"3 months to start — <span class=\"grad-text\">¥30,000/month</span> guaranteed.","t312":"Vetted clippers on new accounts get the shortfall topped up in any month earnings fall below the guarantee. As a reward for the vetting, even those with few followers can start with confidence.","t313":"¥30,000<small> / month · up to 3 months</small>","t314":"If your performance pay (TIER1 + TIER2) falls below ¥30,000 in a month, we top up the difference. In months you exceed it, you receive your performance pay as usual.","t315":"Conditions","t316":"20 or more posts in the month","t317":"Review rejection rate at or below the set threshold","t318":"Zero terms violations","t319":"Clippers on certified (existing) accounts are not eligible.","t001":"<b>Internal design preview</b> — campaign names, figures and rankings shown here are placeholder samples for layout review (not actual results).","t003":"Rewards","t004":"Campaigns","t005":"Why CLIPYIELD","t006":"How it works","t007":"FAQ","t008":"Log in","t009":"Start free","t010":"<b>TWO-TIER</b> Get paid for views. Get paid again when it sells.","t012":"We distribute only material officially licensed by rights holders and vet quality before posting, which <b>structurally lowers the risk of copyright-based claims</b>.<br/>On top of view rewards, you keep <b>30–60% (varies by campaign)</b> of every merch sale made through your link.","t013":"Sign up free","t014":"See how you earn","t015":"<i class=\"dot\"></i>Vetted official clippers only","t016":"<i class=\"dot\"></i>Followers don’t matter (vetted on quality)","t017":"<i class=\"dot\"></i>¥0.03–0.5 per view (by tier & campaign)","t019":"Jul · TIER1+TIER2 <span class=\"st st-pend\">Processing</span>","t020":"Jun · TIER1+TIER2 <span class=\"st st-paid\">Paid</span>","t021":"May · TIER1 <span class=\"st st-paid\">Paid</span>","t024":"Confirmed earnings (MTD)","t027":"Total views","t030":"Purchases via link","t031":"142","t033":"Views & conversions","t034":"Last 30 days","t035":"<i style=\"background:linear-gradient(90deg,#FF7A18,#F5A623)\"></i>Views","t036":"<i style=\"background:rgba(16,24,40,.18)\"></i>Sale events","t037":"THIS MONTH / Breakdown","t039":"View rewards","t042":"Merch commission","t044":"Views by country","t055":"Top clippers this month","t068":"¥0.03–0.5<span style=\"font-size:.42em;letter-spacing:0;color:var(--ink-3)\"> / view</span>","t069":"TIER 1 · View rewards","t070":"Base earnings that build up the same day, in step with how far your post travels.","t072":"TIER 2 · Merch commission","t073":"30–60% of merch sales made through your link (varies by campaign). Set per campaign, not by tier.","t074":"¥30,000<span style=\"font-size:.42em;letter-spacing:0;color:var(--ink-3)\"> / mo</span>","t075":"Starter minimum guarantee","t076":"Vetted clippers on new accounts get ¥30,000/mo for 3 months (top-up if earnings fall short; conditions apply).","t078":"Going viral isn’t the end.<br/>It compounds, because it’s <span class=\"grad-text\">two-tier</span>.","t079":"A typical clipping campaign pays once, based on views, and stops there. CLIPYIELD adds a second layer: commission earned when your posts actually sell merch.","t081":"¥0.03–0.5<small> / view (by tier & campaign)</small>","t082":"Views on your clips convert directly into earnings. Rates run ¥0.03–0.5 per view by campaign, and the higher your tier the higher-rate campaigns you can take. Tallied daily on your dashboard.","t084":"30–60%<small> / merch sales via your link</small>","t085":"When someone buys merch through your personal referral link, 30–60% of that sale is paid to you — the exact rate is set per campaign and shown on each campaign card. Purchase tracking is automated on our side — no claims to file. Even if views stay modest, reaching the right people pays.","t086":"Earnings simulator","t087":"Monthly total views","t089":"Merch sales via your link","t091":"TIER 1 rates run ¥0.03–0.5 per view by tier and campaign (this simulator estimates at ¥0.03). TIER 2 is 30–60% of merch sales set per campaign. This simulator illustrates the reward model and does not guarantee earnings.","t096":"Earnings breakdown","t097":"View rewards","t098":"Merch commission","t099":"At the same view count, CLIPYIELD’s structure means <b style=\"color:var(--ink)\">your earnings rise with every unit of merch sold</b>. On a views-only campaign, that second floor simply does not exist.","t101":"Choose what you clip.","t102":"First access to official licensed clips across film, drama, anime, music, manga and YouTube — before anyone else.","t103":"All","t104":"Movies","t105":"Drama","t106":"Anime","t107":"Music","t271":"Manga","t272":"YouTube","t273":"Target countries","t108":"<i class=\"live-dot\"></i>Open","t109":"42 days left","t111":"Anime · 24 episodes / exclusive first release","t113":"¥0.05<small> /view</small>","t115":"60%<small> /merch sales</small>","t120":"Budget used 34%","t121":"BRONZE+","t122":"<i class=\"live-dot\"></i>Open","t123":"28 days left","t125":"Film · 118 min / official trailer & key scenes","t127":"¥0.15<small> /view</small>","t129":"45%<small> /merch sales</small>","t133":"Budget used 62%","t134":"SILVER+","t135":"<i class=\"live-dot\"></i>New","t136":"60 days left","t138":"Music · official MV / artist-approved","t140":"¥0.50<small> /view</small>","t142":"40%<small> /merch sales</small>","t147":"Budget used 11%","t148":"GOLD only","t150":"Titles, rates and progress shown are samples for design review. Real campaigns will be listed as contracted titles begin distribution.","t152":"Same clip.<br/>Very different return.","t153":"The difference is not whose material it is — it is whether the material is officially licensed by the rights holder. Everything listed on CLIPYIELD, whether it comes from Z-IP’s own label or from a partner rights holder, is distributed officially under a licence.","t155":"A clipper economy that distributes only officially licensed material","t156":"Two-tier rewards (views + 30–60% of merch sales)","t157":"When the buzz turns into sales, the second tier kicks in.","t158":"Early access to exclusive, first-release content","t159":"You get to work with footage no one has clipped yet.","t160":"Official whitelist — structurally lowers copyright-claim risk","t161":"We distribute only material licensed by the rights holder, and re-license that scope to you officially, so rights decisions never sit on the clipper.","t162":"Automatic tracking all the way to purchase","t163":"Purchases through your personal link are tracked automatically. No claims to file.","t164":"Posting will not damage your brand","t165":"You work with authorized motion comics. Unlike campaigns that push corporate ads, nothing here breaks the world you have built on your account.","t166":"Vetted — official clippers only","t167":"Only vetted clippers take part, so rights holders can offer exclusive material and high-rate campaigns.","t169":"Typical clipping campaigns","t170":"Generic marketplace model","t171":"One-off settlement on view rate only","t172":"When the views stop, the earnings stop.","t173":"Built around footage already in circulation","t174":"Crowds of clippers work the same material at once.","t175":"Licensing scope is vague, campaign by campaign","t176":"Rights decisions sit outside the platform.","t177":"No purchase-level tracking","t178":"Contributions beyond raw views never reach your payout.","t179":"May involve straight corporate advertising","t180":"Depending on what you post, it can affect your own reputation as a clipper.","t181":"Per-campaign minimum view thresholds","t182":"It is common for a post to earn nothing unless it clears a set view count.","t184":"From sign-up to first payout in four steps.","t185":"Only vetted official clippers can take campaigns. After signing up, complete identity verification, register your accounts, and apply for review.","t186":"<b>01</b> / JOIN","t187":"Sign up","t188":"A few minutes with just an email. Then complete identity verification, register your accounts, and apply for review.","t189":"<span class=\"chkbox on\"></span>Email address","t190":"<span class=\"chkbox on\"></span>Agree to terms","t191":"<span class=\"chkbox on\"></span>Review<span style=\"margin-left:auto;color:#B45309;font-size:10.5px;font-weight:700\">Yes (2–3 business days)</span>","t192":"<b>02</b> / CONNECT","t193":"Register your accounts","t194":"Register a new Clipyield account (eligible for the starter guarantee) or an existing account with a track record (certified account), then get reviewed.","t200":"<b>03</b> / CLIP &amp; POST","t201":"Clip and post","t202":"Download source material from the campaign board, edit it freely, and post.","t203":"<span class=\"chkbox on\"></span>Download material","t204":"<span class=\"chkbox on\"></span>Get referral link","t205":"<span class=\"chkbox on\"></span>Register post URL","t206":"<b>04</b> / GET PAID","t207":"Get paid","t208":"Month-end close, confirmed around the 10th of the next month, standard payout (free) after next month-end. Early payout is available for a 4% fee. Choose how you get paid.","t209":"Bank transfer","t212":"July<span class=\"st st-pend\" style=\"margin-left:auto\">Processing</span>","t213":"June<span class=\"st st-paid\" style=\"margin-left:auto\">Paid</span>","t215":"Frequently asked questions","t216":"<span>Q</span>Can I join with a small following?","t217":"Yes. Our review looks at editing quality, rights awareness and track record — not follower count. If you have few followers, there is a 3-month starter guarantee (¥30,000/month).","t218":"<span>Q</span>Who holds the rights to the clips I make?","t219":"All source material is provided by CLIPYIELD under formal contracts with the original creators. The scope of the licence is stated for each campaign, and every rights decision is settled by us.","t220":"<span>Q</span>When does merch commission become final?","t221":"It is recorded the moment a purchase through your personal link is confirmed, and becomes final once the return window has passed. You can check it any time on your dashboard.","t222":"<span>Q</span>Do I need to disclose that I am being paid?","t223":"Yes. Some countries and regions require disclosure that you receive performance-based compensation. We will walk you through the wording you need during onboarding.","t225":"Signing up is free. Pass the review to take campaigns as an official clipper.<br/>Register and start with identity verification and review.","t226":"Sign up free","t227":"Browse campaigns","t232":"The clipper platform where you clip officially licensed motion comics and earn on two tiers — views and merch sales.","t234":"Rewards","t235":"Campaigns","t236":"How it works","t237":"FAQ","t239":"Clipper guide","t240":"Using the material","t241":"Getting paid","t242":"Disclosure requirements","t244":"Terms of service","t245":"Clipper agreement","t246":"Privacy policy","t247":"Contact","t249":"Internal design preview / figures shown are samples","t251":"Official whitelist","t252":"You should never have to clip<br/><span class=\"grad-text\">in the grey zone.</span>","t253":"Everything listed on CLIPYIELD is material we distribute officially, under a contract with the rights holder. Titles from Z-IP’s own label and titles entrusted to us by partner rights holders are handled exactly the same way — the licence you work under does not change.","t255":"Structurally lowers the risk of copyright-based claims","t256":"What frightens a clipper most is not a low rate — it is the account they spent years building being taken down over a copyright claim. CLIPYIELD receives secondary-use and sub-licensing rights from the rights holder and formally licenses that scope on to you. Deciding how far you may go is not something you have to carry alone.","t258":"Not a subcontractor — a co-founder of the fandom.","t259":"Where a title catches fire in the world is decided by the people who clip it first. That is why rewards on CLIPYIELD do not end at settling views. The second tier — 30–60% of merch sales — exists so that a share comes back to the people who grew the title with us.","t261":"What official licensing removes is claims, takedowns and account suspensions grounded in copyright. Disclosure duties for AI-generated content, and each platform’s own policies on quality and authenticity, are separate standards, and we cannot guarantee how each platform will judge under them. The exact licence scope and the wording you need to post are provided campaign by campaign.","t262":"<span>Q</span>How is the risk of a copyright-based ban handled?","t263":"CLIPYIELD distributes only officially licensed material and vets quality before posting, which structurally lowers the risk of copyright-based claims, takedowns and suspensions. That said, each platform’s own policies on quality and authenticity, and disclosure duties for AI-generated content, are separate standards, and we cannot fully guarantee an individual account against a ban. We walk you through the wording and cautions each campaign requires.","t264":"<span>Q</span>Can I clip titles from rights holders other than Z-IP?","t265":"Yes. CLIPYIELD lists titles entrusted to us by partner rights holders alongside Z-IP’s own label. In either case the material is officially licensed under a contract with the rights holder, and the licence scope, reward structure and required disclosures presented to you follow the same standard.","t266":"<i class=\"dot\"></i>Structurally lowers copyright-claim risk","t267":"Same terms for our own titles and for entrusted titles","t268":"Whether a title belongs to Z-IP or is entrusted to us by a partner rights holder, it reaches you as officially licensed material under the same rules.","t269":"No way to verify where the licence came from","t270":"A clipper has no means of checking whether the material was ever licensed by the rights holder."},"zh":{"t280":"专栏","t301":"设想中的版权方伙伴 <span>（示意样例·非实际交易）</span>","t302":"Example clips","t303":"案件示例的切片。","t304":"官方切片师将授权素材制作成短视频的示意（样例）。","t305":"此处显示的切片、作品名称与数值均为设计确认用样例。","t306":"致版权方","t307":"您是IP版权方？点此 →","t310":"启动期最低保障","t311":"启动期3个月，保障<span class=\"grad-text\">每月30,000日元</span>。","t312":"通过审核并使用新账号活动的人，在成效报酬低于保障额的月份补足差额。作为审核制的回报，即使粉丝较少也能安心起步。","t313":"¥30,000<small>／月·最长3个月</small>","t314":"当成效报酬（TIER1＋TIER2）低于每月30,000日元时补足差额；超过的月份照常支付成效报酬。","t315":"达成条件","t316":"当月投稿20条以上","t317":"审核驳回率在规定标准以下","t318":"零违规","t319":"使用认定账号（既有账号）活动者不在对象内。","t001":"<b>内部设计确认用原型</b>｜页面中的项目名称、数值与排行等均为版面确认用的示例内容（并非实际数据）","t003":"报酬模式","t004":"项目看板","t005":"CLIPYIELD 的不同","t006":"如何开始","t007":"常见问题","t008":"登录","t009":"免费开始","t010":"<b>TWO-TIER</b> 播放有报酬，卖出再拿一次。","t012":"我们只分发经版权方官方授权的素材，并在发布前审核质量，<b>从结构上降低因著作权被申诉的风险</b>。<br/>除播放报酬外，通过你的专属链接售出的周边销售额的<b>30–60%（因项目而异）</b>也会不断累积。","t013":"免费注册","t014":"查看报酬模式","t015":"<i class=\"dot\"></i>仅限通过审核的官方切片师","t016":"<i class=\"dot\"></i>不看粉丝数（以质量与实绩审核）","t017":"<i class=\"dot\"></i>每次播放 ¥0.03–0.5（按等级与项目）","t019":"7月 · TIER1+TIER2 <span class=\"st st-pend\">处理中</span>","t020":"6月 · TIER1+TIER2 <span class=\"st st-paid\">已支付</span>","t021":"5月 · TIER1 <span class=\"st st-paid\">已支付</span>","t024":"已确认报酬（本月）","t027":"总播放量","t030":"经由链接的购买","t031":"142笔","t033":"播放量与成效趋势","t034":"最近30天","t035":"<i style=\"background:linear-gradient(90deg,#FF7A18,#F5A623)\"></i>播放量","t036":"<i style=\"background:rgba(16,24,40,.18)\"></i>成效发生点","t037":"THIS MONTH ／ 明细","t039":"播放报酬","t042":"周边成效报酬","t044":"各国播放占比","t045":"美国","t047":"印度尼西亚","t049":"泰国","t051":"韩国","t053":"其他","t055":"本月切片师排行","t068":"¥0.03–0.5<span style=\"font-size:.42em;letter-spacing:0;color:var(--ink-3)\"> / 次播放</span>","t069":"TIER 1・播放报酬","t070":"发布内容传播得越广，当天即可累积的基础报酬。","t072":"TIER 2・周边成效报酬","t073":"通过你的链接售出的周边销售额的30–60%（因项目而异）。费率按项目而非等级决定。","t075":"启动期最低保障","t076":"通过审核并使用新账号活动的切片师，3个月内每月保障30,000日元（成效不足时补差额、有达成条件）。","t078":"爆红不是终点。<br/>因为是<span class=\"grad-text\">双层结构</span>，报酬会持续累积。","t079":"一般的切片项目只按播放量一次性结算便告结束。CLIPYIELD 在播放报酬之上，叠加了你的内容实际带动周边销售时产生的成效报酬。","t081":"¥0.03–0.5<small>／次播放（按等级与项目）</small>","t082":"你发布的切片作品，其播放量会直接转化为报酬。每个项目设定各自的单价，并在仪表板上按日汇总。由于没有最低播放门槛，即使起步很小，也从第1次播放开始计入。","t084":"30–60%<small>／经由链接的周边销售额</small>","t085":"当有人通过你的专属推荐链接购买周边时，该笔销售额的30–60%将支付给你。具体费率按项目设定，并显示在各项目卡片上。购买追踪由平台自动完成，无需任何申请手续。即使播放量没有暴涨，只要触达对的人，报酬同样可观。","t086":"Earnings simulator ／ 收益模拟器","t087":"每月总播放量","t089":"经由你的链接的周边销售额","t091":"TIER1单价按等级与项目在 ¥0.03–0.5／次播放 范围内变动（本模拟器以 ¥0.03 估算）。TIER2为周边销售额的30–60%，按项目设定。本模拟器仅用于说明报酬结构，并不构成收益保证。","t096":"报酬明细","t097":"播放报酬","t098":"周边成效报酬","t099":"即使播放量相同，CLIPYIELD 的结构也能让<b style=\"color:var(--ink)\">周边卖得越多、报酬就越高</b>。在只按播放单价一次性结算的项目中，并不存在这一层。","t101":"选择你要剪辑的作品。","t102":"电影・剧集・动画・音乐・漫画・YouTube 的官方授权素材，抢先于所有人使用。","t103":"全部","t104":"电影","t105":"剧集","t106":"动画","t107":"音乐","t271":"漫画","t272":"YouTube","t273":"招募地区","t108":"<i class=\"live-dot\"></i>招募中","t109":"剩余 42天","t111":"动画・全24话／独占先行配信","t113":"¥0.05<small> /次播放</small>","t115":"60%<small> /周边销售额</small>","t120":"预算消耗 34%","t121":"BRONZE以上","t122":"<i class=\"live-dot\"></i>招募中","t123":"剩余 28天","t125":"电影・正片118分钟／官方预告与名场面","t127":"¥0.15<small> /次播放</small>","t129":"45%<small> /周边销售额</small>","t133":"预算消耗 62%","t134":"SILVER以上","t135":"<i class=\"live-dot\"></i>最新","t136":"剩余 60天","t138":"音乐・官方MV／艺人认证","t140":"¥0.50<small> /次播放</small>","t142":"40%<small> /周边销售额</small>","t147":"预算消耗 11%","t148":"GOLD限定","t150":"此处显示的作品名称、单价与进度均为设计确认用示例。实际项目将随已签约作品开始发行时上线。","t152":"同样是切片，<br/>回报却不一样。","t153":"区别不在于素材属于谁，而在于素材是否获得版权方的官方授权。CLIPYIELD 上架的作品，无论是 Z-IP 自有厂牌作品，还是受其他版权方委托的作品，均为经版权方授权后官方分发的素材。","t155":"只分发版权方官方授权素材的切片师经济圈","t156":"双层报酬（播放＋周边销售额30–60%）","t157":"当热度转化为销售时，上层报酬随之产生。","t158":"优先获取独家・首发内容","t159":"你可以第一个使用尚无人剪辑过的素材。","t160":"官方白名单｜从结构上降低著作权申诉风险","t161":"我们只分发经版权方授权的素材，并将该授权范围官方再授权给你，因此权利判断不会落在切片师身上。","t162":"直至购买的全自动追踪","t163":"自动追踪经由你专属链接的购买，无需申请手续。","t164":"发布内容不会损害你的个人品牌","t165":"你处理的是获得授权的动态漫画。与直接投放企业广告的项目不同，不会破坏你账号的既有调性。","t166":"审核制・仅限官方切片师","t167":"只有通过审核的切片师才能参与，因此版权方可以放心提供独家素材与高单价案件。","t169":"一般的切片项目","t170":"通用市场平台型","t171":"仅按播放单价一次性结算","t172":"播放一旦停止，报酬也随之停止。","t173":"以已在流通的通用素材为对象","t174":"大量切片师同时剪辑同一素材。","t175":"授权范围因项目而异且模糊","t176":"权利判断在平台之外。","t177":"没有以购买为起点的追踪","t178":"播放量以外的贡献不会反映到报酬中。","t179":"有时需要处理企业的官方广告","t180":"视发布内容而定，可能影响切片师自身的声誉。","t181":"各项目设有最低观看数门槛","t182":"未达到一定播放量便不纳入结算，是常见的设计。","t184":"从注册到首次报酬，只需4步。","t185":"只有通过审核的官方切片师才能接单。注册后完成实名认证、登记活动账号并申请审核。","t187":"注册","t188":"只需邮箱，几分钟完成。随后完成实名认证、登记账号并申请审核。","t189":"<span class=\"chkbox on\"></span>邮箱地址","t190":"<span class=\"chkbox on\"></span>同意用户条款","t191":"<span class=\"chkbox on\"></span>审核<span style=\"margin-left:auto;color:#B45309;font-size:10.5px;font-weight:700\">需要（2、3个工作日）</span>","t193":"登记活动账号","t194":"登记Clipyield新账号（可享启动期保障）或有实绩的既有账号（认定账号），然后接受审核。","t201":"剪辑并发布","t202":"从项目看板下载素材，自由编辑后发布。","t203":"<span class=\"chkbox on\"></span>下载素材","t204":"<span class=\"chkbox on\"></span>获取推荐链接","t205":"<span class=\"chkbox on\"></span>登记发布链接","t207":"领取报酬","t208":"月末结算・次月旬前后确定・次月末后标准出金（免费）。早期出金需手续费4%。收款方式可自由选择。","t209":"银行转账","t212":"7月<span class=\"st st-pend\" style=\"margin-left:auto\">处理中</span>","t213":"6月<span class=\"st st-paid\" style=\"margin-left:auto\">已支付</span>","t215":"常见问题","t216":"<span>Q</span>粉丝很少也可以参加吗？","t217":"可以。审核看的是剪辑质量、版权意识与过往实绩，而非粉丝数。粉丝较少的人，我们提供启动期3个月的最低保障（每月30,000日元）。","t218":"<span>Q</span>我剪辑的视频，权利归属如何？","t219":"所有素材均由 CLIPYIELD 在与原作者正式签约的前提下提供。授权范围会在各项目中明示，权利判断全部由运营方完成。","t220":"<span>Q</span>周边成效报酬何时确定？","t221":"在经由你专属链接的购买确认时即计入，并于退货期结束后确定。你可随时在仪表板中查看。","t222":"<span>Q</span>需要在贴文中标明自己获得报酬吗？","t223":"需要。部分国家与地区要求披露你正在获得成效报酬。发布时所需的标注，我们会在新手引导中说明。","t225":"注册免费。通过审核即可作为官方切片师接单。<br/>先注册，并完成实名认证与审核。","t226":"免费注册","t227":"查看项目","t228":"<i class=\"dot\"></i>审核制·仅限官方切片师","t229":"<i class=\"dot\"></i>启动期3个月最低保障","t230":"<i class=\"dot\"></i>每次播放 ¥0.03–0.5","t232":"一个面向切片师的平台：剪辑官方授权的动态漫画，以播放与周边销售的双层结构获得报酬。","t234":"报酬模式","t235":"项目看板","t236":"如何开始","t237":"常见问题","t239":"切片师指南","t240":"素材使用方法","t241":"报酬领取","t242":"关于披露标注","t244":"用户条款","t245":"切片师条款","t246":"隐私政策","t247":"联系我们","t249":"内部设计确认用原型／页面数值为示例","t251":"Official whitelist ｜ 官方白名单","t252":"不必再在灰色地带，<br/><span class=\"grad-text\">做切片。</span>","t253":"CLIPYIELD 上架的，只有与版权方签约后官方分发的素材。无论是 Z-IP 自有厂牌作品，还是受其他版权方委托的作品，处理方式完全相同，你所获得的授权范围也不会因此改变。","t255":"从结构上降低因著作权被申诉的风险","t256":"对切片师而言，最可怕的不是单价低，而是辛苦养大的账号因著作权投诉而停掉。CLIPYIELD 从版权方获得二次利用授权与再授权的权利，并将该范围官方授权给你。“可以用到什么程度”这个判断，不需要你一个人承担。","t258":"不是外包方，而是粉丝文化的共同创始人。","t259":"一部作品会在世界的哪里火起来，是由最早剪辑它的人决定的。因此 CLIPYIELD 的报酬并不止于按播放量结算。周边销售额 30–60% 这一层，正是为了让一起把作品养大的人获得应有的分成。","t261":"官方授权所能消除的，是以著作权为理由的投诉、下架与账号停用。AI 生成内容的标注义务，以及各社交平台自行制定的质量与真实性政策，属于另一套标准，我们无法就各平台在这些标准下的判断做出保证。具体的授权范围与发布时所需的标注，会在各项目中分别说明。","t262":"<span>Q</span>著作权导致封号的风险如何？","t263":"CLIPYIELD 只分发经官方授权的素材并在发布前审核质量，从结构上降低以著作权为理由的投诉、下架与停用风险。但各平台自定的质量与真实性政策、以及 AI 生成内容的标注义务属于另一标准，无法完全保证单个账号不被封。我们会在各项目中说明所需标注与注意事项。","t264":"<span>Q</span>Z-IP 以外的版权方作品也可以剪辑吗？","t265":"可以。CLIPYIELD 上除了 Z-IP 自有厂牌作品，也会上架受其他版权方委托的作品。两者均为基于与版权方合同的官方授权素材，适用于你的授权范围、报酬机制与必要标注也遵循相同标准。","t266":"<i class=\"dot\"></i>从结构上降低著作权申诉风险","t267":"自有作品与受托作品条件相同","t268":"无论作品属于 Z-IP，还是受其他版权方委托，都会以同一规则的官方授权素材交到你手上。","t269":"无法确认素材的授权来源","t270":"切片师无法自行确认该素材是否获得了版权方的授权。"}};
+  var nodes = [].slice.call(document.querySelectorAll('[data-i18n],[data-i18n-html]'));
+  var base = {};
+  nodes.forEach(function(el){
+    var k = el.getAttribute('data-i18n');
+    if(k){ base[k] = el.textContent; return; }
+    k = el.getAttribute('data-i18n-html');
+    base[k] = el.innerHTML;
+  });
+  var btns = [].slice.call(document.querySelectorAll('.lang-b'));
+  function apply(lang){
+    var d = DICT[lang] || {};
+    nodes.forEach(function(el){
+      var k = el.getAttribute('data-i18n');
+      if(k){ el.textContent = (d[k] != null ? d[k] : base[k]); return; }
+      k = el.getAttribute('data-i18n-html');
+      el.innerHTML = (d[k] != null ? d[k] : base[k]);
+    });
+    document.documentElement.setAttribute('lang', lang);
+    btns.forEach(function(b){
+      var on = b.getAttribute('data-lang') === lang;
+      b.classList.toggle('is-on', on);
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+  }
+  btns.forEach(function(b){
+    b.addEventListener('click', function(){ apply(b.getAttribute('data-lang')); });
+  });
+  var m = /[?&]lang=(ja|en|zh)/.exec(location.search);
+  apply(m ? m[1] : 'ja');
+})();
+</script>
+<script src="assets/cy.js"></script>
+<script>
+/* Reflect login state in the nav: swap ログイン/無料ではじめる for a dashboard link. */
+(function(){
+  var u = (window.CY && CY.current) ? CY.current() : null;
+  if (!u) return;
+  var cta = document.querySelector('.nav-cta');
+  if (cta){
+    var login = cta.querySelector('a[href="login.html"]');
+    var signup = cta.querySelector('a[href="signup.html"]');
+    if (login){ login.remove(); }
+    if (signup){
+      signup.setAttribute('href','dashboard.html');
+      signup.removeAttribute('data-i18n');
+      signup.textContent = 'ダッシュボード';
+    }
+  }
+})();
+</script>
+</body>
+</html>

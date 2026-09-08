@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>本人確認 — CLIPYIELD</title>
+<link rel="stylesheet" href="assets/cy.css"/>
+</head>
+<body class="dash">
+<div class="note-bar"><div class="wrap"><b>社内デザイン確認用プロトタイプ</b>｜これはデモです。実在の本人確認書類・顔写真はアップロードしないでください</div></div>
+
+<nav class="nav">
+  <div class="wrap nav-in">
+    <a class="logo" href="index.html">
+      <svg fill="none" height="26" viewBox="0 0 32 32" width="26">
+        <defs><linearGradient id="lg" x1="0" x2="32" y1="0" y2="32"><stop offset="0" stop-color="#FF7A18"></stop><stop offset="1" stop-color="#FFC93C"></stop></linearGradient></defs>
+        <rect height="30" rx="9" stroke="url(#lg)" stroke-width="2" width="30" x="1" y="1"></rect>
+        <path d="M12 9.5 L22.5 16 L12 22.5 Z" fill="url(#lg)"></path>
+        <path d="M8 12.5 L8 19.5" stroke="url(#lg)" stroke-linecap="round" stroke-width="2.4"></path>
+      </svg>
+      CLIPYIELD
+    </a>
+    <div class="nav-cta">
+      <a class="btn btn-ghost btn-sm" href="dashboard.html">ダッシュボードに戻る</a>
+    </div>
+  </div>
+</nav>
+
+<main class="kyc-main">
+  <div class="eyebrow">Identity verification / KYC</div>
+  <h1>本人確認</h1>
+  <p class="lead">成果報酬（グッズ）案件に参加するには本人確認が必要です。書類とセルフィーを提出すると審査が行われます。</p>
+
+  <div class="kyc-warn">
+    <b>⚠️ これはデモです。</b> 実在のパスポート・運転免許証・マイナンバーカード・顔写真は<b>アップロードしないでください</b>。
+    このデモでは画像は端末外に送信されず、内容は保存されません（提出した「書類の種類」と状態のみ記録します）。本番では本人確認事業者（KYCプロバイダ）に暗号化して安全に送信されます。
+  </div>
+
+  <!-- step indicator -->
+  <div class="steps-ind" id="ind">
+    <div class="si on" data-si="0"><span class="n">1</span>書類の種類</div>
+    <div class="bar"></div>
+    <div class="si" data-si="1"><span class="n">2</span>書類</div>
+    <div class="bar"></div>
+    <div class="si" data-si="2"><span class="n">3</span>セルフィー</div>
+    <div class="bar"></div>
+    <div class="si" data-si="3"><span class="n">4</span>確認</div>
+  </div>
+
+  <div class="card">
+    <!-- Step 1: doc type -->
+    <div class="kyc-step on" id="step0">
+      <h2>本人確認書類の種類</h2>
+      <div class="desc">提出する書類を1つ選んでください。</div>
+      <div class="doctype" id="doctype"></div>
+      <div class="kyc-actions">
+        <span></span>
+        <button class="btn btn-primary btn-sm" id="n0" type="button" disabled>次へ</button>
+      </div>
+    </div>
+
+    <!-- Step 2: document upload -->
+    <div class="kyc-step" id="step1">
+      <h2>本人確認書類のアップロード</h2>
+      <div class="desc" id="doc-desc">選択した書類を撮影・アップロードしてください。文字がはっきり読める状態で。</div>
+      <label class="uploader" id="doc-up">
+        <div class="up-ic">🪪</div>
+        <div class="up-t">書類の画像を選択</div>
+        <div class="up-s">JPG / PNG ・ タップして選択</div>
+        <input type="file" accept="image/*" id="doc-file"/>
+        <div class="up-preview" id="doc-prev"><img alt="preview" id="doc-img"/><div class="fn" id="doc-fn"></div></div>
+      </label>
+      <div class="kyc-actions">
+        <button class="btn btn-ghost btn-sm" data-back="0" type="button">戻る</button>
+        <button class="btn btn-primary btn-sm" id="n1" type="button" disabled>次へ</button>
+      </div>
+    </div>
+
+    <!-- Step 3: selfie -->
+    <div class="kyc-step" id="step2">
+      <h2>セルフィー（顔写真）</h2>
+      <div class="desc">顔がはっきり写った自撮り写真をアップロードしてください。書類の顔写真と照合します。</div>
+      <label class="uploader" id="self-up">
+        <div class="up-ic">🤳</div>
+        <div class="up-t">セルフィーを選択</div>
+        <div class="up-s">JPG / PNG ・ タップして選択</div>
+        <input type="file" accept="image/*" capture="user" id="self-file"/>
+        <div class="up-preview" id="self-prev"><img alt="preview" id="self-img"/><div class="fn" id="self-fn"></div></div>
+      </label>
+      <div class="kyc-actions">
+        <button class="btn btn-ghost btn-sm" data-back="1" type="button">戻る</button>
+        <button class="btn btn-primary btn-sm" id="n2" type="button" disabled>次へ</button>
+      </div>
+    </div>
+
+    <!-- Step 4: review & submit -->
+    <div class="kyc-step" id="step3">
+      <h2>内容の確認</h2>
+      <div class="desc">以下の内容で本人確認を申請します。氏名は書類の表記に合わせてください。</div>
+      <div class="field">
+        <label for="kyc-name">氏名（任意）</label>
+        <input id="kyc-name" type="text" placeholder="山田 太郎"/>
+      </div>
+      <div class="review-sum">
+        <div class="r"><span>書類の種類</span><b id="sum-doc">—</b></div>
+        <div class="r"><span>本人確認書類</span><b id="sum-docf" style="color:var(--ok)">—</b></div>
+        <div class="r"><span>セルフィー</span><b id="sum-self" style="color:var(--ok)">—</b></div>
+      </div>
+      <div class="form-err" id="kyc-err" style="margin-top:16px"></div>
+      <div class="kyc-actions">
+        <button class="btn btn-ghost btn-sm" data-back="2" type="button">戻る</button>
+        <button class="btn btn-primary btn-sm" id="kyc-submit" type="button">本人確認を申請する</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="app-foot">© 2026 CLIPYIELD ・ 社内デザイン確認用プロトタイプ</footer>
+
+<script src="assets/cy.js"></script>
+<script>
+(function(){
+  var user = CY.requireAuth("login.html");
+  if (!user) return;
+
+  // Already verified / pending → no need to be here.
+  var st = CY.identityStatus();
+  if (st === "verified" || st === "pending"){
+    location.href = "dashboard.html";
+    return;
+  }
+
+  var $ = function(id){ return document.getElementById(id); };
+  var state = { docType:"", hasDocument:false, hasSelfie:false };
+  var step = 0;
+
+  // --- doc type options ---
+  $("doctype").innerHTML = CY.DOC_TYPES.map(function(d){
+    return '<label data-doc="' + d.id + '"><input type="radio" name="doc" value="' + d.id + '"/>' +
+      '<span><span class="dn">' + CY.esc(d.name) + '</span><span class="dd">' + CY.esc(d.note) + 'を撮影</span></span></label>';
+  }).join("");
+  $("doctype").querySelectorAll("input[name=doc]").forEach(function(r){
+    r.addEventListener("change", function(){
+      state.docType = r.value;
+      $("doctype").querySelectorAll("label").forEach(function(l){ l.classList.toggle("sel", l.getAttribute("data-doc")===r.value); });
+      $("n0").disabled = false;
+      var d = CY.DOC_TYPES.filter(function(x){return x.id===r.value;})[0];
+      if (d) $("doc-desc").textContent = d.name + "の" + d.note + "を撮影・アップロードしてください。文字がはっきり読める状態で。";
+    });
+  });
+
+  // --- steps ---
+  function show(n){
+    step = n;
+    for (var i=0;i<4;i++) $("step"+i).classList.toggle("on", i===n);
+    document.querySelectorAll("#ind .si").forEach(function(s){
+      var i = +s.getAttribute("data-si");
+      s.classList.toggle("on", i===n);
+      s.classList.toggle("done", i<n);
+    });
+    window.scrollTo({top:0,behavior:"smooth"});
+  }
+  $("n0").addEventListener("click", function(){ show(1); });
+  $("n1").addEventListener("click", function(){ show(2); });
+  $("n2").addEventListener("click", function(){ fillSummary(); show(3); });
+  document.querySelectorAll("[data-back]").forEach(function(b){
+    b.addEventListener("click", function(){ show(+b.getAttribute("data-back")); });
+  });
+
+  // --- file pickers (preview only; image data is NOT stored) ---
+  function wireUpload(fileId, upId, prevId, imgId, fnId, nextId, flag){
+    var input = $(fileId), up = $(upId), prev = $(prevId), img = $(imgId), fn = $(fnId), next = $(nextId);
+    input.addEventListener("change", function(){
+      var f = input.files && input.files[0];
+      if (!f){ return; }
+      if (!/^image\//.test(f.type)){ CY.toast("画像ファイルを選択してください。"); return; }
+      img.src = URL.createObjectURL(f);
+      fn.textContent = "✓ " + f.name;
+      prev.style.display = "block";
+      up.classList.add("filled");
+      state[flag] = true;
+      next.disabled = false;
+    });
+  }
+  wireUpload("doc-file","doc-up","doc-prev","doc-img","doc-fn","n1","hasDocument");
+  wireUpload("self-file","self-up","self-prev","self-img","self-fn","n2","hasSelfie");
+
+  function fillSummary(){
+    $("sum-doc").textContent = CY.docTypeName(state.docType);
+    $("sum-docf").textContent = state.hasDocument ? "アップロード済み ✓" : "未";
+    $("sum-self").textContent = state.hasSelfie ? "アップロード済み ✓" : "未";
+  }
+
+  $("kyc-submit").addEventListener("click", function(){
+    $("kyc-err").classList.remove("on");
+    try {
+      CY.submitKyc({ docType: state.docType, name: $("kyc-name").value, hasDocument: state.hasDocument, hasSelfie: state.hasSelfie });
+      location.href = "dashboard.html?kyc=submitted";
+    } catch (ex) {
+      $("kyc-err").textContent = ex.message; $("kyc-err").classList.add("on");
+    }
+  });
+})();
+</script>
+</body>
+</html>
